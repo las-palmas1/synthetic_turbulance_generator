@@ -51,16 +51,26 @@ def get_amplitude_arr(k_arr: typing.List[float], energy_arr: typing.List[float])
     return result
 
 
-def get_d_vector_and_theta() -> tuple:
+def get_d_vector_theta_and_phi() -> tuple:
     phi = random.uniform(0, 2 * np.pi)
     theta = random.uniform(0, 2 * np.pi)
-    return np.array([np.sin(theta) * np.cos(phi), np.sin(theta) * np.sin(phi), np.cos(theta)]), theta
+    return np.array([np.sin(theta) * np.cos(phi), np.sin(theta) * np.sin(phi), np.cos(theta)]), theta, phi
 
 
-def get_sigma_vector(d_vector: np.ndarray, theta: float) -> np.ndarray:
+def get_sigma_vector(d_vector: np.ndarray, theta: float, phi: float) -> np.ndarray:
     z_rotation_axis = 0
-    x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
-    y_rotation_axis = np.sqrt(1 - x_rotation_axis ** 2)
+    if (phi >= 0) and (phi < np.pi / 2):
+        x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
+    elif (phi >= np.pi / 2) and (phi < np.pi):
+        x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = np.sqrt(1 - x_rotation_axis ** 2)
+    elif (phi >= np.pi) and (phi < 3 / 2 * np.pi):
+        x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = np.sqrt(1 - x_rotation_axis ** 2)
+    else:
+        x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
     rotation_matrix = np.array([
         [np.cos(theta) + (1 - np.cos(theta)) * x_rotation_axis ** 2,
          (1 - np.cos(theta)) * x_rotation_axis * y_rotation_axis - np.sin(theta) * z_rotation_axis,
@@ -96,8 +106,8 @@ def get_auxiliary_pulsation_velocity(r_vector, t, l_cut, l_e, l_cut_min, l_e_max
     amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
     result = np.array([0, 0, 0])
     for i in range(len(k_arr)):
-        d_vector, theta = get_d_vector_and_theta()
-        sigma_vector = get_sigma_vector(d_vector, theta)
+        d_vector, theta, phi = get_d_vector_theta_and_phi()
+        sigma_vector = get_sigma_vector(d_vector, theta, phi)
         phase = get_phase()
         frequency = get_frequency()
         result += 2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector * \
@@ -114,8 +124,8 @@ def plot_spectrum(r_vector, t, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissip
     amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
     v_arr = []
     for i in range(len(k_arr)):
-        d_vector, theta = get_d_vector_and_theta()
-        sigma_vector = get_sigma_vector(d_vector, theta)
+        d_vector, theta, phi = get_d_vector_theta_and_phi()
+        sigma_vector = get_sigma_vector(d_vector, theta, phi)
         phase = get_phase()
         frequency = get_frequency()
         v_arr.append(2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector * \
