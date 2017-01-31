@@ -51,27 +51,12 @@ def get_amplitude_arr(k_arr: typing.List[float], energy_arr: typing.List[float])
     return result
 
 
-def get_d_vector_theta_and_phi() -> tuple:
-    phi = random.uniform(0, 2 * np.pi)
-    theta = random.uniform(0, 2 * np.pi)
-    return np.array([np.sin(theta) * np.cos(phi), np.sin(theta) * np.sin(phi), np.cos(theta)]), theta, phi
-
-
-def get_sigma_vector(d_vector: np.ndarray, theta: float, phi: float) -> np.ndarray:
-    z_rotation_axis = 0
-    if (phi >= 0) and (phi < np.pi / 2):
-        x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
-        y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
-    elif (phi >= np.pi / 2) and (phi < np.pi):
-        x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
-        y_rotation_axis = np.sqrt(1 - x_rotation_axis ** 2)
-    elif (phi >= np.pi) and (phi < 3 / 2 * np.pi):
-        x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
-        y_rotation_axis = np.sqrt(1 - x_rotation_axis ** 2)
-    else:
-        x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
-        y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
-    rotation_matrix = np.array([
+def get_rotation_matrix_3d(rotation_axis: typing.List[float], rotation_angle) -> np.ndarray:
+    x_rotation_axis = rotation_axis[0]
+    y_rotation_axis = rotation_axis[1]
+    z_rotation_axis = rotation_axis[2]
+    theta = rotation_angle
+    result = np.array([
         [np.cos(theta) + (1 - np.cos(theta)) * x_rotation_axis ** 2,
          (1 - np.cos(theta)) * x_rotation_axis * y_rotation_axis - np.sin(theta) * z_rotation_axis,
          (1 - np.cos(theta)) * x_rotation_axis * z_rotation_axis + np.sin(theta) * y_rotation_axis],
@@ -82,6 +67,33 @@ def get_sigma_vector(d_vector: np.ndarray, theta: float, phi: float) -> np.ndarr
          (1 - np.cos(theta)) * z_rotation_axis * y_rotation_axis + np.sin(theta) * x_rotation_axis,
          np.cos(theta) + (1 - np.cos(theta)) * z_rotation_axis ** 2]
         ])
+    return result
+
+
+def get_d_vector_and_theta() -> tuple:
+    z = random.uniform(-1, 1)
+    phi = random.uniform(0, 2 * np.pi)
+    theta = np.arccos(z)
+    result = np.array([np.sin(theta) * np.cos(phi), np.sin(theta) * np.sin(phi), z])
+    return result, theta
+
+
+def get_sigma_vector(d_vector: np.ndarray, theta: float) -> np.ndarray:
+    z_rotation_axis = 0
+    if (d_vector[1] >= 0) and (d_vector[0] > 0):
+        x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
+    elif (d_vector[0] <= 0) and (d_vector[1] > 0):
+        x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = np.sqrt(1 - x_rotation_axis ** 2)
+    elif (d_vector[0] < 0) and (d_vector[1] <= 0):
+        x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = np.sqrt(1 - x_rotation_axis ** 2)
+    else:
+        x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
+        y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
+    rotation_axis = [x_rotation_axis, y_rotation_axis, z_rotation_axis]
+    rotation_matrix = get_rotation_matrix_3d(rotation_axis, theta)
     z_prime = 0
     phi_prime = random.uniform(0, 2 * np.pi)
     x_prime = np.cos(phi_prime)
@@ -99,15 +111,15 @@ def get_frequency():
 
 
 def get_auxiliary_pulsation_velocity(r_vector, t, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
-                                     alpha=0.025, u0=0) -> np.ndarray:
+                                     alpha=0.01, u0=0) -> np.ndarray:
     k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
     tau = get_tau(u0, l_e_max)
     energy_arr = get_energy_arr(k_arr, l_cut, l_e, viscosity, dissipation_rate)
     amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
-    result = np.array([0, 0, 0])
+    result = np.array([0.0, 0.0, 0.0])
     for i in range(len(k_arr)):
-        d_vector, theta, phi = get_d_vector_theta_and_phi()
-        sigma_vector = get_sigma_vector(d_vector, theta, phi)
+        d_vector, theta = get_d_vector_and_theta()
+        sigma_vector = get_sigma_vector(d_vector, theta)
         phase = get_phase()
         frequency = get_frequency()
         result += 2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector * \
@@ -116,7 +128,7 @@ def get_auxiliary_pulsation_velocity(r_vector, t, l_cut, l_e, l_cut_min, l_e_max
 
 
 def plot_spectrum(r_vector, t, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
-                  alpha=0.025, u0=0):
+                  alpha=0.01, u0=0):
     plt.figure(figsize=(9, 7))
     k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
     tau = get_tau(u0, l_e_max)
@@ -124,8 +136,8 @@ def plot_spectrum(r_vector, t, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissip
     amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
     v_arr = []
     for i in range(len(k_arr)):
-        d_vector, theta, phi = get_d_vector_theta_and_phi()
-        sigma_vector = get_sigma_vector(d_vector, theta, phi)
+        d_vector, theta = get_d_vector_and_theta()
+        sigma_vector = get_sigma_vector(d_vector, theta)
         phase = get_phase()
         frequency = get_frequency()
         v_arr.append(2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector * \
@@ -142,4 +154,46 @@ def plot_spectrum(r_vector, t, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissip
     plt.show()
 
 
-plot_spectrum([0.1, 0.1, 0.1], 1, 0.0005, 0.005, 0.0005, 0.005, 5e-6, 0.01)
+if __name__ == '__main__':
+    plot_spectrum([0.1, 0.1, 0.1], 0, 0.0005, 0.005, 0.0005, 0.005, 2e-5, 6e3, u0=0)
+    # t_arr = np.linspace(0, 0.2, 500)
+    # u_arr = []
+    # v_arr = []
+    # w_arr = []
+    # uv_arr = []
+    # vw_arr = []
+    # uw_arr = []
+    # k_u_arr = []
+    # k_uw_arr = []
+    # for i in range(20):
+    #     for t in t_arr:
+    #         print(i, '', t)
+    #         v_vector = get_auxiliary_pulsation_velocity([0.1, 0.1, 0.1], t, 0.0005, 0.005, 0.0005, 0.005,  2e-5, 6e3, u0=2)
+    #         u_arr.append(v_vector[0])
+    #         v_arr.append(v_vector[1])
+    #         w_arr.append(v_vector[2])
+    #         uv_arr.append(v_vector[0] * v_vector[1])
+    #         vw_arr.append(v_vector[1] * v_vector[2])
+    #         uw_arr.append(v_vector[0] * v_vector[2])
+    #     k_u_arr.append(sum(u_arr) / len(u_arr))
+    #     k_uw_arr.append(sum(uw_arr) / len(uw_arr))
+    # print(sum(k_u_arr) / len(k_u_arr))
+    # print(sum(k_uw_arr) / len(k_uw_arr))
+    # print(sum(u_arr) / len(u_arr))
+    # print(sum(uv_arr) / len(uv_arr))
+    # plt.plot(t_arr, u_arr, 'r')
+    # plt.plot(t_arr, uv_arr, 'b')
+    # plt.grid()
+    # plt.show()
+
+    # from mpl_toolkits.mplot3d import Axes3D
+    # fig = plt.figure()
+    # ax = Axes3D(fig)
+    # for i in range(500):
+    #     d_vector, theta = get_d_vector_and_theta()
+    #     sigma_vector = get_sigma_vector(d_vector, theta)
+    #     print(np.dot(d_vector, sigma_vector))
+    #     ax.plot(xs=[sigma_vector[0]], ys=[sigma_vector[1]], zs=[sigma_vector[2]], marker='o', color='r')
+    # plt.show()
+
+
