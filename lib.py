@@ -3,6 +3,10 @@ import numpy.random as random
 import numpy.linalg as linalg
 import typing
 import matplotlib.pyplot as plt
+import logging
+
+
+logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 def get_k_arr(l_e_max, l_cut_min, alpha=0.01) -> typing.List[float]:
@@ -127,7 +131,7 @@ def get_auxiliary_pulsation_velocity(r_vector, t, l_cut, l_e, l_cut_min, l_e_max
     return result
 
 
-def plot_spectrum(r_vector, t, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
+def plot_spectrum(r_vector, t, filename, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
                   alpha=0.01, u0=0):
     plt.figure(figsize=(9, 7))
     k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
@@ -143,26 +147,132 @@ def plot_spectrum(r_vector, t, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissip
         v_arr.append(2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector * \
                      np.cos(k_arr[i] * np.dot(d_vector, r_vector) + phase + frequency * t / tau))
     energy_arr_new = [linalg.norm(v) ** 2 for v in v_arr]
-    plt.plot(k_arr, energy_arr, color='black', lw=1)
-    plt.plot(k_arr, energy_arr_new, color='red', lw=1)
-    plt.xlim(min(k_arr), 2 * np.pi / l_cut_min)
+    plt.plot(k_arr, energy_arr, color='blue', lw=1, label=r'$Спектр\ фон\ Кармана$')
+    plt.plot(k_arr, energy_arr_new, color='red', lw=1, label=r'$Спектр\ синтетического\ поля$')
+    plt.plot([2 * np.pi / l_cut_min, 2 * np.pi / l_cut_min], [0, 2 * max(energy_arr_new)], lw=3, color='black',
+             label=r'$k_{max}$')
+    plt.ylim(10e-10, 1.1 * max(energy_arr_new))
+    plt.xlim(min(k_arr), max(k_arr))
     plt.yscale('log')
     plt.xscale('log')
     plt.grid(which='both')
-    plt.xlabel('k', fontsize=16)
-    plt.ylabel('E', fontsize=16)
+    plt.legend(fontsize=16, loc=3)
+    plt.xlabel(r'$k$', fontsize=20)
+    plt.ylabel(r'$E$', fontsize=20)
+    plt.savefig(filename)
     plt.show()
 
 
+class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
+    def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, filename, grid_step, l_e, viscosity, dissipation_rate,
+                 alpha=0.01, u0=0, time=0):
+        """
+        :param i_cnt: количество ячеек в направлении орта i
+        :param j_cnt: количество ячеек в направлении орта j
+        :param k_cnt: количество ячеек в направлении орта k
+        :param filename: имя файла с выходными данными
+        :param grid_step: шаг сетки
+        :param l_e: размер наиболее энергонесущих вихрей
+        :param viscosity: молекулярная вязкость
+        :param dissipation_rate: степень диссипации
+        :param alpha: константа для определения набора волновых чисел
+        :param u0: характерная скорость
+        :param time: параметр времени
+        """
+        self.i_cnt = i_cnt
+        self.j_cnt = j_cnt
+        self.k_cnt = k_cnt
+        self.filename = filename
+        self.grid_step = grid_step
+        self.l_e = l_e
+        self.viscosity = viscosity
+        self.dissipation_rate = dissipation_rate
+        self.alpha = alpha
+        self.u0 = u0
+        self.time = time
+        self.l_cut = 2 * self.grid_step
+        self._i_arr = []
+        self._j_arr = []
+        self._k_arr = []
+        self._x_arr = []
+        self._y_arr = []
+        self._z_arr = []
+        self._u_arr = []
+        self._v_arr = []
+        self._w_arr = []
+
+    @classmethod
+    def _get_index_arrays(cls, i_cnt, j_cnt, k_cnt):
+        i_arr = []
+        j_arr = []
+        k_arr = []
+        for i1 in range(i_cnt):
+            for j1 in range(j_cnt):
+                for k1 in range(k_cnt):
+                    i_arr.append(i1)
+                    j_arr.append(j1)
+                    k_arr.append(k1)
+        return i_arr, j_arr, k_arr
+
+    @classmethod
+    def _get_coordinates_arrays(cls, i_arr, j_arr, k_arr, grid_step):
+        x_arr = []
+        y_arr = []
+        z_arr = []
+        for i, j, k in zip(i_arr, j_arr, k_arr):
+            x_arr.append(i * grid_step)
+            y_arr.append(j * grid_step)
+            z_arr.append(k * grid_step)
+        return x_arr, y_arr, z_arr
+
+    def _get_velocity_arrays(self, x_arr, y_arr, z_arr):
+        logging.info('Velocity calculation')
+        u_arr = []
+        v_arr = []
+        w_arr = []
+        for i, j, k in zip(range(len(x_arr)), range(len(y_arr)), range(len(z_arr))):
+            v_vector = get_auxiliary_pulsation_velocity([x_arr[i], y_arr[j], z_arr[k]], self.time,
+                                                        self.l_cut, self.l_e, self.l_cut, self.l_e,
+                                                        self.viscosity, self.dissipation_rate, self.alpha,
+                                                        self.u0)
+            logging.info('i = %s, j = %s, k = %s  ---  u = %.3f, v = %.3f, w = %.3f' %
+                         (i, j, k, v_vector[0], v_vector[1], v_vector[2]))
+            u_arr.append(v_vector[0])
+            v_arr.append(v_vector[1])
+            w_arr.append(v_vector[2])
+        return u_arr, v_arr, w_arr
+
+    @classmethod
+    def _record_variables(cls, filename, i_arr, j_arr, k_arr, x_arr, y_arr, z_arr, u_arr, v_arr, w_arr):
+        logging.info('Recording variables')
+        file = open(filename, 'w')
+        file.write('VARIABLES = X Y Z I J K U V W\n')
+        file.write('ZONE I= %s J= %s K= %s\n' % (len(i_arr), len(j_arr), len(k_arr)))
+        for i, j, k, x, y, z, u, v, w in zip(i_arr, j_arr, k_arr, x_arr, y_arr, z_arr, u_arr, v_arr, w_arr):
+            file.write('%s %s %s %s %s %s %s %s %s\n' % (x, y, z, i, j, k, u, v, w))
+        file.close()
+
+    def commit(self):
+        self._i_arr, self._j_arr, self._k_arr = self._get_index_arrays(self.i_cnt, self.j_cnt, self.k_cnt)
+        self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(self._i_arr, self._j_arr, self._k_arr,
+                                                                             self.grid_step)
+        self._u_arr, self._v_arr, self._w_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
+        self._record_variables(self.filename, self._i_arr, self._j_arr, self._k_arr, self._x_arr, self._y_arr,
+                               self._z_arr, self._u_arr, self._v_arr, self._w_arr)
+        logging.info('Finish')
+
+
 if __name__ == '__main__':
-    plot_spectrum([0.1, 0.1, 0.1], 0, 0.0005, 0.005, 0.0005, 0.005, 2e-5, 6e3, u0=0)
+    # plot_spectrum([0.1, 0.1, 0.1], 0, 'output\spectrum', 0.0005, 0.005, 0.0005, 0.005, 2e-5, 6e3, u0=0)
+    turb_generator = UniformGridAuxiliaryPulsationVelocityFieldGenerator(3, 4, 5, 'output\Test.TEC', 0.001, 0.005,
+                                                                         2e-5, 6e3)
+    # turb_generator.commit()
     # t_arr = np.linspace(0, 0.2, 500)
     # u_arr = []
     # v_arr = []
     # w_arr = []
     # uv_arr = []
     # vw_arr = []
-    # uw_arr = []
     # k_u_arr = []
     # k_uw_arr = []
     # for i in range(20):
@@ -186,14 +296,14 @@ if __name__ == '__main__':
     # plt.grid()
     # plt.show()
 
-    # from mpl_toolkits.mplot3d import Axes3D
-    # fig = plt.figure()
-    # ax = Axes3D(fig)
-    # for i in range(500):
-    #     d_vector, theta = get_d_vector_and_theta()
-    #     sigma_vector = get_sigma_vector(d_vector, theta)
-    #     print(np.dot(d_vector, sigma_vector))
-    #     ax.plot(xs=[sigma_vector[0]], ys=[sigma_vector[1]], zs=[sigma_vector[2]], marker='o', color='r')
-    # plt.show()
+    from mpl_toolkits.mplot3d import Axes3D
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    for i in range(500):
+        d_vector, theta = get_d_vector_and_theta()
+        sigma_vector = get_sigma_vector(d_vector, theta)
+        print(np.dot(d_vector, sigma_vector))
+        ax.plot(xs=[d_vector[0]], ys=[d_vector[1]], zs=[d_vector[2]], marker='o', color='r')
+    plt.show()
 
 
