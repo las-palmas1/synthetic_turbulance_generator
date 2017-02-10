@@ -173,13 +173,13 @@ def plot_spectrum(r_vector, t, filename, l_cut, l_e, l_cut_min, l_e_max, viscosi
 
 
 class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
-    def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, filename, grid_step, l_e, viscosity, dissipation_rate,
-                 alpha=0.01, u0=0, time=0):
+    def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, tec_filename, plot3d_filename, velocity_filename,
+                 grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=0, time=0):
         """
         :param i_cnt: количество ячеек в направлении орта i
         :param j_cnt: количество ячеек в направлении орта j
         :param k_cnt: количество ячеек в направлении орта k
-        :param filename: имя файла с выходными данными
+        :param tec_filename: имя файла с выходными данными
         :param grid_step: шаг сетки
         :param l_e: размер наиболее энергонесущих вихрей
         :param viscosity: молекулярная вязкость
@@ -191,7 +191,9 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
         self.i_cnt = i_cnt
         self.j_cnt = j_cnt
         self.k_cnt = k_cnt
-        self.filename = filename
+        self.tec_filename = tec_filename
+        self.plot3d_filename = plot3d_filename
+        self.velocity_filename = velocity_filename
         self.grid_step = grid_step
         self.l_e = l_e
         self.viscosity = viscosity
@@ -209,15 +211,18 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
         self._u_arr = []
         self._v_arr = []
         self._w_arr = []
+        self._vorticity_x_arr = None
+        self._vorticity_y_arr = None
+        self._vorticity_z_arr = None
 
     @classmethod
     def _get_index_arrays(cls, i_cnt, j_cnt, k_cnt):
         i_arr = []
         j_arr = []
         k_arr = []
-        for i1 in range(i_cnt):
+        for k1 in range(k_cnt):
             for j1 in range(j_cnt):
-                for k1 in range(k_cnt):
+                for i1 in range(i_cnt):
                     i_arr.append(i1)
                     j_arr.append(j1)
                     k_arr.append(k1)
@@ -254,63 +259,117 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
             w_arr.append(v_vector[2])
         return u_arr, v_arr, w_arr
 
-    def _record_variables(self, filename, i_arr, j_arr, k_arr, x_arr, y_arr, z_arr, u_arr, v_arr, w_arr):
-        logging.info('Recording variables')
+    def _create_tec_file(self, filename, i_arr, j_arr, k_arr, x_arr, y_arr, z_arr, u_arr, v_arr, w_arr,
+                         vorticity_x_arr, vorticity_y_arr, vorticity_z_arr):
+        logging.info('Creating TEC file')
         file = open(filename, 'w')
-        file.write('VARIABLES = X Y Z I J K U V W\n')
+        file.write('VARIABLES = X Y Z I J K U V W VORT_X VORT_Y VORT_Z\n')
         file.write('ZONE I= %s J= %s K= %s\n' % (self.i_cnt, self.j_cnt, self.k_cnt))
-        for i, j, k, x, y, z, u, v, w in zip(i_arr, j_arr, k_arr, x_arr, y_arr, z_arr, u_arr, v_arr, w_arr):
-            file.write('%s %s %s %s %s %s %s %s %s\n' % (x, y, z, i, j, k, u, v, w))
+        for i, j, k, x, y, z, u, v, w, vort_x, vort_y, vort_z in zip(i_arr, j_arr, k_arr, x_arr, y_arr, z_arr, u_arr,
+                                                                     v_arr, w_arr, vorticity_x_arr, vorticity_y_arr,
+                                                                     vorticity_z_arr):
+            file.write('%s %s %s %s %s %s %s %s %s %s %s %s\n' % (x, y, z, i, j, k, u, v, w, vort_x, vort_y, vort_z))
         file.close()
 
     @classmethod
-    def _get_index_shift(cls, parameter_arr: typing.List[float], number: int, j_cnt: int, k_cnt: int, delta_i: int = 1,
+    def _get_index_shift(cls, parameter_arr: typing.List[float], number: int, j_cnt: int, i_cnt: int, delta_i: int = 1,
                          delta_j: int = 1,  delta_k: int = 1):
-        return parameter_arr[number + delta_k + k_cnt * delta_j + j_cnt * k_cnt * delta_i]
+        return parameter_arr[number + delta_i + i_cnt * delta_j + i_cnt * j_cnt * delta_k]
 
-    def _get_x_derivative(self, parameter_arr: typing.List[float], number: int):
-        dp = self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 1, 0, 0) - \
-            self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, -1, 0, 0)
-        dx = self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 1, 0, 0) - \
-            self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, -1, 0, 0)
+    def _get_x_derivative(self, parameter_arr: typing.List[float], x_arr: typing.List[float], number: int):
+        dp = self._get_index_shift(parameter_arr, number, self.j_cnt, self.i_cnt, 1, 0, 0) - \
+            self._get_index_shift(parameter_arr, number, self.j_cnt, self.i_cnt, -1, 0, 0)
+        dx = self._get_index_shift(x_arr, number, self.j_cnt, self.i_cnt, 1, 0, 0) - \
+            self._get_index_shift(x_arr, number, self.j_cnt, self.i_cnt, -1, 0, 0)
         return dp / dx
 
-    def _get_y_derivative(self, parameter_arr: typing.List[float], number: int):
-        dp = self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, 1, 0) - \
-             self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, -1, 0)
-        dy = self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, 1, 0) - \
-             self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, -1, 0)
+    def _get_y_derivative(self, parameter_arr: typing.List[float], y_arr: typing.List[float], number: int):
+        dp = self._get_index_shift(parameter_arr, number, self.j_cnt, self.i_cnt, 0, 1, 0) - \
+             self._get_index_shift(parameter_arr, number, self.j_cnt, self.i_cnt, 0, -1, 0)
+        dy = self._get_index_shift(y_arr, number, self.j_cnt, self.i_cnt, 0, 1, 0) - \
+             self._get_index_shift(y_arr, number, self.j_cnt, self.i_cnt, 0, -1, 0)
         return dp / dy
 
-    def _get_z_derivative(self, parameter_arr: typing.List[float], number: int):
-        dp = self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, 0, 1) - \
-             self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, 0, -1)
-        dz = self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, 0, 1) - \
-             self._get_index_shift(parameter_arr, number, self.j_cnt, self.k_cnt, 0, 0, -1)
+    def _get_z_derivative(self, parameter_arr: typing.List[float], z_arr: typing.List[float], number: int):
+        dp = self._get_index_shift(parameter_arr, number, self.j_cnt, self.i_cnt, 0, 0, 1) - \
+             self._get_index_shift(parameter_arr, number, self.j_cnt, self.i_cnt, 0, 0, -1)
+        dz = self._get_index_shift(z_arr, number, self.j_cnt, self.i_cnt, 0, 0, 1) - \
+             self._get_index_shift(z_arr, number, self.j_cnt, self.i_cnt, 0, 0, -1)
         return dp / dz
 
     def _get_vorticity_arrays(self, i_arr: typing.List[int], j_arr: typing.List[int], k_arr: typing.List[int],
                               x_arr: typing.List[float], y_arr: typing.List[float], z_arr: typing.List[float],
                               u_arr: typing.List[float], v_arr: typing.List[float], w_arr: typing.List[float]):
-        result = np.zeros(self.i_cnt * self.j_cnt * self.k_cnt)
-        for i in range(len(x_arr)):
+        logging.info('Vorticity calculation')
+        result_x = np.zeros(self.i_cnt * self.j_cnt * self.k_cnt)
+        result_y = np.zeros(self.i_cnt * self.j_cnt * self.k_cnt)
+        result_z = np.zeros(self.i_cnt * self.j_cnt * self.k_cnt)
+        for i in range(len(u_arr)):
             if i_arr[i] != 0 and j_arr[i] != 0 and k_arr[i] != 0 and i_arr[i] != self.i_cnt - 1 and \
                j_arr[i] != self.j_cnt - 1 and k_arr[i] != self.k_cnt - 1:
-                pass
+                vort_x = self._get_y_derivative(w_arr, y_arr, i) - self._get_z_derivative(v_arr, z_arr, i)
+                vort_y = self._get_z_derivative(u_arr, z_arr, i) - self._get_x_derivative(w_arr, x_arr, i)
+                vort_z = self._get_x_derivative(v_arr, x_arr, i) - self._get_y_derivative(u_arr, y_arr, i)
+                result_x[i] = vort_x
+                result_y[i] = vort_y
+                result_z[i] = vort_z
+            else:
+                vort_x = 0
+                vort_y = 0
+                vort_z = 0
+                result_x[i] = vort_x
+                result_y[i] = vort_y
+                result_z[i] = vort_z
+            logging.info('i = %s, j = %s, k = %s  ---  vort_x = %.3f, vort_y = %.3f, vort_z = %.3f' %
+                         (i_arr[i], j_arr[i], k_arr[i], vort_x, vort_y, vort_z))
+        return result_x, result_y, result_z
+
+    @classmethod
+    def _create_plot3d_file(cls, filename, i_cnt, j_cnt, k_cnt, x_arr, y_arr, z_arr):
+        logging.info('Creating PLOT3D file')
+        file = open(filename, mode='w', encoding='ascii')
+        file.write('1 \n')
+        file.write('%s %s %s \n' % (i_cnt, j_cnt, k_cnt))
+        for x in x_arr:
+            file.write('%s ' % x)
+        for y in y_arr:
+            file.write('%s ' % y)
+        for z in z_arr:
+            file.write('%s ' % z)
+        file.close()
+
+    @classmethod
+    def _create_velocity_file(cls, filename, u_arr: typing.List[float], v_arr: typing.List[float],
+                              w_arr: typing.List[float]):
+        logging.info('Creating velocity file')
+        file = open(filename, mode='w', encoding='utf-8')
+        for u, v, w in zip(u_arr, v_arr, w_arr):
+            file.write('%s %s %s \n' % (u, v, w))
+        file.close()
 
     def commit(self):
         self._i_arr, self._j_arr, self._k_arr = self._get_index_arrays(self.i_cnt, self.j_cnt, self.k_cnt)
         self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(self._i_arr, self._j_arr, self._k_arr,
                                                                              self.grid_step)
         self._u_arr, self._v_arr, self._w_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
-        self._record_variables(self.filename, self._i_arr, self._j_arr, self._k_arr, self._x_arr, self._y_arr,
-                               self._z_arr, self._u_arr, self._v_arr, self._w_arr)
+        self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr = \
+            self._get_vorticity_arrays(self._i_arr, self._j_arr, self._k_arr,
+                                       self._x_arr, self._y_arr, self._z_arr,
+                                       self._u_arr, self._v_arr, self._w_arr)
+        self._create_tec_file(self.tec_filename, self._i_arr, self._j_arr, self._k_arr, self._x_arr, self._y_arr,
+                              self._z_arr, self._u_arr, self._v_arr, self._w_arr, self._vorticity_x_arr,
+                              self._vorticity_y_arr, self._vorticity_z_arr)
+        self._create_plot3d_file(self.plot3d_filename, self.i_cnt, self.j_cnt, self.k_cnt, self._x_arr, self._y_arr,
+                                 self._z_arr)
+        self._create_velocity_file(self.velocity_filename, self._u_arr, self._v_arr, self._w_arr)
         logging.info('Finish')
 
 
 if __name__ == '__main__':
     # plot_spectrum([0.1, 0.1, 0.1], 0, 'output\spectrum', 0.0005, 0.005, 0.0005, 0.005, 2e-5, 6e3, u0=0)
-    turb_generator = UniformGridAuxiliaryPulsationVelocityFieldGenerator(3, 4, 5, 'output\Test.TEC', 0.001, 0.005,
+    turb_generator = UniformGridAuxiliaryPulsationVelocityFieldGenerator(3, 4, 5, 'output\Test.TEC',
+                                                                         r'output\test_grid.PFD',
+                                                                         r'output\velocity.VEL', 0.001, 0.005,
                                                                          2e-5, 6e3)
     # turb_generator.commit()
     t_arr = np.linspace(0, 3.0, 30000)
