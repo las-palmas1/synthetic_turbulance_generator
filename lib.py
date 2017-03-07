@@ -4,6 +4,7 @@ import numpy.linalg as linalg
 import typing
 import matplotlib.pyplot as plt
 import logging
+import numba as nb
 
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
