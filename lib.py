@@ -5,6 +5,7 @@ import typing
 import matplotlib.pyplot as plt
 import logging
 import numba as nb
+import time
 
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
@@ -23,7 +24,7 @@ def get_tau(u0, l_e_max):
     if u0 != 0:
         return 2 * l_e_max / u0
     else:
-        return np.inf
+        return 1e50
 
 
 def get_energy_arr(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -> np.ndarray:
@@ -38,31 +39,30 @@ def get_energy_arr(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -
 
 
 def get_amplitude_arr(k_arr: np.ndarray, energy_arr: np.ndarray) -> np.ndarray:
-    k_arr1 = k_arr[0: len(k_arr) - 1]
-    k_arr2 = k_arr[1: len(k_arr)]
+    k_arr1 = k_arr[0: k_arr.shape[0] - 1]
+    k_arr2 = k_arr[1: k_arr.shape[0]]
     delta_k = k_arr2 - k_arr1
-    norm_coef = (energy_arr[0: len(energy_arr) - 1] * delta_k).sum()
-    result = np.zeros(len(k_arr))
-    result[0: len(k_arr) - 1] = energy_arr[0: len(k_arr) - 1] * delta_k / norm_coef
+    norm_coef = (energy_arr[0: energy_arr.shape[0] - 1] * delta_k).sum()
+    result = np.zeros(k_arr.shape[0])
+    result[0: k_arr.shape[0] - 1] = energy_arr[0: k_arr.shape[0] - 1] * delta_k / norm_coef
     return result
 
 
-def get_rotation_matrix_3d(rotation_axis: typing.List[float], rotation_angle) -> np.ndarray:
+def get_rotation_matrix_3d(rotation_axis: np.ndarray, rotation_angle) -> np.ndarray:
     x_rotation_axis = rotation_axis[0]
     y_rotation_axis = rotation_axis[1]
     z_rotation_axis = rotation_axis[2]
     theta = rotation_angle
-    result = np.array([
-        [np.cos(theta) + (1 - np.cos(theta)) * x_rotation_axis ** 2,
-         (1 - np.cos(theta)) * x_rotation_axis * y_rotation_axis - np.sin(theta) * z_rotation_axis,
-         (1 - np.cos(theta)) * x_rotation_axis * z_rotation_axis + np.sin(theta) * y_rotation_axis],
-        [(1 - np.cos(theta)) * y_rotation_axis * x_rotation_axis + np.sin(theta) * z_rotation_axis,
-         np.cos(theta) + (1 - np.cos(theta)) * y_rotation_axis ** 2,
-         (1 - np.cos(theta)) * y_rotation_axis * z_rotation_axis - np.sin(theta) * x_rotation_axis],
-        [(1 - np.cos(theta)) * z_rotation_axis * x_rotation_axis - np.sin(theta) * y_rotation_axis,
-         (1 - np.cos(theta)) * z_rotation_axis * y_rotation_axis + np.sin(theta) * x_rotation_axis,
-         np.cos(theta) + (1 - np.cos(theta)) * z_rotation_axis ** 2]
-        ])
+    result = np.zeros([3, 3])
+    result[0, 0] = np.cos(theta) + (1 - np.cos(theta)) * x_rotation_axis ** 2
+    result[0, 1] = (1 - np.cos(theta)) * x_rotation_axis * y_rotation_axis - np.sin(theta) * z_rotation_axis
+    result[0, 2] = (1 - np.cos(theta)) * x_rotation_axis * z_rotation_axis + np.sin(theta) * y_rotation_axis
+    result[1, 0] = (1 - np.cos(theta)) * y_rotation_axis * x_rotation_axis + np.sin(theta) * z_rotation_axis
+    result[1, 1] = np.cos(theta) + (1 - np.cos(theta)) * y_rotation_axis ** 2
+    result[1, 2] = (1 - np.cos(theta)) * y_rotation_axis * z_rotation_axis - np.sin(theta) * x_rotation_axis
+    result[2, 0] = (1 - np.cos(theta)) * z_rotation_axis * x_rotation_axis - np.sin(theta) * y_rotation_axis
+    result[2, 1] = (1 - np.cos(theta)) * z_rotation_axis * y_rotation_axis + np.sin(theta) * x_rotation_axis
+    result[2, 2] = np.cos(theta) + (1 - np.cos(theta)) * z_rotation_axis ** 2
     return result
 
 
@@ -77,8 +77,37 @@ def get_d_vector_theta_and_phase(size=0) -> tuple:
     return result, theta, phi
 
 
-def get_sigma_vector(d_vector: np.ndarray, theta: float) -> np.ndarray:
+def get_z(size=0) -> np.ndarray:
+    z = random.uniform(-1, 1, size)
+    return z
+
+
+def get_phase(size=0) -> np.ndarray:
+    phi = random.uniform(0, 2 * np.pi, size)
+    return phi
+
+
+def get_theta(z: np.ndarray) -> np.ndarray:
+    theta = np.arccos(z)
+    return theta
+
+
+def get_d_vector(z: np.ndarray, phase: np.ndarray, theta: np.ndarray) -> np.ndarray:
+    result = np.zeros([z.shape[0], 3])
+    result[:, 0] = np.sin(theta) * np.cos(phase)
+    result[:, 1] = np.sin(theta) * np.sin(phase)
+    result[:, 2] = z
+    return result
+
+
+def get_sigma_vector(d_vector: np.ndarray, theta) -> np.ndarray:
     z_rotation_axis = 0
+    a1 = 1 + (d_vector[0] / d_vector[1]) ** 2
+    x1 = 1 / np.sqrt(a1)
+    x2 = - 1 / np.sqrt(a1)
+    a2 = 1 - x1 ** 2
+    y1 = -np.sqrt(a2)
+    y2 = np.sqrt(a2)
     if (d_vector[1] >= 0) and (d_vector[0] > 0):
         x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
         y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
@@ -91,13 +120,14 @@ def get_sigma_vector(d_vector: np.ndarray, theta: float) -> np.ndarray:
     else:
         x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
         y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
-    rotation_axis = [x_rotation_axis, y_rotation_axis, z_rotation_axis]
-    rotation_matrix = get_rotation_matrix_3d(rotation_axis, theta)
-    z_prime = 0
+    rotation_axis = np.array([x_rotation_axis, y_rotation_axis, z_rotation_axis])
+    rotation_matrix = get_rotation_matrix_3d(rotation_axis, -theta)
     phi_prime = random.uniform(0, 2 * np.pi)
-    x_prime = np.cos(phi_prime)
-    y_prime = np.sin(phi_prime)
-    result = np.dot(linalg.inv(rotation_matrix), np.array([x_prime, y_prime, z_prime]))
+    vector_prime = np.zeros(3)
+    vector_prime[0] = 0
+    vector_prime[1] = np.cos(phi_prime)
+    vector_prime[2] = np.sin(phi_prime)
+    result = np.dot(rotation_matrix, vector_prime)
     return result
 
 
@@ -105,18 +135,22 @@ def get_frequency(size=0):
     return random.normal(2 * np.pi, 2 * np.pi, size=size)
 
 
+def get_sigma_vector_array(d_vector_arr: np.ndarray, theta_arr: np.ndarray) -> np.ndarray:
+    sigma_vector_arr = np.zeros([d_vector_arr.shape[0], 3])
+    for i in range(d_vector_arr.shape[0]):
+        sigma_vector_arr[i] = get_sigma_vector(d_vector_arr[i], theta_arr[i])
+    return sigma_vector_arr
+
+
 def get_auxiliary_pulsation_velocity_parameters(l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
-                                                alpha=0.01, u0=0):
+                                                alpha=0.01, u0=0.):
     k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
     tau = get_tau(u0, l_e_max)
     energy_arr = get_energy_arr(k_arr, l_cut, l_e, viscosity, dissipation_rate)
     amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
-    d_vector_arr, theta_arr, phase_arr = get_d_vector_theta_and_phase(len(k_arr))
-    sigma_vector_arr = []
-    frequency_arr = get_frequency(len(k_arr))
-    for i in range(len(k_arr)):
-        sigma_vector = get_sigma_vector(d_vector_arr[i], theta_arr[i])
-        sigma_vector_arr.append(sigma_vector)
+    d_vector_arr, theta_arr, phase_arr = get_d_vector_theta_and_phase(k_arr.shape[0])
+    frequency_arr = get_frequency(k_arr.shape[0])
+    sigma_vector_arr = get_sigma_vector_array(d_vector_arr, theta_arr)
     return tau, k_arr, amplitude_arr, d_vector_arr, np.array(sigma_vector_arr), phase_arr, frequency_arr
 
 
@@ -127,10 +161,10 @@ def plot_spectrum(r_vector, t, filename, l_cut, l_e, l_cut_min, l_e_max, viscosi
     tau = get_tau(u0, l_e_max)
     energy_arr = get_energy_arr(k_arr, l_cut, l_e, viscosity, dissipation_rate)
     amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
-    d_vector, theta, phase = get_d_vector_theta_and_phase(len(k_arr))
-    frequency = get_frequency(len(k_arr))
+    d_vector, theta, phase = get_d_vector_theta_and_phase(k_arr.shape[0])
+    frequency = get_frequency(k_arr.shape[0])
     v_arr = []
-    for i in range(len(k_arr)):
+    for i in range(k_arr.shape[0]):
         sigma_vector = get_sigma_vector(d_vector[i], theta[i])
         v_arr.append(2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector *
                      np.cos(k_arr[i] * np.dot(d_vector[i], r_vector) + phase[i] + frequency[i] * t / tau))
@@ -150,6 +184,8 @@ def plot_spectrum(r_vector, t, filename, l_cut, l_e, l_cut_min, l_e_max, viscosi
     plt.savefig(filename)
 
 
+@nb.jit(nb.double[:](nb.double[:], nb.double, nb.double, nb.double[:], nb.double[:], nb.double[:, :],
+                     nb.double[:, :], nb.double[:], nb.double[:]))
 def get_auxiliary_pulsation_velocity(r_vector, t, tau, k_arr: np.ndarray, amplitude_arr: np.ndarray,
                                      d_vector_arr: np.ndarray, sigma_vector_arr: np.ndarray,
                                      phase_arr: np.ndarray, frequency_arr: np.ndarray) -> np.ndarray:
@@ -162,7 +198,7 @@ def get_auxiliary_pulsation_velocity(r_vector, t, tau, k_arr: np.ndarray, amplit
 
 class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
     def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, tec_filename, plot3d_filename, velocity_filename,
-                 grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=0, time=0):
+                 grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=0., time=0.):
         """
         :param i_cnt: количество ячеек в направлении орта i
         :param j_cnt: количество ячеек в направлении орта j
@@ -213,7 +249,7 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
 
     @classmethod
     def _get_coordinates_arrays(cls, index_gen: typing.Iterator[Vector], grid_step) -> \
-            typing.Iterable[typing.List[float]]:
+            typing.Iterable[np.ndarray]:
         x_arr = []
         y_arr = []
         z_arr = []
@@ -221,30 +257,7 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
              x_arr.append(index_vector[0] * grid_step)
              y_arr.append(index_vector[1] * grid_step)
              z_arr.append(index_vector[2] * grid_step)
-        return x_arr, y_arr, z_arr
-
-    def _get_velocity_arrays(self, x_arr: typing.List[float], y_arr: typing.List[float],
-                             z_arr: typing.List[float]) -> typing.Iterable[typing.List[float]]:
-        logging.info('Velocity calculation')
-        u_arr = []
-        v_arr = []
-        w_arr = []
-        n = 0
-        for x, y, z in zip(x_arr, y_arr, z_arr):
-            tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr = \
-                get_auxiliary_pulsation_velocity_parameters(self.l_cut, self.l_e, self.l_cut, self.l_e,
-                                                            self.viscosity, self.dissipation_rate,
-                                                            self.alpha, self.u0)
-            v_vector = get_auxiliary_pulsation_velocity([x, y, z], self.time, tau, k_arr,
-                                                        amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr,
-                                                        frequency_arr)
-            logging.info('n = %s  ---  u = %.3f, v = %.3f, w = %.3f' %
-                         (n, v_vector[0], v_vector[1], v_vector[2]))
-            n += 1
-            u_arr.append(v_vector[0])
-            v_arr.append(v_vector[1])
-            w_arr.append(v_vector[2])
-        return u_arr, v_arr, w_arr
+        return np.array(x_arr), np.array(y_arr), np.array(z_arr)
 
     def _create_tec_file(self, filename, index_gen: typing.Iterator[Vector], x_arr, y_arr, z_arr, u_arr, v_arr, w_arr,
                          vorticity_x_arr, vorticity_y_arr, vorticity_z_arr):
@@ -252,7 +265,7 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
         file = open(filename, 'w')
         file.write('VARIABLES = X Y Z I J K U V W VORT_X VORT_Y VORT_Z\n')
         file.write('ZONE I= %s J= %s K= %s\n' % (self.i_cnt, self.j_cnt, self.k_cnt))
-        for index_vector, x, y, z, u, v, w, vort_x, vort_y, vort_z in zip(index_gen, k_arr, x_arr, y_arr, z_arr, u_arr,
+        for index_vector, x, y, z, u, v, w, vort_x, vort_y, vort_z in zip(index_gen, x_arr, y_arr, z_arr, u_arr,
                                                                      v_arr, w_arr, vorticity_x_arr, vorticity_y_arr,
                                                                      vorticity_z_arr):
             file.write('%s %s %s %s %s %s %s %s %s %s %s %s\n' % (x, y, z, index_vector[0], index_vector[1],
@@ -284,6 +297,37 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
         dz = self._get_index_shift(z_arr, number, self.j_cnt, self.i_cnt, 0, 0, 1) - \
              self._get_index_shift(z_arr, number, self.j_cnt, self.i_cnt, 0, 0, -1)
         return dp / dz
+
+    def _get_velocity_arrays(self, x_arr: np.ndarray, y_arr: np.ndarray,
+                             z_arr: np.ndarray) -> np.ndarray:
+        logging.info('Velocity calculation')
+        u_arr = np.zeros(x_arr.shape[0])
+        v_arr = np.zeros(x_arr.shape[0])
+        w_arr = np.zeros(x_arr.shape[0])
+        result = np.zeros([3, x_arr.shape[0]])
+        tau = get_tau(self.u0, self.l_e)
+        k_arr = get_k_arr(self.l_e, self.l_cut, self.alpha)
+        energy_arr = get_energy_arr(k_arr, self.l_cut, self.l_e, self.viscosity, self.dissipation_rate)
+        amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
+        for i in range(x_arr.shape[0]):
+            z = get_z(k_arr.shape[0])
+            phase_arr = get_phase(k_arr.shape[0])
+            theta_arr = get_theta(z)
+            frequency_arr = get_frequency(k_arr.shape[0])
+            d_vector_arr = get_d_vector(z, phase_arr, theta_arr)
+            sigma_vector_arr = get_sigma_vector_array(d_vector_arr, theta_arr)
+            v_vector = get_auxiliary_pulsation_velocity(np.array([x_arr[i], y_arr[i], z_arr[i]]), self.time, tau, k_arr,
+                                                        amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr,
+                                                        frequency_arr)
+            logging.info('n = %s  ---  u = %.3f, v = %.3f, w = %.3f' %
+                         (i, v_vector[0], v_vector[1], v_vector[2]))
+            u_arr[i] = v_vector[0]
+            v_arr[i] = v_vector[1]
+            w_arr[i] = v_vector[2]
+        result[0] = u_arr
+        result[1] = v_arr
+        result[2] = w_arr
+        return result
 
     def _get_vorticity_arrays(self, index_gen: typing.Iterator[Vector],
                               x_arr: typing.List[float], y_arr: typing.List[float], z_arr: typing.List[float],
@@ -341,7 +385,12 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
     def commit(self):
         self._index_gen = self._get_index_generator(self.i_cnt, self.j_cnt, self.k_cnt)
         self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(self._index_gen, self.grid_step)
-        self._u_arr, self._v_arr, self._w_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
+        start = time.time()
+        velocity_vector_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
+        end = time.time()
+        self._u_arr = velocity_vector_arr[0]
+        self._v_arr = velocity_vector_arr[1]
+        self._w_arr = velocity_vector_arr[2]
         self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr = \
             self._get_vorticity_arrays(self._index_gen, self._x_arr, self._y_arr, self._z_arr,
                                        self._u_arr, self._v_arr, self._w_arr)
@@ -352,6 +401,7 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
                                  self._z_arr)
         self._create_velocity_file(self.velocity_filename, self._u_arr, self._v_arr, self._w_arr)
         logging.info('Finish')
+        logging.info('Velocity calculation time is %.4f s' % (end - start))
 
 
 if __name__ == '__main__':
@@ -361,46 +411,39 @@ if __name__ == '__main__':
                                                                          r'output\velocity.VEL', 0.001, 0.005,
                                                                          2e-5, 6e3)
     # turb_generator.commit()
-    t_arr = np.linspace(0, 3.0, 30000)
-    u_arr = []
-    v_arr = []
-    w_arr = []
-    uv_arr = []
-    vw_arr = []
-    uw_arr = []
-    k_u_arr = []
-    k_uw_arr = []
-    for i in range(10):
-        u_arr = []
-        v_arr = []
-        w_arr = []
-        uv_arr = []
-        vw_arr = []
-        uw_arr = []
-        tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr = \
-            get_auxiliary_pulsation_velocity_parameters(0.0002, 0.002, 0.0002, 0.002, 2e-5, 6e3, u0=2)
-        for t in t_arr:
-            print(i, '', t)
-            v_vector = get_auxiliary_pulsation_velocity([0.01, 0.01, 0.01], t, tau, k_arr, amplitude_arr, d_vector_arr,
-                                                        sigma_vector_arr, phase_arr, frequency_arr)
-            u_arr.append(v_vector[0])
-            v_arr.append(v_vector[1])
-            w_arr.append(v_vector[2])
-            uv_arr.append(v_vector[0] * v_vector[1])
-            vw_arr.append(v_vector[1] * v_vector[2])
-            uw_arr.append(v_vector[0] * v_vector[2])
-        k_u_arr.append(sum(u_arr) / len(u_arr))
-        k_uw_arr.append(sum(uw_arr) / len(uw_arr))
-    print(sum(k_u_arr) / len(k_u_arr))
-    print(sum(k_uw_arr) / len(k_uw_arr))
+    # t_arr = np.linspace(0, 3.0, 30000)
+    # u_arr = []
+    # v_arr = []
+    # w_arr = []
+    # uv_arr = []
+    # vw_arr = []
+    # uw_arr = []
+    # k_u_arr = []
+    # k_uw_arr = []
+    # for i in range(10):
+    #     u_arr = []
+    #     v_arr = []
+    #     w_arr = []
+    #     uv_arr = []
+    #     vw_arr = []
+    #     uw_arr = []
+    #     tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr = \
+    #         get_auxiliary_pulsation_velocity_parameters(0.0002, 0.002, 0.0002, 0.002, 2e-5, 6e3, u0=2)
+    #     for t in t_arr:
+    #         print(i, '', t)
+    #         v_vector = get_auxiliary_pulsation_velocity([0.01, 0.01, 0.01], t, tau, k_arr, amplitude_arr, d_vector_arr,
+    #                                                     sigma_vector_arr, phase_arr, frequency_arr)
+    #         u_arr.append(v_vector[0])
+    #         v_arr.append(v_vector[1])
+    #         w_arr.append(v_vector[2])
+    #         uv_arr.append(v_vector[0] * v_vector[1])
+    #         vw_arr.append(v_vector[1] * v_vector[2])
+    #         uw_arr.append(v_vector[0] * v_vector[2])
+    #     k_u_arr.append(sum(u_arr) / len(u_arr))
+    #     k_uw_arr.append(sum(uw_arr) / len(uw_arr))
+    # print(sum(k_u_arr) / len(k_u_arr))
+    # print(sum(k_uw_arr) / len(k_uw_arr))
 
-
-    # print(sum(u_arr) / len(u_arr))
-    # print(sum(uv_arr) / len(uv_arr))
-    # plt.plot(t_arr, u_arr, 'r')`
-    # plt.plot(t_arr, uv_arr, 'b')
-    # plt.grid()
-    # plt.show()
 
     # from mpl_toolkits.mplot3d import Axes3D
     # fig = plt.figure()

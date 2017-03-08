@@ -131,7 +131,7 @@ class SpectralMethodTestCase(ut.TestCase):
 
     def test_average_uw_rel(self):
         self.assertNotAlmostEqual(0., self.correlations.uw_rel, places=3, msg='<uw>_rel = %.6f' %
-                                                                              self.correlations.uv_rel)
+                                                                              self.correlations.uw_rel)
 
     def test_average_vw_rel(self):
         self.assertNotAlmostEqual(0., self.correlations.vw_rel, places=3, msg='<vw>_rel = %.6f' %
