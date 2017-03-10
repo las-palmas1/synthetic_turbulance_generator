@@ -1,0 +1,22 @@
+test_u_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_uu_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_uv_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_uw_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_v_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_vv_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_vw_rel_av (__main__.SpectralMethodTestCase) ... FAIL
+test_w_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_ww_rel_av (__main__.SpectralMethodTestCase) ... ok
+
+======================================================================
+FAIL: test_vw_rel_av (__main__.SpectralMethodTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/User/Documents/tasks/синтетическая турбулентность/uniform_grid_synthetic_turbulance_generator/test.py", line 240, in test_vw_rel_av
+    msg='<vw>_rel = %.6f' % self.correlations.vw_rel_av)
+AssertionError: 0.0 != -0.005451781503999535 within 2 places : <vw>_rel = -0.005452
+
+----------------------------------------------------------------------
+Ran 9 tests in 13.541s
+
+FAILED (failures=1)

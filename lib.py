@@ -20,11 +20,11 @@ def get_k_arr(l_e_max, l_cut_min, alpha=0.01) -> np.ndarray:
     return result
 
 
-def get_tau(u0, l_e_max):
-    if u0 != 0:
-        return 2 * l_e_max / u0
+def get_tau(u0: np.ndarray, l_e_max):
+    if linalg.norm(u0) != 0:
+        return 2 * l_e_max / linalg.norm(u0)
     else:
-        return 1e50
+        return np.inf
 
 
 def get_energy_arr(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -> np.ndarray:
@@ -198,7 +198,7 @@ def get_auxiliary_pulsation_velocity(r_vector, t, tau, k_arr: np.ndarray, amplit
 
 class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
     def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, tec_filename, plot3d_filename, velocity_filename,
-                 grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=0., time=0.):
+                 grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=np.array([0., 0., 0.]), time=0.):
         """
         :param i_cnt: количество ячеек в направлении орта i
         :param j_cnt: количество ячеек в направлении орта j
@@ -321,9 +321,9 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
                                                         frequency_arr)
             logging.info('n = %s  ---  u = %.3f, v = %.3f, w = %.3f' %
                          (i, v_vector[0], v_vector[1], v_vector[2]))
-            u_arr[i] = v_vector[0]
-            v_arr[i] = v_vector[1]
-            w_arr[i] = v_vector[2]
+            u_arr[i] = v_vector[0] + self.u0[0]
+            v_arr[i] = v_vector[1] + self.u0[1]
+            w_arr[i] = v_vector[2] + self.u0[2]
         result[0] = u_arr
         result[1] = v_arr
         result[2] = w_arr
