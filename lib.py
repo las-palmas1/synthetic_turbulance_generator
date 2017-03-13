@@ -12,6 +12,13 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 def get_k_arr(l_e_max, l_cut_min, alpha=0.01) -> np.ndarray:
+    """
+    :param l_e_max: максимальная на всей расчетной области длина волны
+        наиболее энергонесущих мод синтезированного поля пульсаций
+    :param l_cut_min:  минимальная разрешаемая на всей расчетной области длина волны
+    :param alpha: константа
+    :return: массив модулей волновых чисел
+    """
     k_max = 1.5 * 2 * np.pi / l_cut_min
     k_min = 0.5 * 2 * np.pi / l_e_max
     n = int(np.log(k_max / k_min) / np.log(1 + alpha))
@@ -21,6 +28,12 @@ def get_k_arr(l_e_max, l_cut_min, alpha=0.01) -> np.ndarray:
 
 
 def get_tau(u0: np.ndarray, l_e_max):
+    """
+    :param u0: характерная скорость
+    :param l_e_max: максимальная на всей расчетной области длина волны
+           наиболее энергонесущих мод синтезированного поля пульсаций
+    :return: временной масштаб
+    """
     if linalg.norm(u0) != 0:
         return 2 * l_e_max / linalg.norm(u0)
     else:
@@ -28,6 +41,15 @@ def get_tau(u0: np.ndarray, l_e_max):
 
 
 def get_energy_arr(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -> np.ndarray:
+    """
+    :param k_arr:  массив модулей волновых чисел
+    :param l_cut: инимальная длина волны в рассчитываемом узле
+    :param l_e: максимальная в рассчитываемом узле длина волны
+            наиболее энергонесущих мод синтезированного поля пульсаций
+    :param viscosity: молекулярная вязкость
+    :param dissipation_rate:  степень диссипации
+    :return: энергетический спектр синтетического поля в данном узле
+    """
     k_eta = 2 * np.pi * (viscosity ** 3 / dissipation_rate) ** (-0.25)
     k_e = 2 * np.pi / l_e
     k_cut = 2 * np.pi / l_cut
@@ -39,6 +61,11 @@ def get_energy_arr(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -
 
 
 def get_amplitude_arr(k_arr: np.ndarray, energy_arr: np.ndarray) -> np.ndarray:
+    """
+    :param k_arr: массив модулей волновых чисел
+    :param energy_arr: энергетический спектр синтетического поля
+    :return: массив амплитуд мод поля пульсаций в данном узле
+    """
     k_arr1 = k_arr[0: k_arr.shape[0] - 1]
     k_arr2 = k_arr[1: k_arr.shape[0]]
     delta_k = k_arr2 - k_arr1
@@ -102,12 +129,6 @@ def get_d_vector(z: np.ndarray, phase: np.ndarray, theta: np.ndarray) -> np.ndar
 
 def get_sigma_vector(d_vector: np.ndarray, theta) -> np.ndarray:
     z_rotation_axis = 0
-    a1 = 1 + (d_vector[0] / d_vector[1]) ** 2
-    x1 = 1 / np.sqrt(a1)
-    x2 = - 1 / np.sqrt(a1)
-    a2 = 1 - x1 ** 2
-    y1 = -np.sqrt(a2)
-    y2 = np.sqrt(a2)
     if (d_vector[1] >= 0) and (d_vector[0] > 0):
         x_rotation_axis = 1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
         y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
@@ -121,13 +142,13 @@ def get_sigma_vector(d_vector: np.ndarray, theta) -> np.ndarray:
         x_rotation_axis = -1 / np.sqrt(1 + (d_vector[0] / d_vector[1]) ** 2)
         y_rotation_axis = -np.sqrt(1 - x_rotation_axis ** 2)
     rotation_axis = np.array([x_rotation_axis, y_rotation_axis, z_rotation_axis])
-    rotation_matrix = get_rotation_matrix_3d(rotation_axis, -theta)
+    rotation_matrix = get_rotation_matrix_3d(rotation_axis, theta)
     phi_prime = random.uniform(0, 2 * np.pi)
     vector_prime = np.zeros(3)
-    vector_prime[0] = 0
-    vector_prime[1] = np.cos(phi_prime)
-    vector_prime[2] = np.sin(phi_prime)
-    result = np.dot(rotation_matrix, vector_prime)
+    vector_prime[0] = np.cos(phi_prime)
+    vector_prime[1] = np.sin(phi_prime)
+    vector_prime[2] = 0
+    result = np.dot(linalg.inv(rotation_matrix), vector_prime)
     return result
 
 
@@ -151,7 +172,7 @@ def get_auxiliary_pulsation_velocity_parameters(l_cut, l_e, l_cut_min, l_e_max, 
     d_vector_arr, theta_arr, phase_arr = get_d_vector_theta_and_phase(k_arr.shape[0])
     frequency_arr = get_frequency(k_arr.shape[0])
     sigma_vector_arr = get_sigma_vector_array(d_vector_arr, theta_arr)
-    return tau, k_arr, amplitude_arr, d_vector_arr, np.array(sigma_vector_arr), phase_arr, frequency_arr
+    return tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr
 
 
 def plot_spectrum(r_vector, t, filename, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
@@ -196,7 +217,12 @@ def get_auxiliary_pulsation_velocity(r_vector, t, tau, k_arr: np.ndarray, amplit
     return result
 
 
-class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
+class HomogeneousIsotropicTurbulenceGenerator:
+    """
+    Предосталяет интерфейс для генерации на равномерной сетке в области в форме прямоугольного
+        параллелепипеда поля однородной изотропоной турбулентности и сохранения данных о
+        пульсациях и  завихренности в текстовых файлах.
+    """
     def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, tec_filename, plot3d_filename, velocity_filename,
                  grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=np.array([0., 0., 0.]), time=0.):
         """
@@ -205,7 +231,7 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
         :param k_cnt: количество ячеек в направлении орта k
         :param tec_filename: имя файла с выходными данными
         :param grid_step: шаг сетки
-        :param l_e: размер наиболее энергонесущих вихрей
+        :param l_e: длина волны наиболее энергонесущих мод синтезированного поля пульсаций
         :param viscosity: молекулярная вязкость
         :param dissipation_rate: степень диссипации
         :param alpha: константа для определения набора волновых чисел
@@ -406,10 +432,10 @@ class UniformGridAuxiliaryPulsationVelocityFieldGenerator:
 
 if __name__ == '__main__':
     # plot_spectrum([0.1, 0.1, 0.1], 0, 'output\spectrum', 0.0005, 0.005, 0.0005, 0.005, 2e-5, 6e3, u0=0)
-    turb_generator = UniformGridAuxiliaryPulsationVelocityFieldGenerator(3, 4, 5, 'output\Test.TEC',
+    turb_generator = HomogeneousIsotropicTurbulenceGenerator(3, 4, 5, 'output\Test.TEC',
                                                                          r'output\test_grid.PFD',
                                                                          r'output\velocity.VEL', 0.001, 0.005,
-                                                                         2e-5, 6e3)
+                                                             2e-5, 6e3)
     # turb_generator.commit()
     # t_arr = np.linspace(0, 3.0, 30000)
     # u_arr = []
@@ -449,10 +475,11 @@ if __name__ == '__main__':
     # fig = plt.figure()
     # ax = Axes3D(fig)
     # for i in range(500):
-    #     d_vector, theta = get_d_vector_and_theta()
-    #     sigma_vector = get_sigma_vector(d_vector, theta)
-    #     print(np.dot(d_vector, sigma_vector))
-    #     ax.plot(xs=[d_vector[0]], ys=[d_vector[1]], zs=[d_vector[2]], marker='o', color='r')
+    #     d_vector, theta, phase = get_d_vector_theta_and_phase(size=1)
+    #     sigma_vector = get_sigma_vector(d_vector[0], theta[0])
+    #     print(np.dot(d_vector[0], sigma_vector))
+    #     # ax.plot(xs=[d_vector[0, 0]], ys=[d_vector[0, 1]], zs=[d_vector[0, 2]], marker='o', color='r')
+    #     ax.plot(xs=[sigma_vector[0]], ys=[sigma_vector[1]], zs=[sigma_vector[2]], marker='o', color='g')
     # plt.show()
 
 

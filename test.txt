@@ -1,22 +1,30 @@
-test_u_rel_av (__main__.SpectralMethodTestCase) ... ok
-test_uu_rel_av (__main__.SpectralMethodTestCase) ... ok
-test_uv_rel_av (__main__.SpectralMethodTestCase) ... ok
-test_uw_rel_av (__main__.SpectralMethodTestCase) ... ok
-test_v_rel_av (__main__.SpectralMethodTestCase) ... ok
-test_vv_rel_av (__main__.SpectralMethodTestCase) ... ok
-test_vw_rel_av (__main__.SpectralMethodTestCase) ... FAIL
-test_w_rel_av (__main__.SpectralMethodTestCase) ... ok
-test_ww_rel_av (__main__.SpectralMethodTestCase) ... ok
+test_u_av (__main__.SpectralMethodTestCase) ... ok
+test_uu_av (__main__.SpectralMethodTestCase) ... ok
+test_uv_av (__main__.SpectralMethodTestCase) ... ok
+test_uw_av (__main__.SpectralMethodTestCase) ... ok
+test_v_av (__main__.SpectralMethodTestCase) ... FAIL
+test_vv_av (__main__.SpectralMethodTestCase) ... FAIL
+test_vw_av (__main__.SpectralMethodTestCase) ... ok
+test_w_av (__main__.SpectralMethodTestCase) ... ok
+test_ww_av (__main__.SpectralMethodTestCase) ... ok
 
 ======================================================================
-FAIL: test_vw_rel_av (__main__.SpectralMethodTestCase)
+FAIL: test_v_av (__main__.SpectralMethodTestCase)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:/Users/User/Documents/tasks/синтетическая турбулентность/uniform_grid_synthetic_turbulance_generator/test.py", line 240, in test_vw_rel_av
-    msg='<vw>_rel = %.6f' % self.correlations.vw_rel_av)
-AssertionError: 0.0 != -0.005451781503999535 within 2 places : <vw>_rel = -0.005452
+  File "C:/Users/User/Documents/tasks/синтетическая турбулентность/uniform_grid_synthetic_turbulance_generator/test.py", line 218, in test_v_av
+    msg="<v'> = %.6f" % self.correlations.v_av)
+AssertionError: 0.0 != -0.16458598871376398 within 1 places : <v'> = -0.164586
+
+======================================================================
+FAIL: test_vv_av (__main__.SpectralMethodTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/User/Documents/tasks/синтетическая турбулентность/uniform_grid_synthetic_turbulance_generator/test.py", line 242, in test_vv_av
+    msg="<v'v'> = %.6f" % self.correlations.vv_av)
+AssertionError: 1.0 != 1.0952169524557802 within 1 places : <v'v'> = 1.095217
 
 ----------------------------------------------------------------------
-Ran 9 tests in 13.541s
+Ran 9 tests in 2.185s
 
-FAILED (failures=1)
+FAILED (failures=2)
