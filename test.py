@@ -173,7 +173,7 @@ class _SpectralMethodPulsationAndReynoldsStressHistory:
         self.ww_av = sum(average_velocity_vector_arr[:, 8]) / iter_cnt
 
     def commit(self):
-        self._t_arr = np.linspace(0, self.time, self.ts_cnt)
+        self._t_arr = np.array(np.linspace(0, self.time, self.ts_cnt))
         for i in range(self.iter_cnt + 1):
             if i == self.iter_cnt:
                 tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr = \

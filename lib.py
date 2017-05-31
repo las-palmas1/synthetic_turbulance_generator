@@ -164,7 +164,7 @@ def get_sigma_vector_array(d_vector_arr: np.ndarray, theta_arr: np.ndarray) -> n
 
 
 def get_auxiliary_pulsation_velocity_parameters(l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
-                                                alpha=0.01, u0=0.):
+                                                alpha=0.01, u0=np.array([0, 0, 0])):
     k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
     tau = get_tau(u0, l_e_max)
     energy_arr = get_energy_arr(k_arr, l_cut, l_e, viscosity, dissipation_rate)
@@ -176,7 +176,7 @@ def get_auxiliary_pulsation_velocity_parameters(l_cut, l_e, l_cut_min, l_e_max, 
 
 
 def plot_spectrum(r_vector, t, filename, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
-                  alpha=0.01, u0=0):
+                  alpha=0.01, u0=np.array([0, 0, 0])):
     plt.figure(figsize=(9, 7))
     k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
     tau = get_tau(u0, l_e_max)
@@ -226,9 +226,9 @@ class HomogeneousIsotropicTurbulenceGenerator:
     def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, tec_filename, plot3d_filename, velocity_filename,
                  grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=np.array([0., 0., 0.]), time=0.):
         """
-        :param i_cnt: количество ячеек в направлении орта i
-        :param j_cnt: количество ячеек в направлении орта j
-        :param k_cnt: количество ячеек в направлении орта k
+        :param i_cnt: количество узлов в направлении орта i
+        :param j_cnt: количество узлов в направлении орта j
+        :param k_cnt: количество узлов в направлении орта k
         :param tec_filename: имя файла с выходными данными
         :param grid_step: шаг сетки
         :param l_e: длина волны наиболее энергонесущих мод синтезированного поля пульсаций
