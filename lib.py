@@ -252,14 +252,12 @@ class HomogeneousIsotropicTurbulenceGenerator:
         self.u0 = u0
         self.time = time
         self.l_cut = 2 * self.grid_step
-        self._index_gen = None
-        self._index_gen = None
-        self._x_arr = []
-        self._y_arr = []
-        self._z_arr = []
-        self._u_arr = []
-        self._v_arr = []
-        self._w_arr = []
+        self._x_arr = None
+        self._y_arr = None
+        self._z_arr = None
+        self.u_arr = None
+        self.v_arr = None
+        self.w_arr = None
         self._vorticity_x_arr = None
         self._vorticity_y_arr = None
         self._vorticity_z_arr = None
@@ -405,27 +403,29 @@ class HomogeneousIsotropicTurbulenceGenerator:
         logging.info('Creating velocity file')
         file = open(filename, mode='w', encoding='utf-8')
         for u, v, w in zip(u_arr, v_arr, w_arr):
-            file.write('%s %s %s \n' % (u, v, w))
+            file.write('%s %s %s\n' % (u, v, w))
         file.close()
 
     def commit(self):
-        self._index_gen = self._get_index_generator(self.i_cnt, self.j_cnt, self.k_cnt)
-        self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(self._index_gen, self.grid_step)
+        index_gen1 = self._get_index_generator(self.i_cnt, self.j_cnt, self.k_cnt)
+        self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(index_gen1, self.grid_step)
         start = time.time()
         velocity_vector_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
         end = time.time()
-        self._u_arr = velocity_vector_arr[0]
-        self._v_arr = velocity_vector_arr[1]
-        self._w_arr = velocity_vector_arr[2]
+        self.u_arr = velocity_vector_arr[0]
+        self.v_arr = velocity_vector_arr[1]
+        self.w_arr = velocity_vector_arr[2]
+        index_gen2 = self._get_index_generator(self.i_cnt, self.j_cnt, self.k_cnt)
         self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr = \
-            self._get_vorticity_arrays(self._index_gen, self._x_arr, self._y_arr, self._z_arr,
-                                       self._u_arr, self._v_arr, self._w_arr)
-        self._create_tec_file(self.tec_filename, self._index_gen, self._x_arr, self._y_arr,
-                              self._z_arr, self._u_arr, self._v_arr, self._w_arr, self._vorticity_x_arr,
+            self._get_vorticity_arrays(index_gen2, self._x_arr, self._y_arr, self._z_arr,
+                                       self.u_arr, self.v_arr, self.w_arr)
+        index_gen3 = self._get_index_generator(self.i_cnt, self.j_cnt, self.k_cnt)
+        self._create_tec_file(self.tec_filename, index_gen3, self._x_arr, self._y_arr,
+                              self._z_arr, self.u_arr, self.v_arr, self.w_arr, self._vorticity_x_arr,
                               self._vorticity_y_arr, self._vorticity_z_arr)
         self._create_plot3d_file(self.plot3d_filename, self.i_cnt, self.j_cnt, self.k_cnt, self._x_arr, self._y_arr,
                                  self._z_arr)
-        self._create_velocity_file(self.velocity_filename, self._u_arr, self._v_arr, self._w_arr)
+        self._create_velocity_file(self.velocity_filename, self.u_arr, self.v_arr, self.w_arr)
         logging.info('Finish')
         logging.info('Velocity calculation time is %.4f s' % (end - start))
 
