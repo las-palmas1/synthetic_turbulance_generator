@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from generate_synthetic_field import data_files_dir
 import config
 import os
+from lib import plot_spectrum
 
 spectrum_plots_dir = 'output\spectrum_plots'
 
@@ -18,3 +19,6 @@ if __name__ == '__main__':
     plt.xscale('log')
     plt.yscale('log')
     plt.savefig(os.path.join(spectrum_plots_dir, 'spatial_spectrum_3d'))
+
+    plot_spectrum([0., 0., 0.], 0., os.path.join(spectrum_plots_dir, 'predefined_spectrum.png'), 2 * config.grid_step,
+                  config.l_e, 2 * config.grid_step, config.l_e, config.viscosity, config.dissipation_rate)

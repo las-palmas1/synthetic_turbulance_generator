@@ -64,7 +64,7 @@ class SpatialSpectrum3d:
                     wave_number_abs: float):
         array_for_summation = 0.5 * velocity_fourier_arr * velocity_fourier_arr.conj()
         array_for_summation_filtered = np.abs(array_for_summation)[(k_abs_arr > wave_number_abs - 0.5) *
-                                                                    (k_abs_arr < wave_number_abs + 0.5)]
+                                                                   (k_abs_arr < wave_number_abs + 0.5)]
         result = array_for_summation_filtered.sum()
         logging.debug('wave number = %.4f,   energy = %.4f' % (wave_number_abs, result))
         return result
