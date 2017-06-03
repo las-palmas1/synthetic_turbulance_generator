@@ -1,7 +1,10 @@
 import numpy as np
 from scipy.fftpack import fftn
 import logging
-
+import matplotlib.pyplot as plt
+import config
+from lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector_theta_and_phase, get_frequency, \
+    get_sigma_vector
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
@@ -18,6 +21,7 @@ def read_velocity_file(filename):
 
 
 class SpatialSpectrum3d:
+    # TODO: разобраться с определением значений волновых чисел
     def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, grid_step: float, u_arr: np.ndarray,
                  v_arr: np.ndarray, w_arr: np.ndarray, num_point: int):
         self.i_cnt = i_cnt
@@ -62,7 +66,7 @@ class SpatialSpectrum3d:
     @classmethod
     def _get_energy(cls, k_abs_arr: np.ndarray, velocity_fourier_arr: np.ndarray,
                     wave_number_abs: float):
-        array_for_summation = 0.5 * velocity_fourier_arr * velocity_fourier_arr.conj()
+        array_for_summation = 0.5 * (np.abs(velocity_fourier_arr) / len(velocity_fourier_arr) ** 3) ** 2
         array_for_summation_filtered = np.abs(array_for_summation)[(k_abs_arr > wave_number_abs - 0.5) *
                                                                    (k_abs_arr < wave_number_abs + 0.5)]
         result = array_for_summation_filtered.sum()
@@ -72,6 +76,7 @@ class SpatialSpectrum3d:
     @classmethod
     def _get_spectrum(cls, ki_arr: np.ndarray, kj_arr: np.ndarray, kk_arr: np.ndarray, velocity_arr: np.ndarray,
                       num_point: int):
+        logging.info('')
         logging.info('SPECTRUM CALCULATING\n')
         k_abs_arr = np.sqrt(ki_arr ** 2 + kj_arr ** 2 + kk_arr ** 2)
         k_arr_for_spectrum = np.linspace(k_abs_arr.min(), k_abs_arr.max(), num_point)
@@ -90,6 +95,42 @@ class SpatialSpectrum3d:
         self.energy_v_arr = self._get_spectrum(ki_arr, kj_arr, kk_arr, v_arr_3d, self.num_point)[0]
         self.energy_w_arr = self._get_spectrum(ki_arr, kj_arr, kk_arr, w_arr_3d, self.num_point)[0]
         self.energy_sum_arr = self.energy_u_arr + self.energy_v_arr + self.energy_w_arr
+
+
+def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut_min, l_e_max,
+                                  viscosity=config.viscosity, dissipation_rate=config.dissipation_rate,
+                                  alpha=config.alpha, u0=config.u0, r_vector=np.array([0., 0., 0.]), t=config.time):
+    # TODO: интервалы по осям
+    logging.info('')
+    logging.info('Plotting spectrum')
+    plt.figure(figsize=(9, 7))
+    k_arr_predef = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
+    tau = get_tau(u0, l_e_max)
+    energy_arr_von_karman = get_von_karman_spectrum(k_arr_predef, l_cut, l_e, viscosity, dissipation_rate)
+    amplitude_arr = get_amplitude_arr(k_arr_predef, energy_arr_von_karman)
+    d_vector, theta, phase = get_d_vector_theta_and_phase(k_arr_predef.shape[0])
+    frequency = get_frequency(k_arr_predef.shape[0])
+    v_arr = []
+    for i in range(k_arr_predef.shape[0]):
+        sigma_vector = get_sigma_vector(d_vector[i], theta[i])
+        v_arr.append(2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector *
+                     np.cos(k_arr_predef[i] * np.dot(d_vector[i], r_vector) + phase[i] + frequency[i] * t / tau))
+    energy_arr_predef = [np.linalg.norm(v) ** 2 for v in v_arr]
+    plt.plot(k_arr_predef, energy_arr_von_karman, color='blue', lw=1, label=r'$Модифицированный\ спектр\ фон\ Кармана$')
+    plt.plot(k_arr_predef, energy_arr_predef, color='red', lw=0.5,
+             label=r'$Заданный\ спектр\ синтетического\ поля$')
+    plt.plot(k_arr, energy_arr, color='green', lw=1, label=r'$Вычисленный\ спектр$')
+    plt.plot([2 * np.pi / l_cut_min, 2 * np.pi / l_cut_min], [0, 2 * max(energy_arr_predef)], lw=3, color='black',
+             label=r'$k_{max}$')
+    plt.ylim(10e-6, 1.1 * max(energy_arr_predef))
+    plt.xlim(10, max(k_arr_predef))
+    plt.yscale('log')
+    plt.xscale('log')
+    plt.grid(which='both')
+    plt.legend(fontsize=12, loc=3)
+    plt.xlabel(r'$k$', fontsize=20)
+    plt.ylabel(r'$E$', fontsize=20)
+    plt.savefig(filename)
 
 
 if __name__ == '__main__':

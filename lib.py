@@ -2,7 +2,6 @@ import numpy as np
 import numpy.random as random
 import numpy.linalg as linalg
 import typing
-import matplotlib.pyplot as plt
 import logging
 import numba as nb
 import time
@@ -40,7 +39,7 @@ def get_tau(u0: np.ndarray, l_e_max):
         return np.inf
 
 
-def get_energy_arr(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -> np.ndarray:
+def get_von_karman_spectrum(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -> np.ndarray:
     """
     :param k_arr:  массив модулей волновых чисел
     :param l_cut: инимальная длина волны в рассчитываемом узле
@@ -48,7 +47,7 @@ def get_energy_arr(k_arr: np.ndarray, l_cut, l_e, viscosity, dissipation_rate) -
             наиболее энергонесущих мод синтезированного поля пульсаций
     :param viscosity: молекулярная вязкость
     :param dissipation_rate:  степень диссипации
-    :return: энергетический спектр синтетического поля в данном узле
+    :return: модифицированный энергетический спектр фон Кармана синтетического поля в данном узле
     """
     k_eta = 2 * np.pi * (viscosity ** 3 / dissipation_rate) ** (-0.25)
     k_e = 2 * np.pi / l_e
@@ -167,42 +166,12 @@ def get_auxiliary_pulsation_velocity_parameters(l_cut, l_e, l_cut_min, l_e_max, 
                                                 alpha=0.01, u0=np.array([0, 0, 0])):
     k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
     tau = get_tau(u0, l_e_max)
-    energy_arr = get_energy_arr(k_arr, l_cut, l_e, viscosity, dissipation_rate)
+    energy_arr = get_von_karman_spectrum(k_arr, l_cut, l_e, viscosity, dissipation_rate)
     amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
     d_vector_arr, theta_arr, phase_arr = get_d_vector_theta_and_phase(k_arr.shape[0])
     frequency_arr = get_frequency(k_arr.shape[0])
     sigma_vector_arr = get_sigma_vector_array(d_vector_arr, theta_arr)
     return tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr
-
-
-def plot_spectrum(r_vector, t, filename, l_cut, l_e, l_cut_min, l_e_max, viscosity, dissipation_rate,
-                  alpha=0.01, u0=np.array([0, 0, 0])):
-    plt.figure(figsize=(9, 7))
-    k_arr = get_k_arr(l_e_max, l_cut_min, alpha=alpha)
-    tau = get_tau(u0, l_e_max)
-    energy_arr = get_energy_arr(k_arr, l_cut, l_e, viscosity, dissipation_rate)
-    amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
-    d_vector, theta, phase = get_d_vector_theta_and_phase(k_arr.shape[0])
-    frequency = get_frequency(k_arr.shape[0])
-    v_arr = []
-    for i in range(k_arr.shape[0]):
-        sigma_vector = get_sigma_vector(d_vector[i], theta[i])
-        v_arr.append(2 * np.sqrt(3 / 2) * np.sqrt(amplitude_arr[i]) * sigma_vector *
-                     np.cos(k_arr[i] * np.dot(d_vector[i], r_vector) + phase[i] + frequency[i] * t / tau))
-    energy_arr_new = [linalg.norm(v) ** 2 for v in v_arr]
-    plt.plot(k_arr, energy_arr, color='blue', lw=1, label=r'$Спектр\ фон\ Кармана$')
-    plt.plot(k_arr, energy_arr_new, color='red', lw=1, label=r'$Спектр\ синтетического\ поля$')
-    plt.plot([2 * np.pi / l_cut_min, 2 * np.pi / l_cut_min], [0, 2 * max(energy_arr_new)], lw=3, color='black',
-             label=r'$k_{max}$')
-    plt.ylim(10e-10, 1.1 * max(energy_arr_new))
-    plt.xlim(min(k_arr), max(k_arr))
-    plt.yscale('log')
-    plt.xscale('log')
-    plt.grid(which='both')
-    plt.legend(fontsize=16, loc=3)
-    plt.xlabel(r'$k$', fontsize=20)
-    plt.ylabel(r'$E$', fontsize=20)
-    plt.savefig(filename)
 
 
 @nb.jit(nb.double[:](nb.double[:], nb.double, nb.double, nb.double[:], nb.double[:], nb.double[:, :],
@@ -331,7 +300,7 @@ class HomogeneousIsotropicTurbulenceGenerator:
         result = np.zeros([3, x_arr.shape[0]])
         tau = get_tau(self.u0, self.l_e)
         k_arr = get_k_arr(self.l_e, self.l_cut, self.alpha)
-        energy_arr = get_energy_arr(k_arr, self.l_cut, self.l_e, self.viscosity, self.dissipation_rate)
+        energy_arr = get_von_karman_spectrum(k_arr, self.l_cut, self.l_e, self.viscosity, self.dissipation_rate)
         amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
         for i in range(x_arr.shape[0]):
             z = get_z(k_arr.shape[0])
