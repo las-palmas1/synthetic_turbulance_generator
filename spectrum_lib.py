@@ -3,8 +3,8 @@ from scipy.fftpack import fftn
 import logging
 import matplotlib.pyplot as plt
 import config
-from lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector_theta_and_phase, get_frequency, \
-    get_sigma_vector
+from lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector_theta_and_phase, \
+    get_frequency, get_sigma_vector
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
@@ -21,9 +21,9 @@ def read_velocity_file(filename):
 
 
 class SpatialSpectrum3d:
-    # TODO: разобраться с определением значений волновых чисел
     def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, grid_step: float, u_arr: np.ndarray,
-                 v_arr: np.ndarray, w_arr: np.ndarray, num_point: int):
+                 v_arr: np.ndarray, w_arr: np.ndarray, num_point: int, l_e: float =config.l_e,
+                 alpha: float = config.alpha):
         self.i_cnt = i_cnt
         self.j_cnt = j_cnt
         self.k_cnt = k_cnt
@@ -32,6 +32,9 @@ class SpatialSpectrum3d:
         self.v_arr = v_arr
         self.w_arr = w_arr
         self.num_point = num_point
+        self.l_e = l_e
+        self.alpha = alpha
+        self.l_cut = 2 * self.grid_step
         self.k_abs_arr = None
         self.energy_sum_arr = None
         self.energy_u_arr = None
@@ -44,7 +47,15 @@ class SpatialSpectrum3d:
         return result
 
     @classmethod
-    def _get_wave_number_array(cls, i_cnt: int, j_cnt: int, k_cnt: int, grid_step):
+    def _get_k_abs(cls, l_e: float, l_cut: float, alpha):
+        k_abs_arr = get_k_arr(l_e, l_cut, alpha)
+        k_abs_min = k_abs_arr.min()
+        k_abs_max = k_abs_arr.max()
+        return k_abs_min, k_abs_max
+
+    @classmethod
+    def _get_wave_number_array(cls, i_cnt: int, j_cnt: int, k_cnt: int, grid_step: float, k_abs_min: float,
+                               k_abs_max: float):
         logging.info('Wave number arrays calculating')
         x_size = grid_step * (i_cnt - 1)
         y_size = grid_step * (j_cnt - 1)
@@ -52,9 +63,14 @@ class SpatialSpectrum3d:
         result_i = np.zeros([k_cnt, j_cnt, i_cnt])
         result_j = np.zeros([k_cnt, j_cnt, i_cnt])
         result_k = np.zeros([k_cnt, j_cnt, i_cnt])
-        ki_arr = np.linspace(1 / x_size, 1 / grid_step, i_cnt)
-        kj_arr = np.linspace(1 / y_size, 1 / grid_step, j_cnt)
-        kk_arr = np.linspace(1 / z_size, 1 / grid_step, k_cnt)
+        k_max = k_abs_max / np.sqrt(3)
+        norm_coef = k_abs_min / np.sqrt(1 / x_size ** 2 + 1 / y_size ** 2 + 1 / z_size ** 2)
+        ki_min = norm_coef / x_size
+        kj_min = norm_coef / y_size
+        kk_min = norm_coef / z_size
+        ki_arr = np.linspace(ki_min, k_max, i_cnt)
+        kj_arr = np.linspace(kj_min, k_max, j_cnt)
+        kk_arr = np.linspace(kk_min, k_max, k_cnt)
         for k in range(k_cnt):
             for j in range(j_cnt):
                 for i in range(i_cnt):
@@ -66,7 +82,8 @@ class SpatialSpectrum3d:
     @classmethod
     def _get_energy(cls, k_abs_arr: np.ndarray, velocity_fourier_arr: np.ndarray,
                     wave_number_abs: float):
-        array_for_summation = 0.5 * (np.abs(velocity_fourier_arr) / len(velocity_fourier_arr) ** 3) ** 2
+        volume = velocity_fourier_arr.shape[0] * velocity_fourier_arr.shape[1] * velocity_fourier_arr.shape[2]
+        array_for_summation = 0.5 * (np.abs(velocity_fourier_arr) / volume) ** 2
         array_for_summation_filtered = np.abs(array_for_summation)[(k_abs_arr > wave_number_abs - 0.5) *
                                                                    (k_abs_arr < wave_number_abs + 0.5)]
         result = array_for_summation_filtered.sum()
@@ -87,7 +104,9 @@ class SpatialSpectrum3d:
         return energy_arr, k_arr_for_spectrum
 
     def compute_spectrum(self):
-        ki_arr, kj_arr, kk_arr = self._get_wave_number_array(self.i_cnt, self.j_cnt, self.k_cnt, self.grid_step)
+        k_abs_min, k_abs_max = self._get_k_abs(self.l_e, self.l_cut, self.alpha)
+        ki_arr, kj_arr, kk_arr = self._get_wave_number_array(self.i_cnt, self.j_cnt, self.k_cnt, self.grid_step,
+                                                             k_abs_min, k_abs_max)
         u_arr_3d = self._get_array_3d(self.u_arr, self.i_cnt, self.j_cnt, self.k_cnt)
         v_arr_3d = self._get_array_3d(self.v_arr, self.i_cnt, self.j_cnt, self.k_cnt)
         w_arr_3d = self._get_array_3d(self.w_arr, self.i_cnt, self.j_cnt, self.k_cnt)
@@ -100,7 +119,6 @@ class SpatialSpectrum3d:
 def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut_min, l_e_max,
                                   viscosity=config.viscosity, dissipation_rate=config.dissipation_rate,
                                   alpha=config.alpha, u0=config.u0, r_vector=np.array([0., 0., 0.]), t=config.time):
-    # TODO: интервалы по осям
     logging.info('')
     logging.info('Plotting spectrum')
     plt.figure(figsize=(9, 7))
@@ -122,8 +140,8 @@ def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut
     plt.plot(k_arr, energy_arr, color='green', lw=1, label=r'$Вычисленный\ спектр$')
     plt.plot([2 * np.pi / l_cut_min, 2 * np.pi / l_cut_min], [0, 2 * max(energy_arr_predef)], lw=3, color='black',
              label=r'$k_{max}$')
-    plt.ylim(10e-6, 1.1 * max(energy_arr_predef))
-    plt.xlim(10, max(k_arr_predef))
+    plt.ylim(10e-5, 1.1 * max(energy_arr_predef))
+    plt.xlim(min(k_arr_predef), max(k_arr_predef))
     plt.yscale('log')
     plt.xscale('log')
     plt.grid(which='both')
