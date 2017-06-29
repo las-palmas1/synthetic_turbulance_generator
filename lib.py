@@ -193,7 +193,7 @@ class HomogeneousIsotropicTurbulenceGenerator:
         пульсациях и  завихренности в текстовых файлах.
     """
     def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, tec_filename, plot3d_filename, velocity_filename,
-                 grid_step, l_e, l_cut, viscosity, dissipation_rate, alpha=0.01, u0=np.array([0., 0., 0.]), time=0.):
+                 grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=np.array([0., 0., 0.]), time=0.):
         """
         :param i_cnt: количество узлов в направлении орта i
         :param j_cnt: количество узлов в направлении орта j

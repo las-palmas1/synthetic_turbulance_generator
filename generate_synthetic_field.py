@@ -4,6 +4,7 @@ import os
 
 
 data_files_dir = 'output\data_files'
+data_for_calc_dir = r'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\initial_values'
 
 if __name__ == '__main__':
     turbulence_generator = lib.HomogeneousIsotropicTurbulenceGenerator(config.i_cnt, config.j_cnt,

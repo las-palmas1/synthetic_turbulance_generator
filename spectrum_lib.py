@@ -140,7 +140,7 @@ def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut
     plt.plot(k_arr, energy_arr, color='green', lw=1, label=r'$Вычисленный\ спектр$')
     plt.plot([2 * np.pi / l_cut_min, 2 * np.pi / l_cut_min], [0, 2 * max(energy_arr_predef)], lw=3, color='black',
              label=r'$k_{max}$')
-    plt.ylim(10e-5, 1.1 * max(energy_arr_predef))
+    plt.ylim(10e-5, 1.1 * max(max(energy_arr_predef), max(energy_arr)))
     plt.xlim(min(k_arr_predef), max(k_arr_predef))
     plt.yscale('log')
     plt.xscale('log')
