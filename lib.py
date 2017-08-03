@@ -5,12 +5,14 @@ import typing
 import logging
 import numba as nb
 import time
+import os
+import pandas as pd
 
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
-def get_k_arr(l_e_max, l_cut_min, alpha=0.01) -> np.ndarray:
+def get_k_arr(l_e_max: float, l_cut_min: float, alpha=0.01) -> np.ndarray:
     """
     :param l_e_max: максимальная на всей расчетной области длина волны
         наиболее энергонесущих мод синтезированного поля пульсаций
@@ -192,13 +194,13 @@ class HomogeneousIsotropicTurbulenceGenerator:
         параллелепипеда поля однородной изотропоной турбулентности и сохранения данных о
         пульсациях и  завихренности в текстовых файлах.
     """
-    def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, tec_filename, plot3d_filename, velocity_filename,
+    def __init__(self, i_cnt: int, j_cnt: int, k_cnt: int, data_files_dir: str,
                  grid_step, l_e, viscosity, dissipation_rate, alpha=0.01, u0=np.array([0., 0., 0.]), time=0.):
         """
         :param i_cnt: количество узлов в направлении орта i
         :param j_cnt: количество узлов в направлении орта j
         :param k_cnt: количество узлов в направлении орта k
-        :param tec_filename: имя файла с выходными данными
+        :param data_files_dir: имя файла с выходными данными
         :param grid_step: шаг сетки
         :param l_e: длина волны наиболее энергонесущих мод синтезированного поля пульсаций
         :param viscosity: молекулярная вязкость
@@ -210,9 +212,10 @@ class HomogeneousIsotropicTurbulenceGenerator:
         self.i_cnt = i_cnt
         self.j_cnt = j_cnt
         self.k_cnt = k_cnt
-        self.tec_filename = tec_filename
-        self.plot3d_filename = plot3d_filename
-        self.velocity_filename = velocity_filename
+        self.data_files_dir = data_files_dir
+        self.tec_filename = os.path.join(data_files_dir, 'synthetic_turbulence_field.TEC')
+        self.plot3d_filename = os.path.join(data_files_dir, 'grid.PFG')
+        self.velocity_filename = os.path.join(data_files_dir, 'velocity.VEL')
         self.grid_step = grid_step
         self.l_e = l_e
         self.viscosity = viscosity
@@ -352,6 +355,22 @@ class HomogeneousIsotropicTurbulenceGenerator:
             n += 1
         return result_x, result_y, result_z
 
+    def _create_velocity_component_file(self, x_arr, y_arr, z_arr, vel_arr, component_name):
+        """
+        Создает .csv файл, в котором содержаться значения координат узлов и одной и компонент скорости
+
+        :param x_arr: массив координат по x
+        :param y_arr: массив координат по y
+        :param z_arr: массив координат по z
+        :param vel_arr: массив значений компоненты скорости
+        :param component_name: имя компоненты скорости
+        :return: None
+        """
+        logging.info('Creation of %s velocity component file' % component_name)
+        frame = pd.DataFrame.from_records([[x, y, z, vel] for x, y, z, vel in zip(x_arr, y_arr, z_arr, vel_arr)])
+        frame.to_csv(os.path.join(self.data_files_dir, '%s_velocity.txt' % component_name), header=False, index=False,
+                     sep=',')
+
     @classmethod
     def _create_plot3d_file(cls, filename, i_cnt, j_cnt, k_cnt, x_arr, y_arr, z_arr):
         logging.info('Creating PLOT3D file')
@@ -395,15 +414,16 @@ class HomogeneousIsotropicTurbulenceGenerator:
         self._create_plot3d_file(self.plot3d_filename, self.i_cnt, self.j_cnt, self.k_cnt, self._x_arr, self._y_arr,
                                  self._z_arr)
         self._create_velocity_file(self.velocity_filename, self.u_arr, self.v_arr, self.w_arr)
+        self._create_velocity_component_file(self._x_arr, self._y_arr, self._z_arr, self.u_arr, 'u')
+        self._create_velocity_component_file(self._x_arr, self._y_arr, self._z_arr, self.v_arr, 'v')
+        self._create_velocity_component_file(self._x_arr, self._y_arr, self._z_arr, self.w_arr, 'w')
         logging.info('Finish')
         logging.info('Velocity calculation time is %.4f s' % (end - start))
 
 
 if __name__ == '__main__':
     # plot_spectrum([0.1, 0.1, 0.1], 0, 'output\spectrum', 0.0005, 0.005, 0.0005, 0.005, 2e-5, 6e3, u0=0)
-    turb_generator = HomogeneousIsotropicTurbulenceGenerator(3, 4, 5, 'output\Test.TEC',
-                                                                         r'output\test_grid.PFD',
-                                                                         r'output\velocity.VEL', 0.001, 0.005,
+    turb_generator = HomogeneousIsotropicTurbulenceGenerator(3, 4, 5, 'output\data_files', 0.001, 0.005,
                                                              2e-5, 6e3)
     # turb_generator.commit()
     # t_arr = np.linspace(0, 3.0, 30000)
