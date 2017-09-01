@@ -1,9 +1,10 @@
-import lib
-import unittest as ut
 import typing
-import numpy as np
-import test_config
+import unittest as ut
+import tests.test_config as test_config
 import matplotlib.pyplot as plt
+import numpy as np
+import os
+import lib
 
 
 class _SpectralMethodPulsationAndReynoldsStressHistory:
@@ -64,12 +65,10 @@ class _SpectralMethodPulsationAndReynoldsStressHistory:
 
     @classmethod
     def _get_average_velocity_vector(cls, velocity_gen: typing.Iterator[Vector], ts_cnt) -> np.ndarray:
-        result = np.zeros(9)
         velocity_sum = np.zeros(9)
         for n, velocity_vector in enumerate(velocity_gen):
             velocity_sum += np.array(velocity_vector)
-            average_velocity_vector = velocity_sum / ts_cnt
-            result = average_velocity_vector
+        result = velocity_sum / ts_cnt
         return result
 
     @classmethod
@@ -141,7 +140,8 @@ class _SpectralMethodPulsationAndReynoldsStressHistory:
 
     @classmethod
     def _plot_history(cls, velocity_arr: np.ndarray, rel_av_velocity_arr: np.ndarray, t_arr):
-        name_template = 'output/history_plots/spectral_method_%s.png'
+        project_dir = os.path.dirname(os.path.dirname(__file__))
+        name_template = os.path.join(project_dir, 'output/history_plots/spectral_method_%s.png')
         cls._plot_velocity_component_history(velocity_arr[:, 0], t_arr, "u'", name_template % 'u')
         cls._plot_velocity_component_history(velocity_arr[:, 1], t_arr, "v'", name_template % 'v')
         cls._plot_velocity_component_history(velocity_arr[:, 2], t_arr, "w'", name_template % 'w')

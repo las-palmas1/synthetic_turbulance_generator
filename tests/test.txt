@@ -1,0 +1,22 @@
+test_u_av (__main__.SpectralMethodTestCase) ... ok
+test_uu_av (__main__.SpectralMethodTestCase) ... ok
+test_uv_av (__main__.SpectralMethodTestCase) ... ok
+test_uw_av (__main__.SpectralMethodTestCase) ... ok
+test_v_av (__main__.SpectralMethodTestCase) ... ok
+test_vv_av (__main__.SpectralMethodTestCase) ... FAIL
+test_vw_av (__main__.SpectralMethodTestCase) ... ok
+test_w_av (__main__.SpectralMethodTestCase) ... ok
+test_ww_av (__main__.SpectralMethodTestCase) ... ok
+
+======================================================================
+FAIL: test_vv_av (__main__.SpectralMethodTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/User/Documents/tasks/it_projects/synthetic_turbulance_generator/tests/test.py", line 242, in test_vv_av
+    msg="<v'v'> = %.6f" % self.correlations.vv_av)
+AssertionError: 1.0 != 1.0552017769304256 within 1 places : <v'v'> = 1.055202
+
+----------------------------------------------------------------------
+Ran 9 tests in 4.060s
+
+FAILED (failures=1)
