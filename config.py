@@ -1,4 +1,5 @@
 import numpy as np
+import logging
 # ------------------------------------------------------------------------------------------
 # настройки для генерации поля вспомогательной пульсационной скорости на равномерной сетке
 # ------------------------------------------------------------------------------------------
@@ -12,6 +13,7 @@ dissipation_rate = 6e1   # степень диссипации
 alpha = 0.01   # константа для определения набора волновых чисел
 u0 = np.array([0., 0., 0.])  # характерная скорость
 time = 0.  # параметр времени
+log_level = logging.INFO
 data_files_dir = 'output\data_files'
 data_for_calc_dir = r'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\initial_values'
 spectrum_plots_dir = 'output\spectrum_plots'

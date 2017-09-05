@@ -1,15 +1,17 @@
 import numpy as np
 import numpy.random as random
 import numpy.linalg as linalg
+import multiprocessing as mp
 import typing
 import logging
+import config
 import numba as nb
 import time
 import os
 import pandas as pd
 
 
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(levelname)s: %(message)s', level=config.log_level)
 
 
 def get_k_arr(l_e_max: float, l_cut_min: float, alpha=0.01) -> np.ndarray:
@@ -190,7 +192,7 @@ def get_auxiliary_pulsation_velocity(r_vector, t, tau, k_arr: np.ndarray, amplit
 
 class HomogeneousIsotropicTurbulenceGenerator:
     """
-    Предосталяет интерфейс для генерации на равномерной сетке в области в форме прямоугольного
+    Предоставляет интерфейс для генерации на равномерной сетке в области в форме прямоугольного
         параллелепипеда поля однородной изотропоной турбулентности и сохранения данных о
         пульсациях и  завихренности в текстовых файлах.
     """
@@ -255,6 +257,39 @@ class HomogeneousIsotropicTurbulenceGenerator:
              z_arr.append(index_vector[2] * grid_step)
         return np.array(x_arr), np.array(y_arr), np.array(z_arr)
 
+    # @classmethod
+    # def _divide_coordinates(cls, i_cnt, j_cnt, k_cnt, x_arr: np.ndarray, y_arr: np.ndarray, z_arr: np.ndarray,
+    #                         num_blocks: int = 1):
+    #     result = np.zeros([num_blocks, 3, i_cnt * j_cnt * k_cnt])
+    #     x_arr_reshape = x_arr.reshape([k_cnt, j_cnt, i_cnt])
+    #     y_arr_reshape = y_arr.reshape([k_cnt, j_cnt, i_cnt])
+    #     z_arr_reshape = z_arr.reshape([k_cnt, j_cnt, i_cnt])
+    #     i_div = 1
+    #     j_div = 1
+    #     k_div = 1
+    #     if num_blocks == 1:
+    #         i_div = 1
+    #         j_div = 1
+    #         k_div = 1
+    #     elif divmod(np.log2(num_blocks), 3)[1] != 0:
+    #         i_div = 2 ** (divmod(np.log2(num_blocks), 3)[0] + 1)
+    #         if divmod(np.log2(num_blocks), 3)[1] == 1:
+    #             j_div, k_div = i_div / 2, i_div / 2
+    #         if divmod(np.log2(num_blocks), 3)[1] == 2:
+    #             j_div = i_div
+    #             k_div = i_div / 2
+    #     elif divmod(np.log2(num_blocks), 3)[1] == 0:
+    #         i_div = 2 ** divmod(np.log2(num_blocks), 3)[0]
+    #         j_div, k_div = i_div, i_div
+    #     for block in range(num_blocks):
+    #         for k1 in range(int(k_cnt / k_div) * block, int(k_cnt / k_div) * (block + 1)):
+    #             for j1 in range(int(j_cnt / j_div) * block, int(j_cnt / j_div) * (block + 1)):
+    #                 for i1 in range(int(i_cnt / i_div) * block, int(i_cnt / i_div) * (block + 1)):
+    #                     result[block, 0, i1, j1, k1] = x_arr_reshape[k1, j1, i1]
+    #                     result[block, 1, i1, j1, k1] = y_arr_reshape[k1, j1, i1]
+    #                     result[block, 2, i1, j1, k1] = z_arr_reshape[k1, j1, i1]
+    #     return result
+
     def _create_tec_file(self, filename, index_gen: typing.Iterator[Vector], x_arr, y_arr, z_arr, u_arr, v_arr, w_arr,
                          vorticity_x_arr, vorticity_y_arr, vorticity_z_arr):
         logging.info('Creating TEC file')
@@ -294,9 +329,56 @@ class HomogeneousIsotropicTurbulenceGenerator:
              self._get_index_shift(z_arr, number, self.j_cnt, self.i_cnt, 0, 0, -1)
         return dp / dz
 
+    def _get_velocity(self, x, y, z) -> tuple:
+        """
+        Возвращает значение скоростей в точке с заданными координатами
+        :param x:
+        :param y:
+        :param z:
+        :return: tuple
+        """
+        tau = get_tau(self.u0, self.l_e)
+        k_arr = get_k_arr(self.l_e, self.l_cut, self.alpha)
+        energy_arr = get_von_karman_spectrum(k_arr, self.l_cut, self.l_e, self.viscosity, self.dissipation_rate)
+        amplitude_arr = get_amplitude_arr(k_arr, energy_arr)
+        z_new = get_z(k_arr.shape[0])
+        phase_arr = get_phase(k_arr.shape[0])
+        theta_arr = get_theta(z_new)
+        frequency_arr = get_frequency(k_arr.shape[0])
+        d_vector_arr = get_d_vector(z_new, phase_arr, theta_arr)
+        sigma_vector_arr = get_sigma_vector_array(d_vector_arr, theta_arr)
+        v_vector = get_auxiliary_pulsation_velocity(np.array([x, y, z]), self.time, tau, k_arr,
+                                                    amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr,
+                                                    frequency_arr)
+        logging.info(' u = %.3f, v = %.3f, w = %.3f' %
+                     (v_vector[0], v_vector[1], v_vector[2]))
+        u = v_vector[0] + self.u0[0]
+        v = v_vector[1] + self.u0[1]
+        w = v_vector[2] + self.u0[2]
+        return u, v, w
+
+    def _get_velocity_arrays_mp_pool(self, x_arr: np.ndarray, y_arr: np.ndarray,
+                                     z_arr: np.ndarray, proc_num: int = 2) -> np.ndarray:
+        logging.info('Velocity calculation with mp.Pool')
+        logging.info('Processes number: %s' % proc_num)
+        start = time.time()
+        with mp.Pool(processes=proc_num) as pool:
+            velocities = pool.starmap(self._get_velocity, list(zip(x_arr, y_arr, z_arr)))
+        end = time.time()
+        logging.info('Velocity calculation time is %.4f s' % (end - start))
+        result = np.zeros([3, x_arr.shape[0]])
+        u_arr = np.array(velocities)[:, 0]
+        v_arr = np.array(velocities)[:, 1]
+        w_arr = np.array(velocities)[:, 2]
+        result[0] = u_arr
+        result[1] = v_arr
+        result[2] = w_arr
+        return result
+
     def _get_velocity_arrays(self, x_arr: np.ndarray, y_arr: np.ndarray,
                              z_arr: np.ndarray) -> np.ndarray:
         logging.info('Velocity calculation')
+        start = time.time()
         u_arr = np.zeros(x_arr.shape[0])
         v_arr = np.zeros(x_arr.shape[0])
         w_arr = np.zeros(x_arr.shape[0])
@@ -320,6 +402,8 @@ class HomogeneousIsotropicTurbulenceGenerator:
             u_arr[i] = v_vector[0] + self.u0[0]
             v_arr[i] = v_vector[1] + self.u0[1]
             w_arr[i] = v_vector[2] + self.u0[2]
+        end = time.time()
+        logging.info('Velocity calculation time is %.4f s' % (end - start))
         result[0] = u_arr
         result[1] = v_arr
         result[2] = w_arr
@@ -350,8 +434,8 @@ class HomogeneousIsotropicTurbulenceGenerator:
                 result_x[u] = vort_x
                 result_y[u] = vort_y
                 result_z[u] = vort_z
-            logging.info('n = %s  ---  vort_x = %.3f, vort_y = %.3f, vort_z = %.3f' %
-                         (n, vort_x, vort_y, vort_z))
+            logging.debug('n = %s  ---  vort_x = %.3f, vort_y = %.3f, vort_z = %.3f' %
+                          (n, vort_x, vort_y, vort_z))
             n += 1
         return result_x, result_y, result_z
 
@@ -394,12 +478,31 @@ class HomogeneousIsotropicTurbulenceGenerator:
             file.write('%s %s %s\n' % (u, v, w))
         file.close()
 
-    def commit(self):
+    def run(self, **kwargs):
+        """
+        kwargs:
+                1. mode: str, optional, 'single', or 'mp_pool' or 'mp_proc'
+                2. proc_num: int, optional
+        """
         index_gen1 = self._get_index_generator(self.i_cnt, self.j_cnt, self.k_cnt)
         self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(index_gen1, self.grid_step)
-        start = time.time()
-        velocity_vector_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
-        end = time.time()
+        if 'proc_num' not in kwargs:
+            proc_num = 2
+        else:
+            proc_num = kwargs['proc_num']
+        velocity_vector_arr = None
+        if 'mode' in kwargs:
+            if kwargs['mode'] == 'single':
+                velocity_vector_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
+            elif kwargs['mode'] == 'mp_pool':
+                velocity_vector_arr = self._get_velocity_arrays_mp_pool(self._x_arr, self._y_arr, self._z_arr,
+                                                                        proc_num=proc_num)
+            elif kwargs['mode'] == 'mp_proc':
+                pass
+            else:
+                raise KeyError('Incorrect mode value')
+        else:
+            velocity_vector_arr = self._get_velocity_arrays(self._x_arr, self._y_arr, self._z_arr)
         self.u_arr = velocity_vector_arr[0]
         self.v_arr = velocity_vector_arr[1]
         self.w_arr = velocity_vector_arr[2]
@@ -418,7 +521,6 @@ class HomogeneousIsotropicTurbulenceGenerator:
         self._create_velocity_component_file(self._x_arr, self._y_arr, self._z_arr, self.v_arr, 'v')
         self._create_velocity_component_file(self._x_arr, self._y_arr, self._z_arr, self.w_arr, 'w')
         logging.info('Finish')
-        logging.info('Velocity calculation time is %.4f s' % (end - start))
 
 
 if __name__ == '__main__':
