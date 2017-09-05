@@ -9,4 +9,4 @@ if __name__ == '__main__':
                                                                        config.viscosity,
                                                                        config.dissipation_rate, config.alpha,
                                                                        config.u0, config.time)
-    turbulence_generator.run(mode='mp_pool', proc_num=4)
+    turbulence_generator.run(mode=config.run_mode, proc_num=config.proc_num)

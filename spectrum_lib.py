@@ -6,7 +6,7 @@ import config
 from lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector_theta_and_phase, \
     get_frequency, get_sigma_vector
 
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(levelname)s: %(message)s', level=config.log_level)
 
 
 def read_velocity_file(filename):
@@ -140,8 +140,10 @@ def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut
     plt.plot(k_arr, energy_arr, color='green', lw=1, label=r'$Вычисленный\ спектр$')
     plt.plot([2 * np.pi / l_cut_min, 2 * np.pi / l_cut_min], [0, 2 * max(energy_arr_predef)], lw=3, color='black',
              label=r'$k_{max}$')
-    plt.ylim(10e-5, 1.1 * max(max(energy_arr_predef), max(energy_arr)))
-    plt.xlim(min(k_arr_predef), max(k_arr_predef))
+    # plt.ylim(10e-5, 1.1 * max(max(energy_arr_predef), max(energy_arr)))
+    plt.ylim(10e-5, 10e-2)
+    # plt.xlim(min(k_arr_predef), max(k_arr_predef))
+    plt.xlim(1, 10e1)
     plt.yscale('log')
     plt.xscale('log')
     plt.grid(which='both')
