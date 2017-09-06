@@ -1,9 +1,9 @@
-import numpy as np
-from scipy.fftpack import fftn
 import logging
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.fftpack import fftn
 import config
-from lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector_theta_and_phase, \
+from core.lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector_theta_and_phase, \
     get_frequency, get_sigma_vector
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=config.log_level)

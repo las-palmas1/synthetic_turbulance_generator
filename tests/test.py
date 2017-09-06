@@ -1,10 +1,12 @@
+import os
 import typing
 import unittest as ut
-import tests.test_config as test_config
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
-import lib
+
+import tests.test_config as test_config
+from core import lib
 
 
 class _SpectralMethodPulsationAndReynoldsStressHistory:

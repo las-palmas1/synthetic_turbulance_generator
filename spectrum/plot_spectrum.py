@@ -1,14 +1,16 @@
-import spectrum_lib
-import config
 import os
+import config
+from spectrum import spectrum_lib
 
+base_dir = os.path.dirname(os.path.dirname(__file__))
 
 if __name__ == '__main__':
-    u_arr, v_arr, w_arr = spectrum_lib.read_velocity_file(os.path.join(config.data_files_dir, 'velocity.VEL'))
+    u_arr, v_arr, w_arr = spectrum_lib.read_velocity_file(os.path.join(base_dir, config.data_files_dir, 'velocity.VEL'))
     spatial_spectrum_3d = spectrum_lib.SpatialSpectrum3d(config.i_cnt, config.j_cnt, config.k_cnt, config.grid_step,
                                                          u_arr, v_arr, w_arr, 200)
     spatial_spectrum_3d.compute_spectrum()
 
     spectrum_lib.plot_spectrum_with_predefined(spatial_spectrum_3d.k_abs_arr, spatial_spectrum_3d.energy_sum_arr,
-                                               os.path.join(config.spectrum_plots_dir, 'spatial_spectrum_3d.png'),
+                                               os.path.join(base_dir, config.spectrum_plots_dir,
+                                                            'spatial_spectrum_3d.png'),
                                                2 * config.grid_step, config.l_e, 2 * config.grid_step, config.l_e)
