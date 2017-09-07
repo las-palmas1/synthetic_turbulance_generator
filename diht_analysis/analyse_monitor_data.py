@@ -76,7 +76,7 @@ if __name__ == '__main__':
     plt.figure(figsize=(8, 6))
     plt.plot(time_arr, cfx_kinetic_energy, lw=1, label='cfx')
     plt.plot(time_arr, lazurit_kinetic_energy, lw=1, label='lazurit')
-    plt.plot(time_arr, 0.005 / time_arr ** 1.2, lw=1, color='black', linestyle='--', label='$t^{-1.2}$')
+    plt.plot(time_arr, 0.005 / time_arr ** 1.2, lw=1, color='black', linestyle='--', label=r'$\sim t^{-1.2}$')
     plt.legend(fontsize=12)
     plt.xscale('log')
     plt.yscale('log')

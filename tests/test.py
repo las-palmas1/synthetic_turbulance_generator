@@ -143,7 +143,7 @@ class _SpectralMethodPulsationAndReynoldsStressHistory:
     @classmethod
     def _plot_history(cls, velocity_arr: np.ndarray, rel_av_velocity_arr: np.ndarray, t_arr):
         project_dir = os.path.dirname(os.path.dirname(__file__))
-        name_template = os.path.join(project_dir, 'output/history_plots/spectral_method_%s.png')
+        name_template = os.path.join(project_dir, 'output/test_plots/spectral_method_%s.png')
         cls._plot_velocity_component_history(velocity_arr[:, 0], t_arr, "u'", name_template % 'u')
         cls._plot_velocity_component_history(velocity_arr[:, 1], t_arr, "v'", name_template % 'v')
         cls._plot_velocity_component_history(velocity_arr[:, 2], t_arr, "w'", name_template % 'w')

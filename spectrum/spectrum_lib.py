@@ -63,14 +63,20 @@ class SpatialSpectrum3d:
         result_i = np.zeros([k_cnt, j_cnt, i_cnt])
         result_j = np.zeros([k_cnt, j_cnt, i_cnt])
         result_k = np.zeros([k_cnt, j_cnt, i_cnt])
-        k_max = k_abs_max / np.sqrt(3)
-        norm_coef = k_abs_min / np.sqrt(1 / x_size ** 2 + 1 / y_size ** 2 + 1 / z_size ** 2)
-        ki_min = norm_coef / x_size
-        kj_min = norm_coef / y_size
-        kk_min = norm_coef / z_size
-        ki_arr = np.linspace(ki_min, k_max, i_cnt)
-        kj_arr = np.linspace(kj_min, k_max, j_cnt)
-        kk_arr = np.linspace(kk_min, k_max, k_cnt)
+        # k_max = k_abs_max / np.sqrt(3)
+        # norm_coef = k_abs_min / np.sqrt(1 / x_size ** 2 + 1 / y_size ** 2 + 1 / z_size ** 2)
+        # ki_min = norm_coef / x_size
+        # kj_min = norm_coef / y_size
+        # kk_min = norm_coef / z_size
+        # ki_arr = np.linspace(ki_min, k_max, i_cnt)
+        # kj_arr = np.linspace(kj_min, k_max, j_cnt)
+        # kk_arr = np.linspace(kk_min, k_max, k_cnt)
+        ki_min = 1 / x_size
+        kj_min = 1 / y_size
+        kk_min = 1 / z_size
+        ki_arr = np.linspace(ki_min, i_cnt * ki_min, i_cnt)
+        kj_arr = np.linspace(kj_min, j_cnt * kj_min, j_cnt)
+        kk_arr = np.linspace(kk_min, k_cnt * kk_min, k_cnt)
         for k in range(k_cnt):
             for j in range(j_cnt):
                 for i in range(i_cnt):
@@ -140,9 +146,7 @@ def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut
     plt.plot(k_arr, energy_arr, color='green', lw=1, label=r'$Вычисленный\ спектр$')
     plt.plot([2 * np.pi / l_cut_min, 2 * np.pi / l_cut_min], [0, 2 * max(energy_arr_predef)], lw=3, color='black',
              label=r'$k_{max}$')
-    # plt.ylim(10e-5, 1.1 * max(max(energy_arr_predef), max(energy_arr)))
-    plt.ylim(10e-5, 10e-2)
-    # plt.xlim(min(k_arr_predef), max(k_arr_predef))
+    plt.ylim(10e-5, 10e-1)
     plt.xlim(1, 10e1)
     plt.yscale('log')
     plt.xscale('log')
