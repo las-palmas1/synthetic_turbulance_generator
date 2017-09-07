@@ -18,7 +18,7 @@ def set_plot(title: str, legend: bool=False):
     plt.ylabel(r'$E$', fontsize=20)
     plt.title(title, fontsize=14)
     if legend:
-        plt.legend(fontsize=9, loc=3)
+        plt.legend(fontsize=8, loc=0)
     plt.ylim(10e-5, 10e-1)
     plt.xlim(1, 10e1)
 
@@ -28,7 +28,7 @@ def plot_initial_spectrum():
     spectrum = SpatialSpectrum3d(config.i_cnt, config.j_cnt, config.k_cnt,
                                  config.grid_step, u_arr, v_arr, w_arr, 200)
     spectrum.compute_spectrum()
-    plt.plot(spectrum.k_abs_arr, spectrum.energy_sum_arr, lw=1.2, color='black')
+    plt.plot(spectrum.k_abs_arr, spectrum.energy_sum_arr, lw=1.2, color='black', label=r'$t = 0$')
 
 
 def plot_spectrum(i_cnt, j_cnt, k_cnt, frames: typing.List[pd.DataFrame], subplot_num: int, title: str,
@@ -42,7 +42,7 @@ def plot_spectrum(i_cnt, j_cnt, k_cnt, frames: typing.List[pd.DataFrame], subplo
         spectrum = SpatialSpectrum3d(i_cnt, j_cnt, k_cnt,
                                      config.grid_step, u_arr, v_arr, w_arr, 200)
         spectrum.compute_spectrum()
-        plt.plot(spectrum.k_abs_arr, spectrum.energy_sum_arr, lw=0.5, label=round(sol_time, 4))
+        plt.plot(spectrum.k_abs_arr, spectrum.energy_sum_arr, lw=0.5, label=r'$t = %s $' % round(sol_time, 3))
     set_plot(title, legend=bool(sol_time_arr))
 
 

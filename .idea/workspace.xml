@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb8710e8-3e0a-460c-8b96-64805d791138" name="Default" comment="Begin DIHT analysis">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/diht_analysis/analyse_spectrum.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/output/history_plots/spectral_method_average_pulsation.png" afterPath="$PROJECT_DIR$/output/test_plots/spectral_method_average_pulsation.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/output/history_plots/spectral_method_stress.png" afterPath="$PROJECT_DIR$/output/test_plots/spectral_method_stress.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/output/history_plots/spectral_method_u.png" afterPath="$PROJECT_DIR$/output/test_plots/spectral_method_u.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/output/history_plots/spectral_method_v.png" afterPath="$PROJECT_DIR$/output/test_plots/spectral_method_v.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/output/history_plots/spectral_method_w.png" afterPath="$PROJECT_DIR$/output/test_plots/spectral_method_w.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/monitor_data_plots/kinetic_energy.png" afterPath="$PROJECT_DIR$/output/monitor_data_plots/kinetic_energy.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/spectrum_plots/spatial_spectrum_3d.png" afterPath="$PROJECT_DIR$/output/spectrum_plots/spatial_spectrum_3d.png" />
+    <list default="true" id="fb8710e8-3e0a-460c-8b96-64805d791138" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history.png" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/diht_analysis/analyse_monitor_data.py" afterPath="$PROJECT_DIR$/diht_analysis/analyse_monitor_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/diht_analysis/convert_to_txt.mcr" afterPath="$PROJECT_DIR$/diht_analysis/convert_to_txt.mcr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/diht_analysis/convert_to_txt.py" afterPath="$PROJECT_DIR$/diht_analysis/convert_to_txt.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spectrum/spectrum_lib.py" afterPath="$PROJECT_DIR$/spectrum/spectrum_lib.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test.py" afterPath="$PROJECT_DIR$/tests/test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/diht_analysis/analyse_spectrum.py" afterPath="$PROJECT_DIR$/diht_analysis/analyse_spectrum.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,7 +23,7 @@
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$spectrum_lib.coverage" NAME="spectrum_lib Coverage Results" MODIFIED="1496256584444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$test.coverage" NAME="test Coverage Results" MODIFIED="1504274389694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1504274421916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$analyse_spectrum.coverage" NAME="analyse_spectrum Coverage Results" MODIFIED="1504796244146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/diht_analysis" />
+    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$analyse_spectrum.coverage" NAME="analyse_spectrum Coverage Results" MODIFIED="1504796862109" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/diht_analysis" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$plot_spectrum__1_.coverage" NAME="plot_spectrum (1) Coverage Results" MODIFIED="1504796237563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spectrum" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$Nosetests_in_test_py.coverage" NAME="Nosetests in test.py Coverage Results" MODIFIED="1504274398014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -95,8 +83,8 @@
       <file leaf-file-name="analyse_spectrum.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/diht_analysis/analyse_spectrum.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="54" column="14" lean-forward="false" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
+            <state relative-caret-position="162">
+              <caret line="20" column="36" lean-forward="false" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -587,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504724081614</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add spectrum analyse">
+      <created>1504796349945</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1504796349945</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -699,7 +694,8 @@
     <MESSAGE value="Replace test and test_config into separate folder" />
     <MESSAGE value="Add mp_pool mode for generation of HIT" />
     <MESSAGE value="Begin DIHT analysis" />
-    <option name="LAST_COMMIT_MESSAGE" value="Begin DIHT analysis" />
+    <MESSAGE value="Add spectrum analyse" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add spectrum analyse" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -990,6 +986,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1049,6 +1046,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spatial_spectrum_3d.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spectrum/spectrum_lib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="910">
@@ -1069,20 +1076,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spatial_spectrum_3d.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/diht_analysis/analyse_spectrum.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="54" column="14" lean-forward="false" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
+        <state relative-caret-position="162">
+          <caret line="20" column="36" lean-forward="false" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
