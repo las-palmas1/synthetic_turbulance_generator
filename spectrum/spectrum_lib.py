@@ -5,6 +5,8 @@ from scipy.fftpack import fftn
 import config
 from core.lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector_theta_and_phase, \
     get_frequency, get_sigma_vector
+from scipy.interpolate import interp1d
+from scipy.integrate import quad
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=config.log_level)
 
@@ -71,6 +73,9 @@ class SpatialSpectrum3d:
         # ki_arr = np.linspace(ki_min, k_max, i_cnt)
         # kj_arr = np.linspace(kj_min, k_max, j_cnt)
         # kk_arr = np.linspace(kk_min, k_max, k_cnt)
+        # ki_arr = np.linspace(ki_min, k_max, i_cnt)
+        # kj_arr = np.linspace(kj_min, k_max, j_cnt)
+        # kk_arr = np.linspace(kk_min, k_max, k_cnt)
         ki_min = 1 / x_size
         kj_min = 1 / y_size
         kk_min = 1 / z_size
@@ -120,6 +125,11 @@ class SpatialSpectrum3d:
         self.energy_v_arr = self._get_spectrum(ki_arr, kj_arr, kk_arr, v_arr_3d, self.num_point)[0]
         self.energy_w_arr = self._get_spectrum(ki_arr, kj_arr, kk_arr, w_arr_3d, self.num_point)[0]
         self.energy_sum_arr = self.energy_u_arr + self.energy_v_arr + self.energy_w_arr
+
+    def get_turb_kinetic_energy(self):
+        energy_interp = interp1d(self.k_abs_arr, self.energy_sum_arr)
+        result = quad(lambda k: energy_interp(k), min(self.k_abs_arr), max(self.k_abs_arr))[0]
+        return result
 
 
 def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut_min, l_e_max,

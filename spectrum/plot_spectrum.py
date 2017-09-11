@@ -14,3 +14,4 @@ if __name__ == '__main__':
                                                os.path.join(base_dir, config.spectrum_plots_dir,
                                                             'spatial_spectrum_3d.png'),
                                                2 * config.grid_step, config.l_e, 2 * config.grid_step, config.l_e)
+    print(spatial_spectrum_3d.get_turb_kinetic_energy())
