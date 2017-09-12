@@ -165,6 +165,7 @@ def plot_spectrum_with_predefined(k_arr, energy_arr, filename, l_cut, l_e, l_cut
     plt.xlabel(r'$k$', fontsize=20)
     plt.ylabel(r'$E$', fontsize=20)
     plt.savefig(filename)
+    plt.show()
 
 
 if __name__ == '__main__':
