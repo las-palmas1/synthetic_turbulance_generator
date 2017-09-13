@@ -1,9 +1,9 @@
 import numpy as np
-from scipy.interpolate import interp1d
 from scipy.fftpack import fftn, ifftn
 import logging
 import config
 import time
+import numba as nb
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=config.log_level)
 
@@ -88,6 +88,7 @@ def make_spectrum(num: int, length, u_hat: np.ndarray, v_hat: np.ndarray, w_hat:
     return k_mag, e_k_mag
 
 
+@nb.jit(nb.double(nb.double, nb.double[:], nb.double[:]))
 def energy_interp(k_mag, k_fit: np.ndarray, e_k_fit: np.ndarray):
     i = 0
     num = len(k_fit)
@@ -124,7 +125,7 @@ def make_field(num: int, length: float, m: np.ndarray, k: np.ndarray, k_fit: np.
     u_hat = np.zeros_like(np.zeros([num, num, num]), dtype=np.complex)
     v_hat = np.zeros_like(np.zeros([num, num, num]), dtype=np.complex)
     w_hat = np.zeros_like(np.zeros([num, num, num]), dtype=np.complex)
-
+    result = np.zeros_like(np.zeros([3, num, num, num]), dtype=np.complex)
     kmod = 2j * np.sin(np.pi * m / num) / dx
 
     for im in range(1, int(num / 2 + 1)):
@@ -133,6 +134,8 @@ def make_field(num: int, length: float, m: np.ndarray, k: np.ndarray, k_fit: np.
                 k_mag = np.sqrt(k[im]**2 + k[jm]**2 + k[km]**2)
                 u_hat_mag = 1 / (dx**3) * np.sqrt(2 * energy_interp(k_mag, k_fit, e_k_fit) *
                                                   dk / (4 * np.pi * (k_mag/dk)**2))
+                if np.isnan(u_hat_mag):
+                    u_hat_mag = 0
                 kdiv = np.array([kmod[im], kmod[jm], kmod[km]])
                 theta_rand = 2 * np.pi * np.random.rand(3)
 
@@ -150,7 +153,6 @@ def make_field(num: int, length: float, m: np.ndarray, k: np.ndarray, k_fit: np.
                 u_hat[im, jm, km] = r1[0] * u_hat_re + 1j*r2[0]*u_hat_im
                 v_hat[im, jm, km] = r1[1] * u_hat_re + 1j*r2[1]*u_hat_im
                 w_hat[im, jm, km] = r1[2] * u_hat_re + 1j*r2[2]*u_hat_im
-                logging.info('im = %s, jm = %s, km = %s' % (im, jm, km))
 
     for im in range(int(num/2 + 1), num):
         for jm in range(1, num):
@@ -182,7 +184,10 @@ def make_field(num: int, length: float, m: np.ndarray, k: np.ndarray, k_fit: np.
     finish = time.time()
     logging.info('FINISH VELOCITY FIELD GENERATION')
     logging.info('Total time  =  %.3f' % (finish - start))
-    return u_hat, v_hat, w_hat
+    result[0] = u_hat
+    result[1] = v_hat
+    result[2] = w_hat
+    return result
 
 
 def make_fft(u, v, w):
