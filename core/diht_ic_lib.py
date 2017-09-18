@@ -58,14 +58,14 @@ def make_spectrum_alt_way(u_hat: np.ndarray, v_hat: np.ndarray, w_hat: np.ndarra
     return k_mag, e_k_mag
 
 
-def _get_energy(m_grid: np.ndarray, energy_arr: np.ndarray, m_mag, res):
-    energy_arr_filt = energy_arr[(m_grid > m_mag - 0.5 * res) * (m_grid < m_mag + 0.5 * res)]
-    energy = energy_arr_filt.sum() / res
+def _get_energy(m_grid: np.ndarray, energy_arr: np.ndarray, m_mag):
+    energy_arr_filt = energy_arr[(m_grid > m_mag - 0.5) * (m_grid < m_mag + 0.5)]
+    energy = energy_arr_filt.sum()
     return energy
 
 
 def make_spectrum(num: int, length, u_hat: np.ndarray, v_hat: np.ndarray, w_hat: np.ndarray, m: np.ndarray,
-                  num_pnt=100, res=3):
+                  num_pnt=100):
     logging.info('START CALCULATING SPECTRUM')
     m_i = np.zeros([num, num, num])
     m_j = np.zeros([num, num, num])
@@ -77,11 +77,11 @@ def make_spectrum(num: int, length, u_hat: np.ndarray, v_hat: np.ndarray, w_hat:
                 m_j[im, jm, km] = m[jm]
                 m_k[im, jm, km] = m[km]
     m_grid = np.sqrt(m_i**2 + m_j**2 + m_k**2)
-    energy = 0.5 * (length / num)**6 * (np.abs(u_hat)**2 + np.abs(v_hat)**2 + np.abs(w_hat)**2)
+    energy = 0.5 * (1 / num)**6 * (np.abs(u_hat)**2 + np.abs(v_hat)**2 + np.abs(w_hat)**2)
     m_mag = np.linspace(0, m_grid.max(), num_pnt)
     e_k_mag = np.zeros(num_pnt)
     for i in range(num_pnt):
-        e_k_mag[i] = _get_energy(m_grid, energy, m_mag[i], res) * length / (2 * np.pi)
+        e_k_mag[i] = _get_energy(m_grid, energy, m_mag[i]) * length / (2 * np.pi)
         logging.debug('e_k_mag[%s] = %.5f' % (i, e_k_mag[i]))
     k_mag = m_mag * 2 * np.pi / length
     logging.info('FINISH CALCULATING SPECTRUM')
@@ -120,7 +120,7 @@ def get_max_div(u: np.ndarray, v: np.ndarray, w: np.ndarray, num: int, length):
 def make_field(num: int, length: float, m: np.ndarray, k: np.ndarray, k_fit: np.ndarray, e_k_fit: np.ndarray):
     logging.info('START VELOCITY FIELD GENERATION')
     start = time.time()
-    dx = length / num
+    dx = 1 / num
     dk = 2 * np.pi / length
     u_hat = np.zeros_like(np.zeros([num, num, num]), dtype=np.complex)
     v_hat = np.zeros_like(np.zeros([num, num, num]), dtype=np.complex)
@@ -132,7 +132,7 @@ def make_field(num: int, length: float, m: np.ndarray, k: np.ndarray, k_fit: np.
         for jm in range(1, num):
             for km in range(1, num):
                 k_mag = np.sqrt(k[im]**2 + k[jm]**2 + k[km]**2)
-                u_hat_mag = 1 / (dx**3) * np.sqrt(2 * energy_interp(k_mag, k_fit, e_k_fit) *
+                u_hat_mag = 1 / dx**3 * np.sqrt(2 * energy_interp(k_mag, k_fit, e_k_fit) *
                                                   dk / (4 * np.pi * (k_mag/dk)**2))
                 if np.isnan(u_hat_mag):
                     u_hat_mag = 0
@@ -201,9 +201,9 @@ def make_fft(u, v, w):
 
 
 def make_ifft(u_hat, v_hat, w_hat):
-    u_hat = np.fft.fftshift(u_hat)
-    v_hat = np.fft.fftshift(v_hat)
-    w_hat = np.fft.fftshift(w_hat)
+    u_hat = np.fft.ifftshift(u_hat)
+    v_hat = np.fft.ifftshift(v_hat)
+    w_hat = np.fft.ifftshift(w_hat)
     u = ifftn(u_hat)
     v = ifftn(v_hat)
     w = ifftn(w_hat)

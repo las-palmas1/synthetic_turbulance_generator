@@ -1,16 +1,19 @@
-from diht_ic.lib import make_field, make_fft_grid, save_filed, make_ifft, make_spectrum_alt_way, get_max_div, make_spectrum
-from scipy.io import loadmat
+import logging
+
 import matplotlib.pyplot as plt
 import numpy as np
-import logging
+from scipy.io import loadmat
+
 import config
+from core.diht_ic_lib import make_field, make_fft_grid, save_filed, make_ifft, get_max_div, \
+    make_spectrum, make_fft
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=config.log_level)
 
 exp_data = loadmat(r'C:\Users\User\Documents\tasks\others\ic_gen\CBC_exp.mat')
 
-num = 32
-length = 1
+num = 50
+length = 1.9
 
 M = 5.08
 U0 = 1000
@@ -30,11 +33,12 @@ if __name__ == '__main__':
     v_hat = velocities[1]
     w_hat = velocities[2]
     u, v, w = make_ifft(u_hat, v_hat, w_hat)
+    uh, vh, wh = make_fft(u, v, w)
     divmax = get_max_div(u, v, w, num, length)
     logging.info('MAX DIVERGENCE = %.2f' % divmax)
     save_filed(u, v, w, 'velocity_filed')
 
-    k_mag, e_k_mag = make_spectrum(num, length, u_hat, v_hat, w_hat, m, num_pnt=100, res=2)
+    k_mag, e_k_mag = make_spectrum(num, length, uh, vh, wh, m, num_pnt=100)
     plt.figure(figsize=(8, 6))
     plt.plot(k_mag, e_k_mag, lw=0.5, label='Synthetic field')
     plt.plot(k_42, E_42, lw=0.5, label='Experiment')

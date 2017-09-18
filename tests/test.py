@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import tests.test_config as test_config
-from core import lib
+from core import les_inlet_ic_lib
 
 
 class _SpectralMethodPulsationAndReynoldsStressHistory:
@@ -54,9 +54,9 @@ class _SpectralMethodPulsationAndReynoldsStressHistory:
                                 sigma_vector_arr, phase_arr, frequency_arr) -> typing.Iterator[Vector]:
         for time in time_arr:
             print('iter_number = %s, time = %.4f' % (iter_number, time))
-            velocity_vector = lib.get_auxiliary_pulsation_velocity(self.vector, time, tau, k_arr, amplitude_arr,
-                                                                   d_vector_arr, sigma_vector_arr, phase_arr,
-                                                                   frequency_arr)
+            velocity_vector = les_inlet_ic_lib.get_auxiliary_pulsation_velocity(self.vector, time, tau, k_arr, amplitude_arr,
+                                                                                d_vector_arr, sigma_vector_arr, phase_arr,
+                                                                                frequency_arr)
             u = velocity_vector[0]
             v = velocity_vector[1]
             w = velocity_vector[2]
@@ -179,18 +179,18 @@ class _SpectralMethodPulsationAndReynoldsStressHistory:
         for i in range(self.iter_cnt + 1):
             if i == self.iter_cnt:
                 tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr = \
-                    lib.get_auxiliary_pulsation_velocity_parameters(self.l_cut, self.l_e, self.l_cut, self.l_e,
-                                                                    self.viscosity, self.dissipation_rate, self.alpha,
-                                                                    self.u0)
+                    les_inlet_ic_lib.get_auxiliary_pulsation_velocity_parameters(self.l_cut, self.l_e, self.l_cut, self.l_e,
+                                                                                 self.viscosity, self.dissipation_rate, self.alpha,
+                                                                                 self.u0)
                 velocity_gen = self._get_velocity_generator(i, self._t_arr, tau, k_arr, amplitude_arr, d_vector_arr,
                                                             sigma_vector_arr, phase_arr, frequency_arr)
                 velocity_arr, av_velocity_arr = self._get_arrays_for_plotting(velocity_gen, self.ts_cnt)
                 self._plot_history(velocity_arr, av_velocity_arr, self._t_arr)
             else:
                 tau, k_arr, amplitude_arr, d_vector_arr, sigma_vector_arr, phase_arr, frequency_arr = \
-                    lib.get_auxiliary_pulsation_velocity_parameters(self.l_cut, self.l_e, self.l_cut, self.l_e,
-                                                                    self.viscosity, self.dissipation_rate, self.alpha,
-                                                                    self.u0)
+                    les_inlet_ic_lib.get_auxiliary_pulsation_velocity_parameters(self.l_cut, self.l_e, self.l_cut, self.l_e,
+                                                                                 self.viscosity, self.dissipation_rate, self.alpha,
+                                                                                 self.u0)
                 velocity_gen = self._get_velocity_generator(i, self._t_arr, tau, k_arr, amplitude_arr, d_vector_arr,
                                                             sigma_vector_arr, phase_arr, frequency_arr)
 
