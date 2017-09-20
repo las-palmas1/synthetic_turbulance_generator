@@ -2,9 +2,8 @@ import logging
 import matplotlib.pyplot as plt
 import numpy as np
 import config
-from core.les_inlet_ic_lib import get_k_arr, get_tau, get_von_karman_spectrum, get_amplitude_arr, get_d_vector, get_phase, get_z, \
-    get_theta, get_frequency, get_sigma_vector
-from core.diht_ic_lib import make_fft_grid, make_fft
+from core.les_inlet_ic_lib import get_k_arr, get_von_karman_spectrum
+from core.dhit_ic_lib import make_fft_grid, make_fft
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=config.log_level)
 

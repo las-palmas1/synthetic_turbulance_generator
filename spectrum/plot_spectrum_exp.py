@@ -1,7 +1,7 @@
 import os
 import config
 from spectrum import spectrum_lib
-from diht_ic.gen_ic_exp import k_42, k_98, k_171, E_42, E_98, E_171
+from dhit_ic.gen_ic_exp import k_42, k_98, k_171, E_42, E_98, E_171
 
 base_dir = os.path.dirname(os.path.dirname(__file__))
 
@@ -12,5 +12,5 @@ if __name__ == '__main__':
     spatial_spectrum_3d.compute_spectrum()
     spectrum_lib.plot_spectrum_exp(spatial_spectrum_3d.k_mag, spatial_spectrum_3d.e_k_mag, k_42, E_42,
                                    os.path.join(base_dir, config.spectrum_plots_dir, 'init_spectrum_exp.png'),
-                                   xlim=(1, 10e3), ylim=(10e-6, 10e-2))
+                                   xlim=(10, 10e3), ylim=(10e-6, 10e-3))
     print('k_t = %.4f' % spatial_spectrum_3d.get_turb_kinetic_energy())
