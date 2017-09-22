@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import typing
-from dhit_ic.gen_ic_exp import k_42, k_98, k_171, E_42, E_98, E_171
+from dhit_ic.gen_ic import k_42, k_98, k_171, E_42, E_98, E_171
 from dhit_analysis.analyse_monitor_data import cfx_kinetic_energy as mon_cfx_energy_arr, \
     time_arr as mon_time_arr  # , lazurit_kinetic_energy as mon_lazurit_energy_arr
 
@@ -117,9 +117,9 @@ if __name__ == '__main__':
             plt.plot(spectrum.k_mag, spectrum.e_k_mag, lw=0.5, label=r'CFX', color='red')
         else:
             plt.plot(spectrum.k_mag, spectrum.e_k_mag, lw=0.5, color='red')
-    plt.plot(k_42, E_42, linestyle='', marker='s', ms=6, color='black', mew=0.4, label='Experiment')
-    plt.plot(k_98, E_98, linestyle='', marker='s', ms=6, color='black', mew=0.4, label='Experiment')
-    plt.plot(k_171, E_171, linestyle='', marker='s', ms=6, color='black', mew=0.4, label='Experiment')
+    plt.plot(k_42, E_42, linestyle='', marker='s', ms=6, color='black', mew=0.4)
+    plt.plot(k_98, E_98, linestyle='', marker='s', ms=6, color='black', mew=0.4)
+    plt.plot(k_171, E_171, linestyle='', marker='s', ms=6, color='black', mew=0.4)
     set_plot('История изменения спектра', (10, 1e3), (1e-6, 1e-3), True)
     plt.savefig(os.path.join(base_dir, config.spectrum_plots_dir, 'spectrum_history_with_exp_data.png'))
     plt.show()
@@ -151,21 +151,21 @@ if __name__ == '__main__':
     # созданиен графика изменения кинетической энергии турбулентности, вычисленной
     # по спектру и по данным из точек мониторинга
     # --------------------------------------------------------------------------------
-    plt.figure(figsize=(8, 6))
-    plt.plot(cfx_sol_time_arr, cfx_energy_arr, lw=1, label='cfx, from spectrum', linestyle='-', color='red')
-    # plt.plot(lazurit_sol_time_arr, lazurit_energy_arr, lw=1, label='lazurit, from spectrum', linestyle='-',
-    #          color='blue')
-    plt.plot(mon_time_arr, mon_cfx_energy_arr, lw=1, label='cfx, from monitor', linestyle=':', color='red')
-    # plt.plot(mon_time_arr, mon_lazurit_energy_arr, lw=1, label='lazurit, from monitor', linestyle=':', color='blue')
-    plt.plot(cfx_sol_time_arr, 0.005 / cfx_sol_time_arr ** 1.2, lw=1, color='black', linestyle='--',
-             label=r'$\sim t^{-1.2}$')
-    plt.legend(fontsize=12)
-    # plt.xscale('log')
-    # plt.yscale('log')
-    plt.xlabel('time', fontsize=12)
-    plt.ylabel(r'$K_t$', fontsize=12)
-    plt.grid()
-    plt.ylim(0, 0.1)
-    plt.xlim(cfx_sol_time_arr[0], cfx_sol_time_arr[len(cfx_sol_time_arr) - 1])
-    plt.savefig(os.path.join(base_dir, config.spectrum_plots_dir, 'kinetic_energy_monitor_spectrum_comparison.png'))
-    plt.show()
+    # plt.figure(figsize=(8, 6))
+    # plt.plot(cfx_sol_time_arr, cfx_energy_arr, lw=1, label='cfx, from spectrum', linestyle='-', color='red')
+    # # plt.plot(lazurit_sol_time_arr, lazurit_energy_arr, lw=1, label='lazurit, from spectrum', linestyle='-',
+    # #          color='blue')
+    # plt.plot(mon_time_arr, mon_cfx_energy_arr, lw=1, label='cfx, from monitor', linestyle=':', color='red')
+    # # plt.plot(mon_time_arr, mon_lazurit_energy_arr, lw=1, label='lazurit, from monitor', linestyle=':', color='blue')
+    # plt.plot(cfx_sol_time_arr, 0.005 / cfx_sol_time_arr ** 1.2, lw=1, color='black', linestyle='--',
+    #          label=r'$\sim t^{-1.2}$')
+    # plt.legend(fontsize=12)
+    # # plt.xscale('log')
+    # # plt.yscale('log')
+    # plt.xlabel('time', fontsize=12)
+    # plt.ylabel(r'$K_t$', fontsize=12)
+    # plt.grid()
+    # plt.ylim(0, 0.1)
+    # plt.xlim(cfx_sol_time_arr[0], cfx_sol_time_arr[len(cfx_sol_time_arr) - 1])
+    # plt.savefig(os.path.join(base_dir, config.spectrum_plots_dir, 'kinetic_energy_monitor_spectrum_comparison.png'))
+    # plt.show()
