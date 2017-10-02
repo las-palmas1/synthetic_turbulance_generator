@@ -17,11 +17,11 @@ if __name__ == '__main__':
                                                 binary=False, var_list=list(np.linspace(1, 15, 15, dtype=np.int)),
                                                 zone_list=[1])
         macro += open_file + write_data
-    # lazurit_files = os.listdir(os.path.join(config.lazurit_data_dir, 'bin'))
-    # for n, file in enumerate(lazurit_files):
-    #     open_file = get_open_data_file_command(os.path.join(config.lazurit_data_dir, 'bin', file), LoaderType.TECPLOT)
-    #     write_data = get_write_data_set_command(os.path.join(config.lazurit_data_dir, 'txt', 'lazurit_%s.dat' % n),
-    #                                             binary=False)
-    #     macro += open_file + write_data
+    lazurit_files = os.listdir(os.path.join(config.lazurit_data_dir, 'bin'))
+    for n, file in enumerate(lazurit_files):
+        open_file = get_open_data_file_command(os.path.join(config.lazurit_data_dir, 'bin', file), LoaderType.TECPLOT)
+        write_data = get_write_data_set_command(os.path.join(config.lazurit_data_dir, 'txt', 'lazurit_%s.dat' % n),
+                                                binary=False)
+        macro += open_file + write_data
     macro = wrap_macro(macro)
     create_macro_file(macro, 'convert_to_txt.mcr')
