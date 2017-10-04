@@ -8,20 +8,22 @@ import numpy as np
 Создание макроса tecplot для конвертации файлов с результатами в текстовый формат
 """
 
+
+def get_conversation_macro(data_dir: str, type: LoaderType, var_list=None, zone_list=None) -> str:
+    result = ''
+    files = os.listdir(os.path.join(data_dir, 'bin'))
+    for n, file in enumerate(files):
+        open_file = get_open_data_file_command(os.path.join(data_dir, 'bin', file), type)
+        write_data = get_write_data_set_command(os.path.join(data_dir, 'txt', 'data_%s.dat' % n),
+                                                binary=False, var_list=var_list, zone_list=zone_list)
+        result += open_file + write_data
+    return result
+
 if __name__ == '__main__':
-    cfx_files = os.listdir(os.path.join(config.cfx_data_dir, 'bin'))
     macro = ''
-    for n, file in enumerate(cfx_files):
-        open_file = get_open_data_file_command(os.path.join(config.cfx_data_dir, 'bin', file), LoaderType.CFX)
-        write_data = get_write_data_set_command(os.path.join(config.cfx_data_dir, 'txt', 'cfx_%s.dat' % n),
-                                                binary=False, var_list=list(np.linspace(1, 15, 15, dtype=np.int)),
-                                                zone_list=[1])
-        macro += open_file + write_data
-    lazurit_files = os.listdir(os.path.join(config.lazurit_data_dir, 'bin'))
-    for n, file in enumerate(lazurit_files):
-        open_file = get_open_data_file_command(os.path.join(config.lazurit_data_dir, 'bin', file), LoaderType.TECPLOT)
-        write_data = get_write_data_set_command(os.path.join(config.lazurit_data_dir, 'txt', 'lazurit_%s.dat' % n),
-                                                binary=False)
-        macro += open_file + write_data
+    macro += get_conversation_macro(config.cfx_data_dir, LoaderType.CFX, list(np.linspace(1, 15, 15, dtype=np.int)),
+                                    zone_list=[1])
+    macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, '1e-4'), LoaderType.TECPLOT)
+    macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, '5e-5'), LoaderType.TECPLOT)
     macro = wrap_macro(macro)
     create_macro_file(macro, 'convert_to_txt.mcr')

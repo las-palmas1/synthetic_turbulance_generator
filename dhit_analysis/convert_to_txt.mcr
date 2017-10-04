@@ -1,117 +1,7 @@
 #!MC 1410
 $!VarSet |MFBD| = 'C:\Program Files\Tecplot\Tecplot 360 EX 2016 R2'
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\1400.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_0.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\2100.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_1.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\2800.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_2.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\3500.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_3.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\4200.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_4.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\4900.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_5.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\5600.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_6.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\6300.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_7.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\700.trn" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_8.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"StandardSyntax" "1.0" "FEALoaderVersion" "435" "FILENAME_File" "C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\bin\main_001.res" "AutoAssignStrandIDs" "Yes"' DATASETREADER = 'ANSYS CFX (FEA)'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\cfx\txt\cfx_9.dat' 
-  INCLUDETEXT = NO
-  INCLUDEGEOM = NO
-  INCLUDEDATASHARELINKAGE = YES
-  ZONELIST = [1]
-  VARPOSITIONLIST =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-  BINARY = FALSE
-  USEPOINTFORMAT = YES
-  PRECISION = 9
-  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-1400_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_0.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-1400_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_0.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -119,8 +9,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-2100_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_1.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-2100_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_1.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -128,8 +18,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-2800_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_2.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-2800_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_2.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -137,8 +27,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-3500_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_3.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-3500_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_3.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -146,8 +36,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-4200_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_4.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-4200_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_4.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -155,8 +45,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-4900_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_5.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-4900_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_5.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -164,8 +54,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-5600_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_6.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-5600_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_6.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -173,8 +63,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-6300_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_7.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-6300_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_7.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -182,8 +72,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-6601_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_8.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-6601_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_8.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -191,8 +81,98 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\bin\TEC_FLOW_T-700_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\32_cells\data_for_analysis\lazurit\txt\lazurit_9.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-700_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_9.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-11200_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_0.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-12600_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_1.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-13201_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_2.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-1400_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_3.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-2800_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_4.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-4200_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_5.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-5600_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_6.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-7000_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_7.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-8400_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_8.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-9800_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_9.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
