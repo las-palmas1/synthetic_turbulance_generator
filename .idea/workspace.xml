@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb8710e8-3e0a-460c-8b96-64805d791138" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurot_64cells.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_64cells.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_with_exp_data_lazurit_64cells.png" />
+    <list default="true" id="fb8710e8-3e0a-460c-8b96-64805d791138" name="Default" comment="Post processing of 64 cells mesh lazurit computation.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_32cells_500increase_degree.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_32cells_continuity_test.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_32cells_re_number.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_32cells_500increase_degree.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_32cells_continuity_test.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_32cells_re_number.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_with_exp_data_lazurit_32cells_500increase_degree.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_with_exp_data_lazurit_32cells_continuity_test.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/output/spectrum_plots/spectrum_history_with_exp_data_lazurit_32cells_re_number.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurot_64cells.png" afterPath="$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_64cells.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/spectrum_plots/init_spectrum_exp.png" afterPath="$PROJECT_DIR$/output/spectrum_plots/init_spectrum_exp.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dhit_analysis/analyse_spectrum.py" afterPath="$PROJECT_DIR$/dhit_analysis/analyse_spectrum.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dhit_analysis/convert_to_txt.mcr" afterPath="$PROJECT_DIR$/dhit_analysis/convert_to_txt.mcr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dhit_analysis/convert_to_txt.py" afterPath="$PROJECT_DIR$/dhit_analysis/convert_to_txt.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dhit_ic/gen_ic.py" afterPath="$PROJECT_DIR$/dhit_ic/gen_ic.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/data_files/grid.PFG" afterPath="$PROJECT_DIR$/output/data_files/grid.PFG" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/data_files/synthetic_turbulence_field.TEC" afterPath="$PROJECT_DIR$/output/data_files/synthetic_turbulence_field.TEC" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/data_files/u_velocity.txt" afterPath="$PROJECT_DIR$/output/data_files/u_velocity.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/data_files/v_velocity.txt" afterPath="$PROJECT_DIR$/output/data_files/v_velocity.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/data_files/velocity.VEL" afterPath="$PROJECT_DIR$/output/data_files/velocity.VEL" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/data_files/w_velocity.txt" afterPath="$PROJECT_DIR$/output/data_files/w_velocity.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spectrum/plot_spectrum.py" afterPath="$PROJECT_DIR$/spectrum/plot_spectrum.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,16 +40,17 @@
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$generate_synthetic_field.coverage" NAME="generate_synthetic_field Coverage Results" MODIFIED="1505834103114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$plot_spectrum_exp.coverage" NAME="plot_spectrum_exp Coverage Results" MODIFIED="1506078026520" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spectrum" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$les_inlet_ic_lib.coverage" NAME="les_inlet_ic_lib Coverage Results" MODIFIED="1505750486606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
-    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$convert_to_txt.coverage" NAME="convert_to_txt Coverage Results" MODIFIED="1507119063844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_analysis" />
+    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$convert_to_txt.coverage" NAME="convert_to_txt Coverage Results" MODIFIED="1507218899273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_analysis" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$test.coverage" NAME="test Coverage Results" MODIFIED="1504274389694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$spectrum_lib.coverage" NAME="spectrum_lib Coverage Results" MODIFIED="1505759095453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spectrum" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$gen_ic_exp__1_.coverage" NAME="gen_ic_exp (1) Coverage Results" MODIFIED="1506077942795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_ic" />
-    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$analyse_spectrum.coverage" NAME="analyse_spectrum Coverage Results" MODIFIED="1507123088400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_analysis" />
+    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$analyse_spectrum.coverage" NAME="analyse_spectrum Coverage Results" MODIFIED="1507219772586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_analysis" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$gen_ic_given_spectrum.coverage" NAME="gen_ic_given_spectrum Coverage Results" MODIFIED="1505836373979" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/diht_ic" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$plot_spectrum__1_.coverage" NAME="plot_spectrum (1) Coverage Results" MODIFIED="1505837053199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spectrum" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$gen_ic_exp.coverage" NAME="gen_ic_exp Coverage Results" MODIFIED="1505905099924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/diht_ic" />
-    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$gen_ic.coverage" NAME="gen_ic Coverage Results" MODIFIED="1507042728119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_ic" />
-    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$plot_spectrum.coverage" NAME="plot_spectrum Coverage Results" MODIFIED="1507042784965" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spectrum" />
+    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$gen_ic.coverage" NAME="gen_ic Coverage Results" MODIFIED="1507215262737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_ic" />
+    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$config.coverage" NAME="config Coverage Results" MODIFIED="1507215253861" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$plot_spectrum.coverage" NAME="plot_spectrum Coverage Results" MODIFIED="1507215907217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spectrum" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$gen_ic_fon_karman.coverage" NAME="gen_ic_fon_karman Coverage Results" MODIFIED="1505838948970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/diht_ic" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$gen_ic_fon_karman__1_.coverage" NAME="gen_ic_fon_karman (1) Coverage Results" MODIFIED="1505913768159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dhit_ic" />
     <SUITE FILE_PATH="coverage/synthetic_turbulance_generator$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1504274421916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
@@ -56,20 +66,31 @@
       <file leaf-file-name="analyse_spectrum.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dhit_analysis/analyse_spectrum.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="185" column="4" lean-forward="true" selection-start-line="185" selection-start-column="4" selection-end-line="185" selection-end-column="4" />
+            <state relative-caret-position="714">
+              <caret line="198" column="58" lean-forward="false" selection-start-line="198" selection-start-column="58" selection-end-line="198" selection-end-column="58" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#582#847#0" expanded="false" />
-                <element signature="e#883#1195#0" expanded="false" />
-                <element signature="e#1342#1784#0" expanded="false" />
-                <element signature="e#1859#2545#0" expanded="false" />
-                <element signature="e#2868#3322#0" expanded="false" />
-                <element signature="e#3632#5654#0" expanded="false" />
-                <element signature="e#5727#5916#0" expanded="false" />
-                <element signature="e#5966#6452#0" expanded="false" />
-                <element signature="e#6767#7768#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gen_ic.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dhit_ic/gen_ic.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plot_spectrum.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spectrum/plot_spectrum.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="15" column="72" lean-forward="false" selection-start-line="15" selection-start-column="72" selection-end-line="15" selection-end-column="72" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -77,8 +98,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="32" column="63" lean-forward="false" selection-start-line="32" selection-start-column="63" selection-end-line="32" selection-end-column="63" />
+            <state relative-caret-position="357">
+              <caret line="21" column="29" lean-forward="true" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -86,21 +107,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="analyse_monitor_data.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dhit_analysis/analyse_monitor_data.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-595">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="convert_to_txt.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dhit_analysis/convert_to_txt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="26" lean-forward="false" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+            <state relative-caret-position="340">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -149,7 +160,6 @@
         <option value="$PROJECT_DIR$/core/generate_synthetic_field.py" />
         <option value="$PROJECT_DIR$/diht_ic/generate_synthetic_field.py" />
         <option value="$PROJECT_DIR$/diht_ic/generate_field.py" />
-        <option value="$PROJECT_DIR$/spectrum/plot_spectrum.py" />
         <option value="$PROJECT_DIR$/spectrum/plot_spectrum_given.py" />
         <option value="$PROJECT_DIR$/diht_ic/gen_ic_given_spectrum.py" />
         <option value="$PROJECT_DIR$/diht_ic/lib.py" />
@@ -161,6 +171,8 @@
         <option value="$PROJECT_DIR$/spectrum/plot_spectrum_exp.py" />
         <option value="$PROJECT_DIR$/dhit_analysis/analyse_monitor_data.py" />
         <option value="$PROJECT_DIR$/core/dhit_ic_lib.py" />
+        <option value="$PROJECT_DIR$/dhit_ic/gen_ic.py" />
+        <option value="$PROJECT_DIR$/spectrum/plot_spectrum.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/dhit_analysis/convert_to_txt.py" />
         <option value="$PROJECT_DIR$/dhit_analysis/analyse_spectrum.py" />
@@ -199,6 +211,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -210,7 +223,7 @@
             <path>
               <item name="synthetic_turbulance_generator" type="b2602c69:ProjectViewProjectNode" />
               <item name="synthetic_turbulance_generator" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="dhit_analysis" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="synthetic_turbulance_generator" type="b2602c69:ProjectViewProjectNode" />
@@ -223,11 +236,15 @@
               <item name="output" type="462c0819:PsiDirectoryNode" />
               <item name="spectrum_plots" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="synthetic_turbulance_generator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="synthetic_turbulance_generator" type="462c0819:PsiDirectoryNode" />
+              <item name="spectrum" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -437,24 +454,6 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method />
     </configuration>
-    <configuration name="analyse_monitor_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dhit_analysis" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="synthetic_turbulance_generator" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dhit_analysis/analyse_monitor_data.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <configuration name="analyse_spectrum" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -469,6 +468,24 @@
       <module name="synthetic_turbulance_generator" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dhit_analysis/analyse_spectrum.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="config" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="synthetic_turbulance_generator" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/config.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -531,8 +548,8 @@
       <item index="0" class="java.lang.String" itemvalue="Python.gen_ic" />
       <item index="1" class="java.lang.String" itemvalue="Python.plot_spectrum" />
       <item index="2" class="java.lang.String" itemvalue="Python.convert_to_txt" />
-      <item index="3" class="java.lang.String" itemvalue="Python.analyse_monitor_data" />
-      <item index="4" class="java.lang.String" itemvalue="Python.analyse_spectrum" />
+      <item index="3" class="java.lang.String" itemvalue="Python.analyse_spectrum" />
+      <item index="4" class="java.lang.String" itemvalue="Python.config" />
     </list>
     <recent_temporary>
       <list size="5">
@@ -540,7 +557,7 @@
         <item index="1" class="java.lang.String" itemvalue="Python.convert_to_txt" />
         <item index="2" class="java.lang.String" itemvalue="Python.plot_spectrum" />
         <item index="3" class="java.lang.String" itemvalue="Python.gen_ic" />
-        <item index="4" class="java.lang.String" itemvalue="Python.analyse_monitor_data" />
+        <item index="4" class="java.lang.String" itemvalue="Python.config" />
       </list>
     </recent_temporary>
   </component>
@@ -632,7 +649,14 @@
       <option name="project" value="LOCAL" />
       <updated>1506966757121</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Post processing of 64 cells mesh lazurit computation.">
+      <created>1507125341181</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1507125341181</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -667,13 +691,13 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943925" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18596882" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5033408" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53340757" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37639198" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38084632" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27282852" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6636971" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3097015" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3128998" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -755,7 +779,8 @@
     <MESSAGE value="Add visualisation of spectrum history in CFX solution" />
     <MESSAGE value="Объединение главных файлов для генерации и построения спектра в один" />
     <MESSAGE value="32 cells post processing" />
-    <option name="LAST_COMMIT_MESSAGE" value="32 cells post processing" />
+    <MESSAGE value="Post processing of 64 cells mesh lazurit computation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Post processing of 64 cells mesh lazurit computation." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -764,28 +789,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dhit_ic/gen_ic_fon_karman.py" />
-    <entry file="file://$PROJECT_DIR$/spectrum/plot_spectrum_von_karman.py" />
-    <entry file="file://$PROJECT_DIR$/core/les_inlet_ic_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3060">
-          <caret line="180" column="18" lean-forward="false" selection-start-line="180" selection-start-column="18" selection-end-line="180" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/les_inlet_ic_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://G:/ciam/синтетическая турбулентность/uniform_grid_synthetic_turbulance_generator/lib.py" />
-    <entry file="file://$PROJECT_DIR$/output/grid.PFG" />
-    <entry file="file://$PROJECT_DIR$/main.py" />
-    <entry file="file://$PROJECT_DIR$/output/synthetic_turbulence_field.TEC" />
     <entry file="file://$PROJECT_DIR$/output/spectrum_plots/predefined_spectrum.png" />
     <entry file="file://$PROJECT_DIR$/output/data_files/u_velocity.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -907,37 +910,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_monitor_spectrum_comparison.png" />
-    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/init_spectrum_von_karman.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/output/monitor_data_plots/kinetic_energy.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/init_spectrum_exp.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dhit_ic/gen_ic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="50" lean-forward="false" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#14#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dhit_analysis/convert_to_txt.mcr">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-94">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history.png">
@@ -953,59 +928,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="32" column="63" lean-forward="false" selection-start-line="32" selection-start-column="63" selection-end-line="32" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/dhit_ic_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2754">
-          <caret line="27" column="35" lean-forward="false" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/les_inlet_ic_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1751">
-          <caret line="108" column="4" lean-forward="false" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spectrum/plot_spectrum.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spectrum/spectrum_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-969">
-          <caret line="38" column="39" lean-forward="true" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="237" column="8" lean-forward="false" selection-start-line="237" selection-start-column="8" selection-end-line="237" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dhit_analysis/analyse_monitor_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-816">
+          <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_64cells.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
+    <entry file="file://$PROJECT_DIR$/dhit_analysis/convert_to_txt.mcr">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1156">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history_with_exp_data.png">
@@ -1013,12 +956,41 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy.png">
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/init_spectrum_von_karman.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurot_64cells.png">
+    <entry file="file://$PROJECT_DIR$/spectrum/spectrum_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="38" column="39" lean-forward="true" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/les_inlet_ic_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="839">
+          <caret line="108" column="4" lean-forward="false" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/dhit_ic_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="110" column="7" lean-forward="true" selection-start-line="110" selection-start-column="7" selection-end-line="110" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/init_spectrum_exp.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_64cells.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1028,39 +1000,101 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dhit_analysis/convert_to_txt.py">
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history_with_exp_data_lazurit_32cells_re_number.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history_with_exp_data_lazurit_32cells_500increase_degree.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_32cells_500increase_degree.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_64cells.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dhit_ic/gen_ic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spectrum/plot_spectrum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="72" lean-forward="false" selection-start-line="15" selection-start-column="72" selection-end-line="15" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
-          <caret line="21" column="26" lean-forward="false" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+          <caret line="21" column="29" lean-forward="true" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/ntpath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dhit_analysis/convert_to_txt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dhit_analysis/analyse_monitor_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-595">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_32cells_500increase_degree.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/spectrum_history_lazurit_32cells_re_number.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_32cells_continuity_test.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/spectrum_plots/kinetic_energy_lazurit_32cells_re_number.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dhit_analysis/analyse_spectrum.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="185" column="4" lean-forward="true" selection-start-line="185" selection-start-column="4" selection-end-line="185" selection-end-column="4" />
+        <state relative-caret-position="714">
+          <caret line="198" column="58" lean-forward="false" selection-start-line="198" selection-start-column="58" selection-end-line="198" selection-end-column="58" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#582#847#0" expanded="false" />
-            <element signature="e#883#1195#0" expanded="false" />
-            <element signature="e#1342#1784#0" expanded="false" />
-            <element signature="e#1859#2545#0" expanded="false" />
-            <element signature="e#2868#3322#0" expanded="false" />
-            <element signature="e#3632#5654#0" expanded="false" />
-            <element signature="e#5727#5916#0" expanded="false" />
-            <element signature="e#5966#6452#0" expanded="false" />
-            <element signature="e#6767#7768#0" expanded="false" />
           </folding>
         </state>
       </provider>

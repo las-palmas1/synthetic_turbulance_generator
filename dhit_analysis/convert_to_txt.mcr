@@ -1,7 +1,7 @@
 #!MC 1410
 $!VarSet |MFBD| = 'C:\Program Files\Tecplot\Tecplot 360 EX 2016 R2'
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-1400_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_0.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1000_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_0.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -9,8 +9,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-2100_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_1.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-100_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_1.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -18,8 +18,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-2800_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_2.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1050_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_2.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -27,8 +27,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-3500_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_3.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1100_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_3.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -36,8 +36,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-4200_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_4.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1150_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_4.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -45,8 +45,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-4900_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_5.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1200_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_5.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -54,8 +54,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-5600_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_6.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1250_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_6.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -63,8 +63,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-6300_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_7.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1300_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_7.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -72,8 +72,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-6601_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_8.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1350_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_8.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -81,8 +81,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\bin\TEC_FLOW_T-700_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\1e-4\txt\data_9.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-1400_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_9.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -90,8 +90,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-11200_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_0.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-150_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_10.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -99,8 +99,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-12600_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_1.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-200_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_11.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -108,8 +108,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-13201_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_2.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-250_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_12.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -117,8 +117,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-1400_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_3.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-300_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_13.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -126,8 +126,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-2800_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_4.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-350_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_14.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -135,8 +135,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-4200_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_5.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-400_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_15.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -144,8 +144,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-5600_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_6.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-450_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_16.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -153,8 +153,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-7000_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_7.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-500_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_17.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -162,8 +162,8 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-8400_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_8.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-50_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_18.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
@@ -171,8 +171,80 @@ $!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\
   USEPOINTFORMAT = YES
   PRECISION = 9
   TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\bin\TEC_FLOW_T-9800_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\64_cells\data_for_analysis\lazurit\5e-5\txt\data_9.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-550_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_19.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-600_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_20.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-650_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_21.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-700_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_22.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-750_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_23.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-800_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_24.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-850_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_25.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-900_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_26.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\bin\TEC_FLOW_T-950_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\32_cells\data_for_analysis\lazurit\continuity_test\txt\data_27.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES

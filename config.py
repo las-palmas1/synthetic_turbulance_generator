@@ -4,7 +4,8 @@ import logging
 # настройки для генерации поля вспомогательной пульсационной скорости на равномерной сетке
 # ------------------------------------------------------------------------------------------
 ic_type = 'exp'    # тип начальных условий, 'exp' или 'von_karman'
-num = 64  # количество узлов в на стороне генерируемого куба
+increase_degree = 1   # во сколько раз увеличить начальный спектр
+num = 32  # количество узлов в на стороне генерируемого куба
 length = 1   # длина стороны куба в м
 # NOTE: генерируемый спектр получается безразмерным только в случае, если length = 1; в противном случае
 # энергия будет иметь размерноть м, а волновые числа - 1/м. В первом случае скорость по умолчанию генерируется в
@@ -25,11 +26,11 @@ proc_num = 4    # число процессов
 data_files_dir = 'output\data_files'
 spectrum_plots_dir = 'output\spectrum_plots'
 monitor_plots_dir = 'output\monitor_data_plots'
-cfx_data_dir = r'C:\Users\User\Documents\tasks\computitions_and post_processing\diht\%s_cells\data_for_analysis\cfx' \
+cfx_data_dir = r'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\%s_cells\data_for_analysis\cfx' \
                % num
-lazurit_data_dir = 'C:\\Users\\User\\Documents\\tasks\computitions_and post_processing\\diht\\%s_cells\\' \
+lazurit_data_dir = 'C:\\Users\\User\\Documents\\tasks\computitions_and post_processing\\dhit\\%s_cells\\' \
                    'data_for_analysis\\lazurit' % num
-monitor_data_dir = 'C:\\Users\\User\\Documents\\tasks\\computitions_and post_processing\\diht\\' \
+monitor_data_dir = 'C:\\Users\\User\\Documents\\tasks\\computitions_and post_processing\\dhit\\' \
                    '%s_cells\\data_for_analysis\\monitor' % num
 exp_data = 'dhit_ic\CBC_exp.mat'
 # -----------------------------------------------------------------------
