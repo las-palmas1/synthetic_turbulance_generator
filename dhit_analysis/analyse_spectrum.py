@@ -177,28 +177,29 @@ def make_kinetic_energy_plot(frames_set1: typing.List[pd.DataFrame], name1: str,
     plt.savefig(os.path.join(base_dir, config.spectrum_plots_dir, save_name))
 
 if __name__ == '__main__':
-    lazurit_frames1, lazurit_sol_time_arr1 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir, 'continuity_test_every_step'))
+    lazurit_frames1, lazurit_sol_time_arr1 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir,
+                                                                                      'first_step'))
     lazurit_frames2, lazurit_sol_time_arr2 = [], None  # get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir, 'low_re_number'))
 
     lazurit_frames1, lazurit_sol_time_arr1 = sort_frames(lazurit_frames1, lazurit_sol_time_arr1)
     # lazurit_frames2, lazurit_sol_time_arr2 = sort_frames(lazurit_frames2, lazurit_sol_time_arr2)
 
-    make_comparison_plot(lazurit_frames1, 'Lazurit, continuity_test', config.num + 1,
-                         lazurit_frames2, 'Lazurit, Re = 290', config.num + 1, lazurit_sol_time_arr1,
-                         save_name='spectrum_history_lazurit_32cells_continuity_test_every_step.png', ylim=(1e-6, 1e-3))
+    make_comparison_plot(lazurit_frames1, 'Lazurit, 90 cells', config.num + 1,
+                         lazurit_frames2, '', config.num + 1, lazurit_sol_time_arr1,
+                         save_name='spectrum_history_lazurit_90cells_first_step.png', ylim=(1e-6, 1e-3))
 
     # ---------------------------------------------------------------------------
     # Создание графика истории изменения спектра в ходе расчета и эксперимента
     # ---------------------------------------------------------------------------
-    make_plot_with_exp(lazurit_frames1, 'Lazurit, continuity_test', config.num+1,
-                       lazurit_frames2, 'Lazurit, Re = 290', config.num+1,
-                       save_name='spectrum_history_with_exp_data_lazurit_32cells_continuity_test_every_step.png',
-                       ylim=(1e-6, 1e-3), theory_set=1e-1)
+    # make_plot_with_exp(lazurit_frames1, 'Lazurit, continuity_test', config.num+1,
+    #                    lazurit_frames2, '', config.num+1,
+    #                    save_name='spectrum_history_with_exp_data_lazurit_32cells_first_step.png',
+    #                    ylim=(1e-6, 1e-3), theory_set=1e-1)
     # --------------------------------------------------------------------------------
     # создание графика изменения кинетической энергии турбулентности
     # --------------------------------------------------------------------------------
-    make_kinetic_energy_plot(lazurit_frames1, 'Lazurit, continuity_test', config.num+1, lazurit_sol_time_arr1,
-                             lazurit_frames2, 'Lazurit, Re = 290', config.num + 1, lazurit_sol_time_arr2,
-                             save_name='kinetic_energy_lazurit_32cells_continuity_test_every_step.png', ylim=(0, 0.05),
-                             theory_set=0.00002, scale='linear', xlim=(0, 0.015))
+    # make_kinetic_energy_plot(lazurit_frames1, 'Lazurit, continuity_test', config.num+1, lazurit_sol_time_arr1,
+    #                          lazurit_frames2, '', config.num + 1, lazurit_sol_time_arr2,
+    #                          save_name='kinetic_energy_lazurit_32cells_first_step.png', ylim=(0, 0.05),
+    #                          theory_set=0.00002, scale='linear', xlim=(0, 0.015))
     plt.show()

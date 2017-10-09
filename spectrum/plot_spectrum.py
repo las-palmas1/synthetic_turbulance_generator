@@ -13,7 +13,7 @@ if __name__ == '__main__':
     if config.ic_type == 'exp':
         spectrum_lib.plot_spectrum_exp(spatial_spectrum_3d.k_mag, spatial_spectrum_3d.e_k_mag, k_42, E_42,
                                        os.path.join(base_dir, config.spectrum_plots_dir, 'init_spectrum_exp.png'),
-                                       xlim=(1e1, 1e3), ylim=(1e-5, 1e-3))
+                                       xlim=(1e1, 1e3), ylim=(1e-6, 1e-3))
         print('k_t = %.4f' % spatial_spectrum_3d.get_turb_kinetic_energy())
     else:
         spectrum_lib.plot_spectrum_von_karman(spatial_spectrum_3d.k_mag, spatial_spectrum_3d.e_k_mag,

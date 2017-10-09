@@ -28,7 +28,9 @@ if __name__ == '__main__':
     # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'low_re_number'), LoaderType.TECPLOT)
     # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'init_settings'), LoaderType.TECPLOT)
     # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'continuity_test'), LoaderType.TECPLOT)
-    macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'continuity_test_every_step'), LoaderType.TECPLOT)
+    # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'continuity_test_every_step'),
+    # LoaderType.TECPLOT)
+    macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'first_step'), LoaderType.TECPLOT)
     macro = wrap_macro(macro)
     create_macro_file(macro, 'convert_to_txt.mcr')
     execute_macro('convert_to_txt.mcr')
