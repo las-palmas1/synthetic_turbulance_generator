@@ -23,6 +23,7 @@ class HITGenerator(metaclass=ABCMeta):
         self.data_files_dir = data_files_dir
         self.tec_filename = os.path.join(data_files_dir, 'synthetic_turbulence_field.TEC')
         self.plot3d_filename = os.path.join(data_files_dir, 'grid.PFG')
+        self.plot3d_lazurit_filename = os.path.join(data_files_dir, 'grid_lazurit.PFG')
         self.velocity_filename = os.path.join(data_files_dir, 'velocity.VEL')
         self.grid_step = grid_step
 
@@ -172,6 +173,14 @@ class HITGenerator(metaclass=ABCMeta):
         self._create_velocity_component_file(x_arr, y_arr, z_arr, u_arr, 'u')
         self._create_velocity_component_file(x_arr, y_arr, z_arr, v_arr, 'v')
         self._create_velocity_component_file(x_arr, y_arr, z_arr, w_arr, 'w')
+
+    def _create_lazurit_mesh(self):
+        """Создает сетку для lazurit. Lazurit считывает значения скорости в центрах ячеек (на единицу меньше общего
+        количества узлов на стороне), возвращает значения в центрах реальных и фиктивных ячеек (на единицу больше
+        количества узлов на стороне)"""
+        index_gen = self._get_index_generator(self.num + 1)
+        x_arr, y_arr, z_arr = self._get_coordinates_arrays(index_gen, self.grid_step)
+        self._create_plot3d_file(self.plot3d_lazurit_filename, self.num + 1, x_arr, y_arr, z_arr)
 
 
 class HITGeneratorVonKarman(HITGenerator):
@@ -323,6 +332,7 @@ class HITGeneratorVonKarman(HITGenerator):
                                        self.u_arr, self.v_arr, self.w_arr)
         self._create_all_files(self._x_arr, self._y_arr, self._z_arr, self.u_arr, self.v_arr, self.w_arr,
                                self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr)
+        self._create_lazurit_mesh()
         logging.info('Finish')
 
 
@@ -373,5 +383,6 @@ class HITGeneratorGivenSpectrum(HITGenerator):
                                        self.u_arr, self.v_arr, self.w_arr)
         self._create_all_files(self._x_arr, self._y_arr, self._z_arr, self.u_arr, self.v_arr, self.w_arr,
                                self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr)
+        self._create_lazurit_mesh()
         logging.info('Finish')
 

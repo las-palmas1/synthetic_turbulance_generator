@@ -33,22 +33,22 @@ def plot_initial_spectrum():
 
 
 def plot_spectrum(num, frames: typing.List[pd.DataFrame], subplot_index: typing.Tuple[int, int, int],
-                  sol_time_arr=None):
+                  truncate_fiction_cells: bool, sol_time_arr=None):
     plt.subplot(*subplot_index)
     plot_initial_spectrum()
     for frame, sol_time in zip(frames, sol_time_arr):
         u_arr = np.array(frame['U'])
         v_arr = np.array(frame['V'])
         w_arr = np.array(frame['W'])
-        spectrum = SpatialSpectrum3d(num, config.grid_step, u_arr, v_arr, w_arr, 100)
+        spectrum = SpatialSpectrum3d(num, config.grid_step, u_arr, v_arr, w_arr, 100, truncate_fiction_cells)
         spectrum.compute_spectrum()
         plt.plot(spectrum.k_mag, spectrum.e_k_mag, lw=0.5, label=r'$t = %s $' % round(sol_time, 5))
 
 
-def get_kinetic_energy_arr(num, frames: typing.List[pd.DataFrame]):
+def get_kinetic_energy_arr(num, frames: typing.List[pd.DataFrame], truncate_fiction_cells: bool,):
     kinetic_energy_arr = []
     u_arr, v_arr, w_arr = read_velocity_file(os.path.join(base_dir, config.data_files_dir, 'velocity.VEL'))
-    spectrum = SpatialSpectrum3d(config.num, config.grid_step, u_arr, v_arr, w_arr, 100)
+    spectrum = SpatialSpectrum3d(config.num, config.grid_step, u_arr, v_arr, w_arr, 100, truncate_fiction_cells)
     spectrum.compute_spectrum()
     kinetic_energy_arr.append(spectrum.get_turb_kinetic_energy())
     for frame in frames:
@@ -61,26 +61,26 @@ def get_kinetic_energy_arr(num, frames: typing.List[pd.DataFrame]):
     return np.array(kinetic_energy_arr)
 
 
-def make_comparison_plot(frames_set1: typing.List[pd.DataFrame], name1: str, num1: int,
-                         frames_set2: typing.List[pd.DataFrame],
-                         name2: str, num2: int, sol_time_arr=None, xlim=(1e1, 1e3), ylim=(1e-6, 1e-3),
+def make_comparison_plot(frames_set1: typing.List[pd.DataFrame], name1: str, num1: int, truncate_fiction_cells1: bool,
+                         frames_set2: typing.List[pd.DataFrame], name2: str, num2: int, truncate_fiction_cells2: bool,
+                         sol_time_arr=None, xlim=(1e1, 1e3), ylim=(1e-6, 1e-3),
                          save_name='spectrum_history.png'):
     """Создание двойного графика истроии измения спектра"""
     plt.figure(figsize=(13, 7))
     if frames_set2:
-        plot_spectrum(num1, frames_set1, (1, 2, 1), sol_time_arr)
+        plot_spectrum(num1, frames_set1, (1, 2, 1), truncate_fiction_cells1, sol_time_arr)
         set_plot(name1, legend=bool(list(sol_time_arr)), xlim=xlim, ylim=ylim)
-        plot_spectrum(num2, frames_set2, (1, 2, 2), sol_time_arr)
+        plot_spectrum(num2, frames_set2, (1, 2, 2), truncate_fiction_cells2, sol_time_arr)
         set_plot(name2, legend=bool(list(sol_time_arr)), xlim=xlim, ylim=ylim)
     else:
-        plot_spectrum(num1, frames_set1, (1, 1, 1), sol_time_arr)
+        plot_spectrum(num1, frames_set1, (1, 1, 1), truncate_fiction_cells1, sol_time_arr)
         set_plot(name1, legend=bool(list(sol_time_arr)), xlim=xlim, ylim=ylim)
     plt.savefig(os.path.join(base_dir, config.spectrum_plots_dir, save_name))
 
 
-def make_plot_with_exp(frames_set1: typing.List[pd.DataFrame], name1: str, num1: int,
-                       frames_set2: typing.List[pd.DataFrame],
-                       name2: str, num2: int, xlim=(1e1, 1e3), ylim=(1e-6, 1e-3),
+def make_plot_with_exp(frames_set1: typing.List[pd.DataFrame], name1: str, num1: int, truncate_fiction_cells1: bool,
+                       frames_set2: typing.List[pd.DataFrame], name2: str, num2: int, truncate_fiction_cells2: bool,
+                       xlim=(1e1, 1e3), ylim=(1e-6, 1e-3),
                        save_name='spectrum_history_with_exp_data.png', theory_set=1e-1):
     """
     Создание графика истории изменения спектра в ходе расчета и эксперимента
@@ -95,7 +95,7 @@ def make_plot_with_exp(frames_set1: typing.List[pd.DataFrame], name1: str, num1:
         u_arr = np.array(frame['U'])
         v_arr = np.array(frame['V'])
         w_arr = np.array(frame['W'])
-        spectrum = SpatialSpectrum3d(num1, config.grid_step, u_arr, v_arr, w_arr, 100)
+        spectrum = SpatialSpectrum3d(num1, config.grid_step, u_arr, v_arr, w_arr, 100, truncate_fiction_cells1)
         spectrum.compute_spectrum()
         if round(lazurit_sol_time_arr1[num], 2) in t_show:
             if num_t_show == 0:
@@ -109,7 +109,7 @@ def make_plot_with_exp(frames_set1: typing.List[pd.DataFrame], name1: str, num1:
             u_arr = np.array(frame['U'])
             v_arr = np.array(frame['V'])
             w_arr = np.array(frame['W'])
-            spectrum = SpatialSpectrum3d(num2, config.grid_step, u_arr, v_arr, w_arr, 100)
+            spectrum = SpatialSpectrum3d(num2, config.grid_step, u_arr, v_arr, w_arr, 100, truncate_fiction_cells2)
             spectrum.compute_spectrum()
             if round(lazurit_sol_time_arr2[num], 2) in t_show:
                 if num_t_show == 0:
@@ -144,15 +144,17 @@ def get_frames_set_and_sol_time(data_dir):
 
 
 def make_kinetic_energy_plot(frames_set1: typing.List[pd.DataFrame], name1: str, num1: int, sol_time_arr1,
+                             truncate_fiction_cells1: bool,
                              frames_set2: typing.List[pd.DataFrame], name2: str, num2: int, sol_time_arr2,
+                             truncate_fiction_cells2: bool,
                              ylim=(0, 0.05), xlim: tuple=None, scale='linear', save_name='kinetic_energy.png',
                              theory_set=0.004):
     """
     Создание графика изменения кинетической энергии турбулентности
     """
     time = np.linspace(0, 1.0, 300)
-    energy_arr1 = get_kinetic_energy_arr(num1, frames_set1)
-    energy_arr2 = get_kinetic_energy_arr(num2, frames_set2)
+    energy_arr1 = get_kinetic_energy_arr(num1, frames_set1, truncate_fiction_cells1)
+    energy_arr2 = get_kinetic_energy_arr(num2, frames_set2, truncate_fiction_cells2)
 
     plt.figure(figsize=(8, 6))
     sol_time_arr1 = np.array([0] + list(sol_time_arr1))
@@ -179,21 +181,21 @@ def make_kinetic_energy_plot(frames_set1: typing.List[pd.DataFrame], name1: str,
 if __name__ == '__main__':
     lazurit_frames1, lazurit_sol_time_arr1 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir,
                                                                                       'first_step'))
-    lazurit_frames2, lazurit_sol_time_arr2 = [], None  # get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir, 'low_re_number'))
+    lazurit_frames2, lazurit_sol_time_arr2 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir, 'first_step_new_grid'))
 
     lazurit_frames1, lazurit_sol_time_arr1 = sort_frames(lazurit_frames1, lazurit_sol_time_arr1)
-    # lazurit_frames2, lazurit_sol_time_arr2 = sort_frames(lazurit_frames2, lazurit_sol_time_arr2)
+    lazurit_frames2, lazurit_sol_time_arr2 = sort_frames(lazurit_frames2, lazurit_sol_time_arr2)
 
-    make_comparison_plot(lazurit_frames1, 'Lazurit, 90 cells', config.num + 1,
-                         lazurit_frames2, '', config.num + 1, lazurit_sol_time_arr1,
-                         save_name='spectrum_history_lazurit_90cells_first_step.png', ylim=(1e-6, 1e-3))
+    make_comparison_plot(lazurit_frames1, 'Lazurit, 64 cells,  old grid', config.num + 1, False,
+                         lazurit_frames2, 'Lazurit, 64 cells, new grid', config.num + 2, True, lazurit_sol_time_arr1,
+                         save_name='spectrum_history_lazurit_64cells_first_step_new_grid.png', ylim=(1e-6, 1e-3))
 
     # ---------------------------------------------------------------------------
     # Создание графика истории изменения спектра в ходе расчета и эксперимента
     # ---------------------------------------------------------------------------
-    # make_plot_with_exp(lazurit_frames1, 'Lazurit, continuity_test', config.num+1,
-    #                    lazurit_frames2, '', config.num+1,
-    #                    save_name='spectrum_history_with_exp_data_lazurit_32cells_first_step.png',
+    # make_plot_with_exp(lazurit_frames1, 'Lazurit, old grid', config.num+1, False,
+    #                    lazurit_frames2, 'Lazurit, new grid', config.num+2, True,
+    #                    save_name='spectrum_history_with_exp_data_lazurit_64cells_first_step_new_grid.png',
     #                    ylim=(1e-6, 1e-3), theory_set=1e-1)
     # --------------------------------------------------------------------------------
     # создание графика изменения кинетической энергии турбулентности

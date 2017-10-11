@@ -21,7 +21,7 @@ def read_velocity_file(filename):
 
 class SpatialSpectrum3d:
     def __init__(self, num: int, grid_step: float, u_arr: np.ndarray, v_arr: np.ndarray, w_arr: np.ndarray,
-                 num_point: int):
+                 num_point: int, truncate_fiction_cells: bool=False):
         """
         :param num: количество узлов в на стороне генерируемого куба
         :param grid_step: шаг сетки
@@ -29,12 +29,15 @@ class SpatialSpectrum3d:
         :param v_arr:
         :param w_arr:
         :param num_point: размер массива со значениями энергии
+        :param truncate_fiction_cells: bool, optional. Если True - обрезает фиктивные ячейки с граней куба, \n
+               если Fasle - не обрезает.
         """
         self.num = num
         self.grid_step = grid_step
         self.u_arr = u_arr
         self.v_arr = v_arr
         self.w_arr = w_arr
+        self.truncate_fiction_cells = truncate_fiction_cells
         self.num_point = num_point
         self.l_cut = 2 * self.grid_step
         self.u_hat = None
@@ -82,10 +85,19 @@ class SpatialSpectrum3d:
         u_3d = self.u_arr.reshape([self.num, self.num, self.num])
         v_3d = self.v_arr.reshape([self.num, self.num, self.num])
         w_3d = self.w_arr.reshape([self.num, self.num, self.num])
+        if self.truncate_fiction_cells:
+            u_3d = u_3d[1: self.num-1, 1: self.num-1, 1: self.num-1]
+            v_3d = v_3d[1: self.num-1, 1: self.num-1, 1: self.num-1]
+            w_3d = w_3d[1: self.num-1, 1: self.num-1, 1: self.num-1]
         self.u_hat, self.v_hat, self.w_hat = make_fft(u_3d, v_3d, w_3d)
-        n, m, x, k = make_fft_grid(self.num, self.grid_step * (self.num - 1))
-        self.k_mag, self.e_k_mag = self.make_spectrum(self.num, self.grid_step * (self.num - 1), self.u_hat,
-                                                      self.v_hat, self.w_hat, m, self.num_point)
+        if self.truncate_fiction_cells:
+            n, m, x, k = make_fft_grid(self.num - 2, self.grid_step * (self.num - 3))
+            self.k_mag, self.e_k_mag = self.make_spectrum(self.num - 2, self.grid_step * (self.num - 3), self.u_hat,
+                                                          self.v_hat, self.w_hat, m, self.num_point)
+        else:
+            n, m, x, k = make_fft_grid(self.num, self.grid_step * (self.num - 1))
+            self.k_mag, self.e_k_mag = self.make_spectrum(self.num, self.grid_step * (self.num - 1), self.u_hat,
+                                                          self.v_hat, self.w_hat, m, self.num_point)
 
     def get_turb_kinetic_energy(self):
         energy: np.ndarray = 0.5 * (1 / self.num) ** 6 * (np.abs(self.u_hat) ** 2 + np.abs(self.v_hat) ** 2 +
