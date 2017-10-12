@@ -21,16 +21,10 @@ def get_conversation_macro(data_dir: str, loader_type: LoaderType, var_list=None
 
 if __name__ == '__main__':
     macro = ''
-    # macro += get_conversation_macro(config.cfx_data_dir, LoaderType.CFX, list(np.linspace(1, 15, 15, dtype=np.int)),
+    # macro += get_conversation_macro(os.path.join(config.cfx_data_dir, '0,5_length'),
+    #                                 LoaderType.CFX, list(np.linspace(1, 15, 15, dtype=np.int)),
     #                                 zone_list=[1])
-    # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, '500increase_degree'), LoaderType.TECPLOT)
-    # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'high_re_number'), LoaderType.TECPLOT)
-    # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'low_re_number'), LoaderType.TECPLOT)
-    # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'init_settings'), LoaderType.TECPLOT)
-    # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'continuity_test'), LoaderType.TECPLOT)
-    # macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'continuity_test_every_step'),
-    # LoaderType.TECPLOT)
-    macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'first_step_new_grid'), LoaderType.TECPLOT)
+    macro += get_conversation_macro(os.path.join(config.lazurit_data_dir, 'first_step_node_grid'), LoaderType.TECPLOT)
     macro = wrap_macro(macro)
     create_macro_file(macro, 'convert_to_txt.mcr')
     execute_macro('convert_to_txt.mcr')

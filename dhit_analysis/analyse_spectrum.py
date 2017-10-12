@@ -97,7 +97,7 @@ def make_plot_with_exp(frames_set1: typing.List[pd.DataFrame], name1: str, num1:
         w_arr = np.array(frame['W'])
         spectrum = SpatialSpectrum3d(num1, config.grid_step, u_arr, v_arr, w_arr, 100, truncate_fiction_cells1)
         spectrum.compute_spectrum()
-        if round(lazurit_sol_time_arr1[num], 2) in t_show:
+        if round(sol_time_arr1[num], 2) in t_show:
             if num_t_show == 0:
                 plt.plot(spectrum.k_mag, spectrum.e_k_mag, lw=0.8, color='red', label=name1)
             else:
@@ -111,7 +111,7 @@ def make_plot_with_exp(frames_set1: typing.List[pd.DataFrame], name1: str, num1:
             w_arr = np.array(frame['W'])
             spectrum = SpatialSpectrum3d(num2, config.grid_step, u_arr, v_arr, w_arr, 100, truncate_fiction_cells2)
             spectrum.compute_spectrum()
-            if round(lazurit_sol_time_arr2[num], 2) in t_show:
+            if round(sol_time_arr2[num], 2) in t_show:
                 if num_t_show == 0:
                     plt.plot(spectrum.k_mag, spectrum.e_k_mag, lw=0.8, color='blue', label=name2)
                 else:
@@ -179,29 +179,29 @@ def make_kinetic_energy_plot(frames_set1: typing.List[pd.DataFrame], name1: str,
     plt.savefig(os.path.join(base_dir, config.spectrum_plots_dir, save_name))
 
 if __name__ == '__main__':
-    lazurit_frames1, lazurit_sol_time_arr1 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir,
-                                                                                      'first_step'))
-    lazurit_frames2, lazurit_sol_time_arr2 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir, 'first_step_new_grid'))
+    frames1, sol_time_arr1 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir,
+                                                         'first_step_node_grid'))
+    frames2, sol_time_arr2 = get_frames_set_and_sol_time(os.path.join(config.lazurit_data_dir, 'first_step_new_grid'))
 
-    lazurit_frames1, lazurit_sol_time_arr1 = sort_frames(lazurit_frames1, lazurit_sol_time_arr1)
-    lazurit_frames2, lazurit_sol_time_arr2 = sort_frames(lazurit_frames2, lazurit_sol_time_arr2)
+    frames1, sol_time_arr1 = sort_frames(frames1, sol_time_arr1)
+    frames2, sol_time_arr2 = sort_frames(frames2, sol_time_arr2)
 
-    make_comparison_plot(lazurit_frames1, 'Lazurit, 64 cells,  old grid', config.num + 1, False,
-                         lazurit_frames2, 'Lazurit, 64 cells, new grid', config.num + 2, True, lazurit_sol_time_arr1,
-                         save_name='spectrum_history_lazurit_64cells_first_step_new_grid.png', ylim=(1e-6, 1e-3))
+    make_comparison_plot(frames1, 'Lazurit, node grid', config.num + 2, True,
+                         frames2, 'Lazurit, increased cell-center grid', config.num+2, True, sol_time_arr1,
+                         save_name='spectrum_history_lazurit_64cells_first_step_node_grid.png', ylim=(1e-6, 1e-3))
 
     # ---------------------------------------------------------------------------
     # Создание графика истории изменения спектра в ходе расчета и эксперимента
     # ---------------------------------------------------------------------------
-    # make_plot_with_exp(lazurit_frames1, 'Lazurit, old grid', config.num+1, False,
-    #                    lazurit_frames2, 'Lazurit, new grid', config.num+2, True,
-    #                    save_name='spectrum_history_with_exp_data_lazurit_64cells_first_step_new_grid.png',
+    # make_plot_with_exp(frames1, 'CFX, 46 cells', config.num, False,
+    #                    frames2, 'Lazurit, 46 cells', config.num+2, True,
+    #                    save_name='spectrum_history_with_exp_data_lazurit_cfx_46cells_new_grid.png',
     #                    ylim=(1e-6, 1e-3), theory_set=1e-1)
     # --------------------------------------------------------------------------------
     # создание графика изменения кинетической энергии турбулентности
     # --------------------------------------------------------------------------------
-    # make_kinetic_energy_plot(lazurit_frames1, 'Lazurit, continuity_test', config.num+1, lazurit_sol_time_arr1,
-    #                          lazurit_frames2, '', config.num + 1, lazurit_sol_time_arr2,
-    #                          save_name='kinetic_energy_lazurit_32cells_first_step.png', ylim=(0, 0.05),
-    #                          theory_set=0.00002, scale='linear', xlim=(0, 0.015))
+    # make_kinetic_energy_plot(frames1, 'CFX, 46 cells', config.num, sol_time_arr1, False,
+    #                          frames2, 'Lazurit, 46 cells', config.num+2, sol_time_arr2, True,
+    #                          save_name='kinetic_energy_lazurit_cfx_46cells_new_grid.png', ylim=(0, 0.05),
+    #                          theory_set=0.0025, scale='log', xlim=(0.07, 0.66))
     plt.show()

@@ -22,8 +22,8 @@ class HITGenerator(metaclass=ABCMeta):
         self.num = num
         self.data_files_dir = data_files_dir
         self.tec_filename = os.path.join(data_files_dir, 'synthetic_turbulence_field.TEC')
-        self.plot3d_filename = os.path.join(data_files_dir, 'grid.PFG')
-        self.plot3d_lazurit_filename = os.path.join(data_files_dir, 'grid_lazurit.PFG')
+        self.cell_centered_grid_filename = os.path.join(data_files_dir, 'grid_cell_centered.PFG')
+        self.node_grid_filename = os.path.join(data_files_dir, 'grid_node.PFG')
         self.velocity_filename = os.path.join(data_files_dir, 'velocity.VEL')
         self.grid_step = grid_step
 
@@ -32,8 +32,9 @@ class HITGenerator(metaclass=ABCMeta):
         pass
 
     @classmethod
-    def _get_coordinates_arrays(cls, index_gen: typing.Iterator[Vector], grid_step) -> \
+    def _get_cell_center_coordinates_arrays(cls, index_gen: typing.Iterator[Vector], grid_step) -> \
             typing.Iterable[np.ndarray]:
+        """Возвращает координаты центров ячеек, в которых будут генерироваться скорости"""
         x_arr = []
         y_arr = []
         z_arr = []
@@ -141,6 +142,8 @@ class HITGenerator(metaclass=ABCMeta):
 
     @classmethod
     def _create_plot3d_file(cls, filename, num, x_arr, y_arr, z_arr):
+        """Создает файл кубической сетки  с заданным количеством узлов на сторонев формате Plot3d,
+        в котором сохраняются значения координат из заданных одномерных массивов"""
         logging.info('Creating PLOT3D file')
         file = open(filename, mode='w', encoding='ascii')
         file.write('1 \n')
@@ -156,6 +159,7 @@ class HITGenerator(metaclass=ABCMeta):
     @classmethod
     def _create_velocity_file(cls, filename, u_arr: typing.List[float], v_arr: typing.List[float],
                               w_arr: typing.List[float]):
+        """Создает файл с расширением .VEL, в котором будут содержаться начальные условия для Lazurit"""
         logging.info('Creating velocity file')
         file = open(filename, mode='w', encoding='utf-8')
         for u, v, w in zip(u_arr, v_arr, w_arr):
@@ -168,19 +172,31 @@ class HITGenerator(metaclass=ABCMeta):
         self._create_tec_file(self.tec_filename, index_gen, x_arr, y_arr,
                               z_arr, u_arr, v_arr, w_arr, vorticity_x_arr,
                               vorticity_y_arr, vorticity_z_arr)
-        self._create_plot3d_file(self.plot3d_filename, self.num, x_arr, y_arr, z_arr)
+        self._create_plot3d_file(self.cell_centered_grid_filename, self.num, x_arr, y_arr, z_arr)
         self._create_velocity_file(self.velocity_filename, u_arr, v_arr, w_arr)
         self._create_velocity_component_file(x_arr, y_arr, z_arr, u_arr, 'u')
         self._create_velocity_component_file(x_arr, y_arr, z_arr, v_arr, 'v')
         self._create_velocity_component_file(x_arr, y_arr, z_arr, w_arr, 'w')
+        self._create_node_mesh()
 
-    def _create_lazurit_mesh(self):
-        """Создает сетку для lazurit. Lazurit считывает значения скорости в центрах ячеек (на единицу меньше общего
-        количества узлов на стороне), возвращает значения в центрах реальных и фиктивных ячеек (на единицу больше
-        количества узлов на стороне)"""
+    @classmethod
+    def _get_nodes_coordinates_arrays(cls, index_gen: typing.Iterator[Vector], grid_step) -> \
+            typing.Iterable[np.ndarray]:
+        """Возвращает координаты узлов сетки"""
+        x_arr = []
+        y_arr = []
+        z_arr = []
+        for index_vector in index_gen:
+            x_arr.append((index_vector[0] - 0.5) * grid_step)
+            y_arr.append((index_vector[1] - 0.5) * grid_step)
+            z_arr.append((index_vector[2] - 0.5) * grid_step)
+        return np.array(x_arr), np.array(y_arr), np.array(z_arr)
+
+    def _create_node_mesh(self):
+        """Создает и сохраняет файл в формате Plot3d, содержащй координаты узлов"""
         index_gen = self._get_index_generator(self.num + 1)
-        x_arr, y_arr, z_arr = self._get_coordinates_arrays(index_gen, self.grid_step)
-        self._create_plot3d_file(self.plot3d_lazurit_filename, self.num + 1, x_arr, y_arr, z_arr)
+        x_arr, y_arr, z_arr = self._get_nodes_coordinates_arrays(index_gen, self.grid_step)
+        self._create_plot3d_file(self.node_grid_filename, self.num + 1, x_arr, y_arr, z_arr)
 
 
 class HITGeneratorVonKarman(HITGenerator):
@@ -312,7 +328,7 @@ class HITGeneratorVonKarman(HITGenerator):
                 2. proc_num: int, optional
         """
         index_gen1 = self._get_index_generator(self.num)
-        self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(index_gen1, self.grid_step)
+        self._x_arr, self._y_arr, self._z_arr = self._get_cell_center_coordinates_arrays(index_gen1, self.grid_step)
         if 'proc_num' not in kwargs:
             proc_num = 2
         else:
@@ -332,7 +348,6 @@ class HITGeneratorVonKarman(HITGenerator):
                                        self.u_arr, self.v_arr, self.w_arr)
         self._create_all_files(self._x_arr, self._y_arr, self._z_arr, self.u_arr, self.v_arr, self.w_arr,
                                self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr)
-        self._create_lazurit_mesh()
         logging.info('Finish')
 
 
@@ -375,7 +390,7 @@ class HITGeneratorGivenSpectrum(HITGenerator):
 
     def run(self, **kwargs):
         index_gen1 = self._get_index_generator(self.num)
-        self._x_arr, self._y_arr, self._z_arr = self._get_coordinates_arrays(index_gen1, self.grid_step)
+        self._x_arr, self._y_arr, self._z_arr = self._get_cell_center_coordinates_arrays(index_gen1, self.grid_step)
         index_gen2 = self._get_index_generator(self.num)
         self.u_arr, self.v_arr, self.w_arr = self._get_velocity_arrays()
         self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr = \
@@ -383,6 +398,5 @@ class HITGeneratorGivenSpectrum(HITGenerator):
                                        self.u_arr, self.v_arr, self.w_arr)
         self._create_all_files(self._x_arr, self._y_arr, self._z_arr, self.u_arr, self.v_arr, self.w_arr,
                                self._vorticity_x_arr, self._vorticity_y_arr, self._vorticity_z_arr)
-        self._create_lazurit_mesh()
         logging.info('Finish')
 

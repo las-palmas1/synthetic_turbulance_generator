@@ -23,7 +23,7 @@ class SpatialSpectrum3d:
     def __init__(self, num: int, grid_step: float, u_arr: np.ndarray, v_arr: np.ndarray, w_arr: np.ndarray,
                  num_point: int, truncate_fiction_cells: bool=False):
         """
-        :param num: количество узлов в на стороне генерируемого куба
+        :param num: количество узлов на стороне кубической области с заданными скоростями
         :param grid_step: шаг сетки
         :param u_arr:
         :param v_arr:
