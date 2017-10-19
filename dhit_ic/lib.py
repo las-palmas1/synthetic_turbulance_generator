@@ -25,6 +25,7 @@ class HITGenerator(metaclass=ABCMeta):
         self.cell_centered_grid_filename = os.path.join(data_files_dir, 'grid_cell_centered.PFG')
         self.node_grid_filename = os.path.join(data_files_dir, 'grid_node.PFG')
         self.velocity_filename = os.path.join(data_files_dir, 'velocity.VEL')
+        self.velocity_num_cells_filename = os.path.join(data_files_dir, 'velocity_%s_cells.VEL' % self.num)
         self.grid_step = grid_step
 
     @abstractmethod
@@ -174,6 +175,7 @@ class HITGenerator(metaclass=ABCMeta):
                               vorticity_y_arr, vorticity_z_arr)
         self._create_plot3d_file(self.cell_centered_grid_filename, self.num, x_arr, y_arr, z_arr)
         self._create_velocity_file(self.velocity_filename, u_arr, v_arr, w_arr)
+        self._create_velocity_file(self.velocity_num_cells_filename, u_arr, v_arr, w_arr)
         self._create_velocity_component_file(x_arr, y_arr, z_arr, u_arr, 'u')
         self._create_velocity_component_file(x_arr, y_arr, z_arr, v_arr, 'v')
         self._create_velocity_component_file(x_arr, y_arr, z_arr, w_arr, 'w')

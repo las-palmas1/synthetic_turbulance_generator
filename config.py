@@ -33,6 +33,9 @@ lazurit_data_dir = 'C:\\Users\\User\\Documents\\tasks\computitions_and post_proc
                    'data_for_analysis\\lazurit' % num
 monitor_data_dir = 'C:\\Users\\User\\Documents\\tasks\\computitions_and post_processing\\dhit\\' \
                    '%s_cells\\data_for_analysis\\monitor' % num
+main_data_dir = 'C:\\Users\\User\\Documents\\tasks\\computitions_and post_processing\\dhit'
+lazurit_rel_data_dir = 'data_for_analysis\\lazurit'
+cfx_rel_data_dir = 'data_for_analysis\\cfx'
 exp_data = 'dhit_ic\CBC_exp.mat'
 # -----------------------------------------------------------------------
 # параметры для обезразмеривания экспериментального спектра

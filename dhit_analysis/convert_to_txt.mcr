@@ -1,7 +1,88 @@
 #!MC 1410
 $!VarSet |MFBD| = 'C:\Program Files\Tecplot\Tecplot 360 EX 2016 R2'
-$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\64_cells\data_for_analysis\lazurit\first_step_node_grid\bin\TEC_FLOW_T-1_B-1.plt"'
-$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\64_cells\data_for_analysis\lazurit\first_step_node_grid\txt\data_0.dat' 
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-11200_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_0.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-12600_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_1.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-13201_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_2.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-1400_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_3.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-2800_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_4.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-4200_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_5.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-5600_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_6.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-7000_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_7.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-8400_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_8.dat' 
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  INCLUDEDATASHARELINKAGE = YES
+  BINARY = FALSE
+  USEPOINTFORMAT = YES
+  PRECISION = 9
+  TECPLOTVERSIONTOWRITE = TECPLOTCURRENT
+$!READDATASET  '"C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\bin\TEC_FLOW_T-9800_B-1.plt"'
+$!WRITEDATASET  'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\90_cells\data_for_analysis\lazurit\low_re\txt\data_9.dat' 
   INCLUDETEXT = NO
   INCLUDEGEOM = NO
   INCLUDEDATASHARELINKAGE = YES
