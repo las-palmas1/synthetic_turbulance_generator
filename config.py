@@ -22,18 +22,16 @@ alpha = 0.01   # константа для определения набора �
 u0 = np.array([0., 0., 0.])  # характерная скорость
 time = 0.  # параметр времени
 log_level = logging.INFO  # уровень логгирования
-run_mode = 'single'    # способ вычисления скоростей (многопроцессорный "single" или простой "mp_pool")
-proc_num = 4    # число процессов
 data_files_dir = 'output\data_files'
 spectrum_plots_dir = 'output\spectrum_plots'
 monitor_plots_dir = 'output\monitor_data_plots'
-cfx_data_dir = r'C:\Users\User\Documents\tasks\computitions_and post_processing\dhit\%s_cells\data_for_analysis\cfx' \
+cfx_data_dir = r'E:\tasks\computitions_and post_processing\dhit\%s_cells\data_for_analysis\cfx' \
                % num
-lazurit_data_dir = 'C:\\Users\\User\\Documents\\tasks\computitions_and post_processing\\dhit\\%s_cells\\' \
+lazurit_data_dir = 'E:\\tasks\computitions_and post_processing\\dhit\\%s_cells\\' \
                    'data_for_analysis\\lazurit' % num
-monitor_data_dir = 'C:\\Users\\User\\Documents\\tasks\\computitions_and post_processing\\dhit\\' \
+monitor_data_dir = 'E:\\tasks\\computitions_and post_processing\\dhit\\' \
                    '%s_cells\\data_for_analysis\\monitor' % num
-main_data_dir = 'C:\\Users\\User\\Documents\\tasks\\computitions_and post_processing\\dhit'
+main_data_dir = 'E:\\tasks\\computitions_and post_processing\\dhit'
 lazurit_rel_data_dir = 'data_for_analysis\\lazurit'
 cfx_rel_data_dir = 'data_for_analysis\\cfx'
 exp_data = 'dhit_ic\CBC_exp.mat'
